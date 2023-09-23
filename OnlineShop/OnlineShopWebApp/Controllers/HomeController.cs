@@ -54,8 +54,6 @@ namespace OnlineShopWebApp.Controllers
             foreach (var product in products)
             {
                 result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
-
-                //Console.WriteLine($"Description: {product.Description}");
             }
 
             return result_str;
