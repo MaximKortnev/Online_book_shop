@@ -6,24 +6,64 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopWebApp.Models;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace OnlineShopWebApp.Controllers
 {
-	public class HomeController : Controller
+    public class Product
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("cost")]
+        public decimal Cost { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+    }
+    public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+        private List<Product> ReadProductsFromJson(string filePath)
+        {
+            string json;
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return JsonConvert.DeserializeObject<List<Product>>(json);
+        }
+
+        public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public List<Product> Index()
 		{
-			return View();
+            string jsonFilePath = "data.json";  
+            List<Product> products = ReadProductsFromJson(jsonFilePath);
+
+            foreach (var product in products)
+            {
+                Console.WriteLine($"Product ID: {product.Id}");
+                Console.WriteLine($"Name: {product.Name}");
+                Console.WriteLine($"Cost: {product.Cost:C}");
+                Console.WriteLine($"Description: {product.Description}");
+                Console.WriteLine();
+            }
+            return products;
 		}
 
-		public IActionResult Privacy()
+
+        public IActionResult Privacy()
 		{
 			return View();
 		}
@@ -35,11 +75,5 @@ namespace OnlineShopWebApp.Controllers
 		}
 	}
 
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Cost { get; set; }
-        public string Description { get; set; }
-    }
+
 }
