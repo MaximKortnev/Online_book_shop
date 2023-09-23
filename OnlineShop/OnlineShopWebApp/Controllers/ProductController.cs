@@ -24,16 +24,7 @@ namespace OnlineShopWebApp.Controllers
             List<Product> products = ReadProductsFromJson(jsonFilePath);
 
             string result_str = "";
-            if (id == -1)
-            {
-                foreach (var product in products)
-                {
-                    result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
-                }
-            }
-            else
-            {
-                foreach (var product in products)
+            foreach (var product in products)
                 {
                     if (product.Id == id)
                     {
@@ -42,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
                     }
                     else { result_str = "Такого товара нет"; }
                 }
-            }
+            if (id == -1) { result_str = "Вы не выбрали товар"; }
             return result_str;
         }
     }
