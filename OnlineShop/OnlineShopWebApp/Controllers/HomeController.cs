@@ -50,14 +50,11 @@ namespace OnlineShopWebApp.Controllers
             List<Product> products = ReadProductsFromJson(jsonFilePath);
 
             string result_str = "";
-
             foreach (var product in products)
             {
-                result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
-
-                //Console.WriteLine($"Description: {product.Description}");
+                    result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
             }
-
+            
             return result_str;
         }
 
