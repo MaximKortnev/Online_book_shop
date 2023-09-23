@@ -1,20 +1,20 @@
 [
     {
       "id": 1,
-      "name": "Product 1",
+      "name": "Приключения Буратино",
       "cost": 20.00,
-      "description": "This is the description for Product 1."
+      "description": "Невероятная история о деревянном мальчике"
     },
     {
       "id": 2,
-      "name": "Product 2",
+      "name": "Алиса в стране чудес",
       "cost": 15.99,
-      "description": "Description for Product 2 goes here."
+      "description": "Книга о приключениях девочки Асилы и о неведомых чудесах созданных Льюисом Кэрроллом "
     },
     {
       "id": 3,
-      "name": "Product 3",
+      "name": "Марта",
       "cost": 30.50,
-      "description": "Description for Product 3 can be provided here."
+      "description": "Биографическая книга о мыслях и жизни девушки по имени Марта"
     }
   ]

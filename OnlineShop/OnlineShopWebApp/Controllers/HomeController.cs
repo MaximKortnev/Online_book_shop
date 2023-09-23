@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopWebApp.Models;
 using System.IO;
 using Newtonsoft.Json;
+
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -26,8 +24,8 @@ namespace OnlineShopWebApp.Controllers
         public string Description { get; set; }
     }
     public class HomeController : Controller
-	{
-		private readonly ILogger<HomeController> _logger;
+    {
+        private readonly ILogger<HomeController> _logger;
 
         private List<Product> ReadProductsFromJson(string filePath)
         {
@@ -42,38 +40,39 @@ namespace OnlineShopWebApp.Controllers
         }
 
         public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
+        {
+            _logger = logger;
+        }
 
-		public List<Product> Index()
-		{
-            string jsonFilePath = "data.json";  
+        public string Index()
+        {
+            string jsonFilePath = "data.json";
             List<Product> products = ReadProductsFromJson(jsonFilePath);
+
+            string result_str = "";
 
             foreach (var product in products)
             {
-                Console.WriteLine($"Product ID: {product.Id}");
-                Console.WriteLine($"Name: {product.Name}");
-                Console.WriteLine($"Cost: {product.Cost:C}");
-                Console.WriteLine($"Description: {product.Description}");
-                Console.WriteLine();
+                result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
+
+                //Console.WriteLine($"Description: {product.Description}");
             }
-            return products;
-		}
+
+            return result_str;
+        }
 
 
         public IActionResult Privacy()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-	}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 
 
 }
