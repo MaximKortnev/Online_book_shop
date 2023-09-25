@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -8,13 +7,13 @@ namespace OnlineShopWebApp.Controllers
 
         public string Index()
         {
-            var result_str = "";
+            var ProductCard = "";
 
-            foreach (var product in ProductEssence.GetProducts())
+            foreach (var product in ProductsRepository.GetProducts())
             {
-                    result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
+                ProductCard += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
             }
-            return result_str;
+            return ProductCard;
         }
     }
 }

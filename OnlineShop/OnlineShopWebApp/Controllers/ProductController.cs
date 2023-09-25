@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -9,7 +6,7 @@ namespace OnlineShopWebApp.Controllers
     {
         public string Index(int id)
         {
-            var result_str = ProductEssence.SearchProductById(id); 
+            var result_str = ProductsRepository.SearchProductById(id); 
             return result_str;
         }
     }
