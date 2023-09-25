@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
 
         public static List<Product> GetProducts()
         {
-            var jsonFilePath = "data.json";
+            var jsonFilePath = "data/data.json";
             List<Product> products = ReadProductsFromJson(jsonFilePath);
             return products;
         }
