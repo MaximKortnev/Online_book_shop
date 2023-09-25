@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -9,18 +6,13 @@ namespace OnlineShopWebApp.Controllers
     {
         public string Index()
         {
-            var jsonFilePath = "data.json";
-            List<Product> products = ProductEssence.ReadProductsFromJson(jsonFilePath);
+            var ProductCart = "";
 
-            var result_str = "";
-
-            foreach (var product in products)
+            foreach (var product in ProductRepository.GetProducts())
             {
-                result_str += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
+                ProductCart += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
             }
-
-            return result_str;
+            return ProductCart;
         }
-
     }
 }
