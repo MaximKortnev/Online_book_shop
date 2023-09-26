@@ -20,7 +20,7 @@ namespace OnlineShopWebApp.Controllers
         public static List<Product> GetProducts()
         {
             var jsonFilePath = "data.json";
-            List<Product> products = ProductRepository.ReadProductsFromJson(jsonFilePath);
+            List<Product> products = ReadProductsFromJson(jsonFilePath);
             return products;
         }
     }
