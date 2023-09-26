@@ -20,17 +20,12 @@ namespace OnlineShopWebApp.Controllers
 
         public static string SearchProductById(int id)
         {
-            var ProductCard = GetProducts().FirstOrDefault(s => s.Id == id);
+            var productCard = GetProducts().FirstOrDefault(s => s.Id == id);
 
-            if (ProductCard == null) return "Такого товара нет";
-            else return $"Product ID: {ProductCard.Id}\nName: {ProductCard.Name}\nCost {ProductCard.Cost}\nDescription: {ProductCard.Description}";
+            if (productCard == null) return "Такого товара нет";
+            else return $"Product ID: {productCard.Id}\nName: {productCard.Name}\nCost {productCard.Cost}\nDescription: {productCard.Description}";
         }
 
-        public static List<Product> GetProducts()
-        {
-            var jsonFilePath = "data/data.json";
-            List<Product> products = ReadProductsFromJson(jsonFilePath);
-            return products;
-        }
+        public static List<Product> GetProducts() => ReadProductsFromJson("wwwroot/data.json");
     }
 }

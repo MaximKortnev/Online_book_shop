@@ -7,13 +7,13 @@ namespace OnlineShopWebApp.Controllers
 
         public string Index()
         {
-            var ProductCard = "";
+            var productCard = "";
 
             foreach (var product in ProductsRepository.GetProducts())
             {
-                ProductCard += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
+                productCard += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
             }
-            return ProductCard;
+            return productCard;
         }
     }
 }
