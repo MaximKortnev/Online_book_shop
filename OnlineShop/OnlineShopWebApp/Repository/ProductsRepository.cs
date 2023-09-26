@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
             var productCard = GetProducts().FirstOrDefault(s => s.Id == id);
 
             if (productCard == null) return "Такого товара нет";
-            else return $"Product ID: {productCard.Id}\nName: {productCard.Name}\nCost {productCard.Cost}\nDescription: {productCard.Description}";
+            return $"Product ID: {productCard.Id}\nName: {productCard.Name}\nCost {productCard.Cost}\nDescription: {productCard.Description}";
         }
 
         public static List<Product> GetProducts() => ReadProductsFromJson("wwwroot/data.json");
