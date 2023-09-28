@@ -22,22 +22,13 @@ namespace OnlineShopWebApp.Controllers
         public static List<Product> GetProducts()
         {
             var jsonFilePath = "wwwroot/data.json";
-
-            try
-            {
-                List<Product> products = ReadProductsFromJson(jsonFilePath);
-                return products;
-            }
-            catch 
-            {
-                return null;
-            }
+            return File.Exists(jsonFilePath) ? ReadProductsFromJson(jsonFilePath) : null;
         }
 
         public static string GetProductsData() {
 
             var productCart = "";
-            var listProducts = ProductRepository.GetProducts();
+            var listProducts = GetProducts();
 
             if (listProducts != null) { 
                 foreach (var product in listProducts)
