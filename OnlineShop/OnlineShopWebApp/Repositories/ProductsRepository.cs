@@ -29,16 +29,7 @@ namespace OnlineShopWebApp.Controllers
         public static List<Product> GetProducts()
         {
             var jsonFilePath = "wwwroot/data.json";
-
-            try
-            {
-                List<Product> products = ReadProductsFromJson(jsonFilePath);
-                return products;
-            }
-            catch
-            {
-                return new List<Product> {};
-            }
+            return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> { };
         }
 
         public static string GetProductsData()
@@ -47,7 +38,7 @@ namespace OnlineShopWebApp.Controllers
             var productCart = "";
             var listProducts = GetProducts();
 
-            if (ListEmpry(listProducts))
+            if (ListNotEmpry(listProducts))
             {
                 foreach (var product in listProducts)
                 {
@@ -58,6 +49,6 @@ namespace OnlineShopWebApp.Controllers
             return "Не удалось загрузить данные.";
         }
 
-        private static bool ListEmpry(List<Product> prod) => prod.Any();
+        private static bool ListNotEmpry(List<Product> prod) => prod.Any();
     }
 }
