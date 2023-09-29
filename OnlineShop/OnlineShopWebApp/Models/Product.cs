@@ -15,6 +15,9 @@ namespace OnlineShopWebApp.Controllers
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+
+        public override string ToString() => $"Product ID: {Id}\nName: {Name}\nCost: {Cost}";
     }
 }
 

@@ -4,6 +4,6 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()=> ProductsRepository.GetProductsData();    
+        public string Index()=> ProductsRepository.GetAll();    
     }
 }

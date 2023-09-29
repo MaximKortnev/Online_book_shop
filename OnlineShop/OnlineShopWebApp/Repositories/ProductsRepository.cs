@@ -18,13 +18,7 @@ namespace OnlineShopWebApp.Controllers
             return JsonConvert.DeserializeObject<List<Product>>(json);
         }
 
-        public static string SearchProductById(int id)
-        {
-            var productCard = GetProducts().FirstOrDefault(s => s.Id == id);
-
-            if (productCard == null) return "Такого товара нет";
-            return $"Product ID: {productCard.Id}\nName: {productCard.Name}\nCost {productCard.Cost}\nDescription: {productCard.Description}";
-        }
+        public static Product TryGetProductById(int id) => GetProducts().FirstOrDefault(p => p.Id == id);
 
         public static List<Product> GetProducts()
         {
@@ -32,23 +26,26 @@ namespace OnlineShopWebApp.Controllers
             return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> { };
         }
 
-        public static string GetProductsData()
+        public static string GetAll()
         {
 
             var productCart = "";
             var listProducts = GetProducts();
 
-            if (ListNotEmpry(listProducts))
+            if (!ListEmpry(listProducts))
             {
                 foreach (var product in listProducts)
                 {
-                    productCart += "Product ID: " + product.Id + "\nName: " + product.Name + "\nCost " + product.Cost + "\n\n";
+                    productCart += product + "\n\n";
                 }
                 return productCart;
             }
             return "Не удалось загрузить данные.";
         }
 
-        private static bool ListNotEmpry(List<Product> prod) => prod.Any();
+        private static bool ListEmpry(List<Product> prod) => !prod.Any();
+
+       
+ 
     }
 }
