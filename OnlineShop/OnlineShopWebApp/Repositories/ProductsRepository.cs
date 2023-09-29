@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
         public static List<Product> GetProducts()
         {
             var jsonFilePath = "wwwroot/data.json";
-            return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> { };
+            return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> {};
         }
 
         public static string GetAll()
@@ -44,8 +44,5 @@ namespace OnlineShopWebApp.Controllers
         }
 
         private static bool ListEmpry(List<Product> prod) => !prod.Any();
-
-       
- 
     }
 }
