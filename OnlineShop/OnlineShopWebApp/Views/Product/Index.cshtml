@@ -1,0 +1,37 @@
+﻿@model Product
+
+<div class="container mt-3 card-container">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="~/image.jpg" class="card-img" alt="Обложка книги" height="500" width="800">
+                <a href="/home/index/">Продолжить покупки</a>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">Автор: @Model.Author</p>
+                    <p class="card-text">Описание книги<br>@Model.Description</p>
+                    <a class="btn btn-outline-success" href="#">Добавить в избранное</a>
+                    <a class="btn btn-primary ml-2" href="/cart/add/@Model.Id">Добавить в карзину</a>
+                    <div class="mt-4">
+                        <h6>О книге:</h6>
+                        <p>@Model.AboutTheBook</p>
+                    </div>
+                    <div class="mt-4">
+                        <h6>Об авторе:</h6>
+                        <img src="~/author.png" alt="Фото автора" class="author-photo">
+                        <p>@Model.AboutAuthor</p>
+                    </div>
+                    <div class="mt-4">
+                        <h6>Цитата из книги:</h6>
+                        <p>@Model.Quote</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

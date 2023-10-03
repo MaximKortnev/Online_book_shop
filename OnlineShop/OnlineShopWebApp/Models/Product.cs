@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Models
 {
     public class Product
     {
@@ -9,6 +9,17 @@ namespace OnlineShopWebApp.Controllers
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("author")]
+        public string Author { get; set; }
+        [JsonProperty("aboutTheBook")]
+        public string AboutTheBook { get; set; }
+
+        [JsonProperty("aboutAuthor")]
+        public string AboutAuthor { get; set; }
+
+        [JsonProperty("quote")]
+        public string Quote { get; set; }
 
         [JsonProperty("cost")]
         public decimal Cost { get; set; }
