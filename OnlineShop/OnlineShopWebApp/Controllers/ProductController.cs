@@ -8,7 +8,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var productCard = ProductsRepository.TryGetProductById(id);
 
-            if (productCard == null) { return View("Error");}
+            if (productCard == null || productCard.Id != id) { return View("ErrorProduct");}
             return View(productCard);
         }
     }

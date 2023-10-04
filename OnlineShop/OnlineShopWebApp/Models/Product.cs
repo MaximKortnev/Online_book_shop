@@ -27,6 +27,9 @@ namespace OnlineShopWebApp.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
+        [JsonProperty("image")]
+        public string Image { get; set; }
+
 
         public override string ToString() => $"Product ID: {Id}\nName: {Name}\nCost: {Cost}";
     }
