@@ -12,6 +12,7 @@ namespace OnlineShopWebApp.Models
 
         [JsonProperty("author")]
         public string Author { get; set; }
+
         [JsonProperty("aboutTheBook")]
         public string AboutTheBook { get; set; }
 
@@ -27,8 +28,8 @@ namespace OnlineShopWebApp.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("image")]
-        public string Image { get; set; }
+        [JsonProperty("imagePath")]
+        public string ImagePath { get; set; }
 
 
         public override string ToString() => $"Product ID: {Id}\nName: {Name}\nCost: {Cost}";
