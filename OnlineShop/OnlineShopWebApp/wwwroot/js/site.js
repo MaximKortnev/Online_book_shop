@@ -5,7 +5,7 @@
 
 function addToCart(productId) {
     $.ajax({
-        url: '/Cart/Add/' + productId,
+        url: '/cart/add?productId=' + productId,
         type: 'POST',
         success: function (data) {
             $('#cartModal').modal('show');
