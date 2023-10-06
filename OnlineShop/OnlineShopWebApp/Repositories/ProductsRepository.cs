@@ -5,7 +5,7 @@ using System.Linq;
 using OnlineShopWebApp.Models;
 
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Repositories
 {
     public static class ProductsRepository
     {
