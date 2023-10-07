@@ -5,11 +5,11 @@ using System;
 
 namespace OnlineShopWebApp.Repositories
 {
-    public static class CartsRepository
+    public class CartsRepository
     {
-        public static List<Cart> carts = new List<Cart>();
+        public List<Cart> carts = new List<Cart>();
 
-        public static void Add(Product product, string userId)
+        public void Add(Product product, string userId)
         {
             var existingCart = TryGetByUserId(userId);
             if (existingCart == null)
@@ -30,6 +30,6 @@ namespace OnlineShopWebApp.Repositories
                 else existingCart.Items.Add(new CartItem() { Id = Guid.NewGuid(), Amount = 1, Product = product });
             }
         }
-        public static Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
+        public Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
     }
 };

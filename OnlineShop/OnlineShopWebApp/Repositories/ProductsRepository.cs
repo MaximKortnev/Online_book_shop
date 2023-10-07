@@ -7,9 +7,9 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Repositories
 {
-    public static class ProductsRepository
+    public class ProductsRepository
     {
-        public static List<Product> ReadProductsFromJson(string filePath)
+        public List<Product> ReadProductsFromJson(string filePath)
         {
             var json = "";
 
@@ -19,9 +19,9 @@ namespace OnlineShopWebApp.Repositories
             }
             return JsonConvert.DeserializeObject<List<Product>>(json);
         }
-        public static Product TryGetProductById(int id) => GetAll().FirstOrDefault(p => p.Id == id);
+        public Product TryGetProductById(int id) => GetAll().FirstOrDefault(p => p.Id == id);
 
-        public static List<Product> GetAll()
+        public List<Product> GetAll()
         {
             var jsonFilePath = "wwwroot/data.json";
             return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> {};
