@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OnlineShopWebApp.Models;
-
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Repositories
 {
-    public class ProductsRepository
+    public class InFileProductsRepository : IProductsReposotory
     {
         public List<Product> ReadProductsFromJson(string filePath)
         {
@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Repositories
         public List<Product> GetAll()
         {
             var jsonFilePath = "wwwroot/data.json";
-            return File.Exists(jsonFilePath)? ReadProductsFromJson(jsonFilePath): new List<Product> {};
+            return File.Exists(jsonFilePath) ? ReadProductsFromJson(jsonFilePath) : new List<Product> { };
         }
     }
 }

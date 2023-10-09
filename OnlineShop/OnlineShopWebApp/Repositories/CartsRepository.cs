@@ -2,10 +2,11 @@
 using OnlineShopWebApp.Models;
 using System.Linq;
 using System;
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Repositories
 {
-    public class CartsRepository
+    public class InFileCartsRepository : ICartsRepository
     {
         public List<Cart> carts = new List<Cart>();
 

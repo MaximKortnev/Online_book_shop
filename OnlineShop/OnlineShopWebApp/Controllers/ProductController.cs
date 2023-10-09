@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Repositories;
-using System.Collections.Generic;
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ProductsRepository productsRepository;
-        public ProductController(ProductsRepository productsRepository) 
+        private readonly IProductsReposotory productsRepository;
+        public ProductController(IProductsReposotory productsRepository) 
         {
             this.productsRepository = productsRepository;
         }
@@ -16,7 +15,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var productCard = productsRepository.TryGetProductById(productId);
 
-            if (productCard == null || productCard.Id != productId) { return View("ErrorProduct");}
+            if (productCard == null) { return View("ErrorProduct");}
             return View(productCard);
         }
     }

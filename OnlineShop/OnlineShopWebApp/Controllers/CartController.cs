@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Repositories;
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class CartController : Controller
     {
-        private readonly CartsRepository cartRepository;
-        private readonly ProductsRepository productRepository;
-        public CartController(CartsRepository cartRepository, ProductsRepository productRepository)
+        private readonly ICartsRepository cartRepository;
+        private readonly IProductsReposotory productRepository;
+        public CartController(ICartsRepository cartRepository, IProductsReposotory productRepository)
         {
             this.cartRepository = cartRepository;
             this.productRepository = productRepository;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Index(int userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
             return View(cart);

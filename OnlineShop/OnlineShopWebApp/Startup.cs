@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShopWebApp.Repositories;
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp
 {
@@ -19,9 +20,8 @@ namespace OnlineShopWebApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			//Di con
-			services.AddSingleton<ProductsRepository>();
-            services.AddSingleton<CartsRepository>();
+			services.AddSingleton<IProductsReposotory, InFileProductsRepository>();
+            services.AddSingleton<ICartsRepository, InFileCartsRepository>();
             services.AddControllersWithViews();
 		}
 
