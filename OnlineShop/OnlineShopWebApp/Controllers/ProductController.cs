@@ -12,11 +12,11 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index(int productId)
+        public IActionResult Index(int productId222)
         {
-            var productCard = productsRepository.TryGetProductById(productId);
+            var productCard = productsRepository.TryGetProductById(productId222);
 
-            if (productCard == null || productCard.Id != productId) { return View("ErrorProduct");}
+            if (productCard == null || productCard.Id != productId222) { return View("ErrorProduct");}
             return View(productCard);
         }
     }
