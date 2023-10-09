@@ -31,5 +31,9 @@ namespace OnlineShopWebApp.Controllers
             cartRepository.DecreaseAmount(product, Constants.UserId);
             return RedirectToAction("Index");
         }
+        public IActionResult Clear() {
+            cartRepository.Clear();
+            return RedirectToAction("Index");
+        }
     }
 }
