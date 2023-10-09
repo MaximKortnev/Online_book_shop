@@ -31,6 +31,19 @@ namespace OnlineShopWebApp.Repositories
                 else existingCart.Items.Add(new CartItem() { Id = Guid.NewGuid(), Amount = 1, Product = product });
             }
         }
+
+        public void DecreaseAmount(Product product, string userId) {
+
+            var existingCart = TryGetByUserId(userId);
+            var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
+
+            if (existingCardItem != null)
+            {
+                if (existingCardItem.Amount > 1) existingCardItem.Amount -= 1;
+                else { existingCart.Items.Remove(existingCardItem); }
+            }
+        }
+
         public Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
     }
 };
