@@ -1,0 +1,69 @@
+﻿<div class="container mt-5">
+    <h1>Оформление заказа</h1>
+
+    <!-- Личные данные пользователя -->
+    <div class="form-group">
+        <label for="fullName">ФИО</label>
+        <input type="text" class="form-control" id="fullName" placeholder="Введите ФИО">
+    </div>
+
+    <div class="form-group">
+        <label for="Adres">Адрес</label>
+        <input type="text" class="form-control" id="adres" placeholder="Введите Адрес">
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="phone">Телефон</label>
+            <input type="text" class="form-control" id="phone" placeholder="Введите номер телефона">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Введите email">
+        </div>
+    </div>
+
+    <!-- Способ доставки -->
+    <div class="form-group">
+        <label for="deliveryMethod">Способ доставки</label>
+        <select class="form-control" id="deliveryMethod">
+            <option>Самовывоз</option>
+            <option>Курьерская доставка</option>
+            <!-- Добавьте другие способы доставки по необходимости -->
+        </select>
+    </div>
+
+    <!-- Способ оплаты -->
+    <div class="form-group">
+        <label for="paymentMethod">Способ оплаты</label>
+        <select class="form-control" id="paymentMethod">
+            <option>Оплата наличными</option>
+            <option>Оплата картой</option>
+            <!-- Добавьте другие способы оплаты по необходимости -->
+        </select>
+    </div>
+
+    <!-- Поле для ввода промокода -->
+    <div class="form-group">
+        <label for="promoCode">Промокод</label>
+        <input type="text" class="form-control" id="promoCode" placeholder="Введите промокод">
+    </div>
+
+    <!-- Состав заказа -->
+    <h3>Состав заказа</h3>
+    <ul>
+        <!-- Здесь вы можете динамически выводить позиции из корзины -->
+        <li>Товар 1 - 500 руб.</li>
+        <li>Товар 2 - 700 руб.</li>
+        <!-- Добавьте другие позиции заказа по необходимости -->
+    </ul>
+
+    <!-- Итоговая стоимость -->
+    <div class="form-group">
+        <label for="totalCost">Итоговая стоимость</label>
+        <input type="text" class="form-control" id="totalCost" value="1200 руб." readonly>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Оформить заказ</button>
+</div>
