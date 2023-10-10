@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
+using System;
+using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -15,6 +17,17 @@ namespace OnlineShopWebApp.Controllers
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
             return View(cart);
+        }
+
+        [HttpPost]
+        public IActionResult OrdersToFile([FromBody] OrderData orderData)
+        {
+            if (orderData == null)
+            {
+                return BadRequest("Invalid order data.");
+            }
+            cartRepository.SaveToFileOrders(orderData);
+            return Ok(new { message = "Order received and processed successfully." });
         }
     }
 }

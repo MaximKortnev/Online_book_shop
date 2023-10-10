@@ -17,13 +17,13 @@ function addToCart(productId) {
 }
 
 function submitOrder() {
-    const fullName = document.getElementById('fullName').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const deliveryMethod = document.getElementById('deliveryMethod').value;
-    const paymentMethod = document.getElementById('paymentMethod').value;
-    const promoCode = document.getElementById('promoCode').value;
-    const totalCost = document.getElementById('totalCost').value;
+    const fullName = $('#fullName').val();
+    const phone = $('#phone').val();
+    const email = $('#email').val();
+    const deliveryMethod = $('#deliveryMethod').val();
+    const paymentMethod = $('#paymentMethod').val();
+    const promoCode = $('#promoCode').val();
+    const totalCost = $('#totalCost').val();
 
     const orderData = {
         fullName: fullName,
@@ -32,25 +32,26 @@ function submitOrder() {
         deliveryMethod: deliveryMethod,
         paymentMethod: paymentMethod,
         promoCode: promoCode,
-        totalCost: totalCost,
-        // Добавьте информацию о товарах в заказ
-        products: [
-            { name: 'Товар 1', price: 500 },
-            { name: 'Товар 2', price: 700 }
-        ]
+        totalCost: totalCost
     };
 
-    // Отправка данных на сервер
-    fetch('/api/order', {
+
+    fetch("/Order/OrdersToFile", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(orderData)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Ответ от сервера:', data);
+            $('#orderSuccessModal').modal('show');
             // Добавьте здесь логику для обработки ответа от сервера
         })
         .catch(error => {
