@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class OrderController : Controller
     {
-        public IActionResult Index()
+        private readonly ICartsRepository cartRepository;
+
+        public OrderController(ICartsRepository cartRepository)
         {
-            return View();
+            this.cartRepository = cartRepository;
+        }
+        public IActionResult Index(int userId)
+        {
+            var cart = cartRepository.TryGetByUserId(Constants.UserId);
+            return View(cart);
         }
     }
 }

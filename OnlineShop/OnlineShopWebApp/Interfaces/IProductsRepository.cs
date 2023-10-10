@@ -3,7 +3,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Interfaces
 {
-    public interface IProductsReposotory
+    public interface IProductsRepository
     {
         Product TryGetProductById(int productId);
         List<Product> GetAll();

@@ -7,7 +7,7 @@ using OnlineShopWebApp.Interfaces;
 
 namespace OnlineShopWebApp.Repositories
 {
-    public class InFileProductsRepository : IProductsReposotory
+    public class InFileProductsRepository : IProductsRepository
     {
         public List<Product> ReadProductsFromJson(string filePath)
         {

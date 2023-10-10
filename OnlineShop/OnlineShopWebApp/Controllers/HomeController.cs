@@ -5,8 +5,8 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProductsReposotory productsRepository;
-        public HomeController(IProductsReposotory productsRepository)
+        private readonly IProductsRepository productsRepository;
+        public HomeController(IProductsRepository productsRepository)
         {
             this.productsRepository = productsRepository;
         }

@@ -1,4 +1,6 @@
-﻿<div class="container mt-5">
+﻿@model Cart
+
+<div class="container mt-5">
     <h1>Оформление заказа</h1>
 
     <!-- Личные данные пользователя -->
@@ -53,17 +55,15 @@
     <!-- Состав заказа -->
     <h3>Состав заказа</h3>
     <ul>
-        <!-- Здесь вы можете динамически выводить позиции из корзины -->
-        <li>Товар 1 - 500 руб.</li>
-        <li>Товар 2 - 700 руб.</li>
-        <!-- Добавьте другие позиции заказа по необходимости -->
+        @foreach(var item in Model.Items)
+        {
+            <li>@item.Product.Name - @item.Product.Cost руб. @item.Amount шт.</li>
+        }
     </ul>
-
-    <!-- Итоговая стоимость -->
     <div class="form-group">
         <label for="totalCost">Итоговая стоимость</label>
-        <input type="text" class="form-control" id="totalCost" value="1200 руб." readonly>
+        <input type="text" class="form-control" id="totalCost" value="@Model.Cost руб." readonly>
     </div>
 
-    <button type="submit" class="btn btn-primary">Оформить заказ</button>
+    <button type="submit" class="btn btn-primary" >Оформить заказ</button>
 </div>

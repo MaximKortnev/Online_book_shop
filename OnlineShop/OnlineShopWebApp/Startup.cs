@@ -20,7 +20,7 @@ namespace OnlineShopWebApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton<IProductsReposotory, InFileProductsRepository>();
+			services.AddSingleton<IProductsRepository, InFileProductsRepository>();
             services.AddSingleton<ICartsRepository, InFileCartsRepository>();
             services.AddControllersWithViews();
 		}

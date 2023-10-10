@@ -6,8 +6,8 @@ namespace OnlineShopWebApp.Controllers
     public class CartController : Controller
     {
         private readonly ICartsRepository cartRepository;
-        private readonly IProductsReposotory productRepository;
-        public CartController(ICartsRepository cartRepository, IProductsReposotory productRepository)
+        private readonly IProductsRepository productRepository;
+        public CartController(ICartsRepository cartRepository, IProductsRepository productRepository)
         {
             this.cartRepository = cartRepository;
             this.productRepository = productRepository;
