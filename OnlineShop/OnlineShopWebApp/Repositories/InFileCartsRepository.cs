@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using OnlineShopWebApp.Models;
 using System.Linq;
 using System;
 using System.IO;
 using OnlineShopWebApp.Interfaces;
 using Newtonsoft.Json;
+
 
 namespace OnlineShopWebApp.Repositories
 {
@@ -34,8 +35,10 @@ namespace OnlineShopWebApp.Repositories
             }
         }
 
+
         public void DecreaseAmount(Product product, string userId)
         {
+
 
             var existingCart = TryGetByUserId(userId);
             var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
@@ -47,6 +50,7 @@ namespace OnlineShopWebApp.Repositories
             }
             if (existingCart.Items.Count == 0) Clear();
         }
+
 
         public void Clear()
         {
@@ -74,6 +78,7 @@ namespace OnlineShopWebApp.Repositories
             File.WriteAllText(filePath, updatedJson);
             Clear();
         }
+
 
         public Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
     }
