@@ -42,6 +42,7 @@ namespace OnlineShopWebApp.Repositories
                 if (existingCardItem.Amount > 1) existingCardItem.Amount -= 1;
                 else { existingCart.Items.Remove(existingCardItem); }
             }
+            if (existingCart.Items.Count == 0) Clear();
         }
 
         public void Clear() { 
