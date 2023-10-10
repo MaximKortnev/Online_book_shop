@@ -1,11 +1,42 @@
 [
   {
     "FullName": "Кортнев Максим Валерьевич",
-    "Phone": "+ 7 123 456 78 90",
+    "Phone": "+7 123 456 78 90",
     "Email": "fafccc@gmail.com",
+    "DeliveryMethod": "Самовывоз",
+    "PaymentMethod": "Оплата картой",
+    "PromoCode": "Хочу Скидку",
+    "TotalCost": "15,99 руб.",
+    "ListProducts": "Алиса в стране чудес, "
+  },
+  {
+    "FullName": "Аненников Алексей Юрьевич",
+    "Phone": "+ 7 111 111 11 11",
+    "Email": "RHSJB@mail.ru",
+    "DeliveryMethod": "Курьерская доставка",
+    "PaymentMethod": "Оплата наличными",
+    "PromoCode": "",
+    "TotalCost": "127,68 руб.",
+    "ListProducts": "Алиса в стране чудес, Приключения Буратино, Марта, Жан Пьер Мюри. Автобиография, "
+  },
+  {
+    "FullName": " Андрей",
+    "Phone": "+7 222 222 22 22",
+    "Email": "GFjnefs@yandex.ru",
     "DeliveryMethod": "Самовывоз",
     "PaymentMethod": "Оплата наличными",
     "PromoCode": "",
-    "TotalCost": "20,00 руб."
+    "TotalCost": "60,00 руб.",
+    "ListProducts": "Приключения Буратино 3шт., "
+  },
+  {
+    "FullName": "Казимов Сергей Анатольевич",
+    "Phone": "+ 7 123 312 12 31",
+    "Email": "Sergo@mail.ru",
+    "DeliveryMethod": "Курьерская доставка",
+    "PaymentMethod": "Оплата наличными",
+    "PromoCode": "",
+    "TotalCost": "204,67 руб.",
+    "ListProducts": "Приключения Буратино 1шт., Алиса в стране чудес 3шт., Марта 3шт., Жан Пьер Мюри. Автобиография 1шт., "
   }
 ]

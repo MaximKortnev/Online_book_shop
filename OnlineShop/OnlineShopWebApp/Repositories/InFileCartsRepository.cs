@@ -2,6 +2,7 @@
 using OnlineShopWebApp.Models;
 using System.Linq;
 using System;
+using System.IO;
 using OnlineShopWebApp.Interfaces;
 using Newtonsoft.Json;
 
@@ -33,7 +34,8 @@ namespace OnlineShopWebApp.Repositories
             }
         }
 
-        public void DecreaseAmount(Product product, string userId) {
+        public void DecreaseAmount(Product product, string userId)
+        {
 
             var existingCart = TryGetByUserId(userId);
             var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
@@ -46,30 +48,32 @@ namespace OnlineShopWebApp.Repositories
             if (existingCart.Items.Count == 0) Clear();
         }
 
-        public void Clear() { 
+        public void Clear()
+        {
             carts.Clear();
         }
-        public void SaveToFileOrders(OrderData orderData) {
-
+        public void SaveToFileOrders(OrderData orderData, string userId)
+        {
+            var existingCart = TryGetByUserId(userId);
             List<OrderData> existingOrders = new List<OrderData>();
             string filePath = "wwwroot/orders.json";
 
-            // Если файл существует, загружаем из него данные
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                string json = System.IO.File.ReadAllText(filePath);
+                string json = File.ReadAllText(filePath);
                 existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
             }
+            foreach (var product in existingCart.Items)
+            {
+                orderData.ListProducts += product.Product.Name + " " + product.Amount + "шт., ";
+            }
 
-            // Добавляем новый заказ
             existingOrders.Add(orderData);
 
-            // Сериализуем и сохраняем в файл
             string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
-            System.IO.File.WriteAllText(filePath, updatedJson);
+            File.WriteAllText(filePath, updatedJson);
+            Clear();
         }
-        
-
 
         public Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
     }

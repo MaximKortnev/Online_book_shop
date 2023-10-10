@@ -9,5 +9,6 @@
         public string PaymentMethod { get; set; }
         public string PromoCode { get; set; }
         public string TotalCost { get; set; }
+        public string ListProducts { get; set; }
     }
 }

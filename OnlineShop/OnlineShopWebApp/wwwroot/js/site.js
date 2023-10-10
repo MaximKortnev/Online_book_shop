@@ -51,8 +51,7 @@ function submitOrder() {
         })
         .then(data => {
             console.log('Ответ от сервера:', data);
-            $('#orderSuccessModal').modal('show');
-            // Добавьте здесь логику для обработки ответа от сервера
+            window.location.href = "/Order/OrderSuccessfully";
         })
         .catch(error => {
             console.error('Произошла ошибка:', error);
