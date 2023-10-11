@@ -9,31 +9,45 @@
     <link rel="stylesheet" href="~/css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
 </head>
 <body>
     <div style="min-height:90vh">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineShopWebApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <!-- Логотип и название магазина слева -->
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="logo.png" width="50" height="50" alt="Logo" class="mr-2"> Book 
+                        Corner
+                    </a>
+
+                    <!-- Поле для поиска товаров по центру -->
+                    <form class="form-inline my-2 my-lg-0 mx-auto">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Поиск товаров" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Поиск</button>
+                    </form>
+
+                    <!-- Иконки "Избранное", "Корзина" и "Аккаунт" справа -->
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-heart bi-2x"></i> <!-- Увеличенная иконка избранное -->
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Корзина</a>
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-cart bi-2x"></i> <!-- Увеличенная иконка корзина -->
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-person bi-2x"></i> <!-- Увеличенная иконка аккаунт -->
+                            </a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
         <ul class="navbar-nav">
             <li class="nav-item">
