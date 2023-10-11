@@ -15,33 +15,32 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
-                    <!-- Логотип и название магазина слева -->
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="logo.png" width="50" height="50" alt="Logo" class="mr-2"> Book 
                         Corner
                     </a>
 
-                    <!-- Поле для поиска товаров по центру -->
-                    <form class="form-inline my-2 my-lg-0 mx-auto">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Поиск товаров" aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Поиск</button>
+                    <form class="form-inline my-2 my-lg-0 flex-grow-1">
+                        <input class="form-control mr-sm-2 w-75" type="search" placeholder="Поиск товаров" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </form>
 
-                    <!-- Иконки "Избранное", "Корзина" и "Аккаунт" справа -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <li class="nav-item mr-4">
                             <a class="nav-link" href="#">
-                                <i class="bi bi-heart bi-2x"></i> <!-- Увеличенная иконка избранное -->
+                                <i class="bi bi-heart bi-2x"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-cart bi-2x"></i> <!-- Увеличенная иконка корзина -->
+                        <li class="nav-item mr-4">
+                            <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">
+                                <i class="bi bi-cart bi-2x"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mr-4">
                             <a class="nav-link" href="#">
-                                <i class="bi bi-person bi-2x"></i> <!-- Увеличенная иконка аккаунт -->
+                                <i class="bi bi-person bi-2x"></i>
                             </a>
                         </li>
                     </ul>
