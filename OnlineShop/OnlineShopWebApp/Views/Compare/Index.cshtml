@@ -1,0 +1,41 @@
+﻿@model Compare
+
+@if (Model == null)
+{
+    <div class="container mt-5 text-center">
+        <h1>Не удалось добавить книгии для сравнения</h1>
+        <a class="btn btn-primary btn-sm mt-2 ml-3" href="/home/index/" role="button">Вернуться к покупкам</a>
+    </div>
+}
+else{<div class="container mt-5">
+    <h1>Страница сравнения книг</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Характеристика</th>
+                    @for (int i = 1; i<=Model.Items.Count; i++)
+                    {
+                        <th scope="col">Книга @i</th>
+                                        
+                    }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Название</td>
+                @foreach(var product in Model.Items)
+                {
+                    <td> @product.Name</td>
+                }
+            </tr>
+            <tr>
+                <td>Автор</td>
+                @foreach (var product in Model.Items)
+                {
+                    <td> @product.Author</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>}

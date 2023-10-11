@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using OnlineShopWebApp.Models;
 using System.Linq;
 using System;
-using System.IO;
 using OnlineShopWebApp.Interfaces;
-using Newtonsoft.Json;
 
 
 namespace OnlineShopWebApp.Repositories
