@@ -7,10 +7,12 @@ namespace OnlineShopWebApp.Controllers
     public class OrderController : Controller
     {
         private readonly ICartsRepository cartRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public OrderController(ICartsRepository cartRepository)
+        public OrderController(ICartsRepository cartRepository, IOrdersRepository ordersRepository)
         {
             this.cartRepository = cartRepository;
+            this.ordersRepository = ordersRepository;
         }
         public IActionResult Index(int userId)
         {
@@ -27,7 +29,9 @@ namespace OnlineShopWebApp.Controllers
             {
                 return BadRequest("Invalid order data.");
             }
-            cartRepository.SaveToFileOrders(orderData, Constants.UserId);
+            var cart = cartRepository.TryGetByUserId(Constants.UserId);
+            ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
+            cartRepository.Clear();
             return Ok(new { message = "Order received and processed successfully." });
         }
     }

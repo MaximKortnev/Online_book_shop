@@ -35,7 +35,6 @@ namespace OnlineShopWebApp.Repositories
             }
         }
 
-
         public void DecreaseAmount(Product product, string userId)
         {
 
@@ -51,32 +50,9 @@ namespace OnlineShopWebApp.Repositories
             if (existingCart.Items.Count == 0) Clear();
         }
 
-
         public void Clear()
         {
             carts.Clear();
-        }
-        public void SaveToFileOrders(OrderData orderData, string userId)
-        {
-            var existingCart = TryGetByUserId(userId);
-            List<OrderData> existingOrders = new List<OrderData>();
-            string filePath = "wwwroot/orders.json";
-
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
-            }
-            foreach (var product in existingCart.Items)
-            {
-                orderData.ListProducts += product.Product.Name + " " + product.Amount + "шт., ";
-            }
-
-            existingOrders.Add(orderData);
-
-            string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
-            File.WriteAllText(filePath, updatedJson);
-            Clear();
         }
 
 
