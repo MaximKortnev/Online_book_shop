@@ -12,10 +12,10 @@
                     <img class="card-img-top" src="~/@product.ImagePath" alt="Image">
                     <div class="card-body">
                         <a class="btn btn-primary button btn-lg" href="/cart/add?productId=@product.Id">Добавить в корзину</a>
-                        <a href="#" class="bookmark-icon">
+                        <a class="bookmark-icon" href="/favorite/add?productId=@product.Id">
                             <i class="bi bi-star-fill"></i>
                         </a>
-                        <a href="/compare/add?productId=@product.Id" class="compare-icon">
+                        <a class="compare-icon" href="/compare/add?productId=@product.Id">
                             <i class="bi bi-arrow-bar-up"></i> 
                         </a>
                     </div>

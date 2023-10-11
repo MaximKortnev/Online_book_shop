@@ -24,6 +24,7 @@ namespace OnlineShopWebApp
             services.AddSingleton<ICartsRepository, InFileCartsRepository>();
             services.AddTransient<IOrdersRepository, InFileOrdersRepository>();
             services.AddSingleton<IÑompareRepository, CompareRepository>();
+            services.AddSingleton<IFavoritesRepository, InFileFavoritesRepository>();
             services.AddControllersWithViews();
 		}
 

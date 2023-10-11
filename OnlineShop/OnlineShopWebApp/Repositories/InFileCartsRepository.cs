@@ -35,8 +35,6 @@ namespace OnlineShopWebApp.Repositories
 
         public void DecreaseAmount(Product product, string userId)
         {
-
-
             var existingCart = TryGetByUserId(userId);
             var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
 
