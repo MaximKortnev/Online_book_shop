@@ -5,21 +5,27 @@
 
 <div class="container">
     <div class="row">
-    @foreach(var product in Model)
-    {
-        <div class="col-md-3">
-            <div class="card">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3">
+                <div class="card">
                     <img class="card-img-top" src="~/@product.ImagePath" alt="Your Image">
                     <div class="card-body">
                         <a class="btn btn-primary button btn-lg" href="/cart/add?productId=@product.Id">Добавить в корзину</a>
+                        <a href="#" class="bookmark-icon">
+                            <i class="bi bi-star-fill"></i>
+                        </a>
+                        <a href="#" class="compare-icon">
+                            <i class="bi bi-arrow-bar-up"></i> <!-- Используйте нужную иконку для "Добавить к сравнению" -->
+                        </a>
                     </div>
                     <a style="color:black" href="/product/index?productId=@product.Id">
-                        <h5 class ="text-center">@product.Name</h5>
-                </a>
+                        <h5 class="text-center">@product.Name</h5>
+                    </a>
                     <h7 class="text-center">@product.Author</h7>
                     <h5 class="text-center">₽ @product.Cost</h5>
+                </div>
             </div>
-        </div>    
-    }
+        }
     </div>
 </div>
