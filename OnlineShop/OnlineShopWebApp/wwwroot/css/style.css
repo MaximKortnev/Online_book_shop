@@ -15,12 +15,12 @@
     opacity: 1;
 }
 
-.bookmark-icon, .compare-icon {
+.bookmark-icon, .comparison-icon {
     position: absolute;
     top: 10px;
     right: 10px;
 }
 
-.compare-icon {
-    top: 40px; 
+.comparison-icon {
+    top: 40px;
 }

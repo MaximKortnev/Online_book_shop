@@ -2,10 +2,10 @@
 
 namespace OnlineShopWebApp.Interfaces
 {
-    public interface IСompareRepository
+    public interface IComparisonRepository
     {
         void Add(Product product, string userId);
 
-        public Compare TryGetByUserId(string userId);
+        public Comparison TryGetByUserId(string userId);
     }
 }
