@@ -24,3 +24,9 @@
 .comparison-icon {
     top: 40px;
 }
+
+.fixed-image {
+    width: 100%;
+    height: 200px; /* Установите желаемую высоту */
+    object-fit: cover;
+}
