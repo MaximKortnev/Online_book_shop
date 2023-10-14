@@ -36,14 +36,16 @@ namespace OnlineShopWebApp.Repositories
         public void DecreaseAmount(Product product, string userId)
         {
             var existingCart = TryGetByUserId(userId);
-            var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
+            if (existingCart != null) {
+                var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
 
-            if (existingCardItem != null)
-            {
-                if (existingCardItem.Amount > 1) existingCardItem.Amount -= 1;
-                else { existingCart.Items.Remove(existingCardItem); }
-            }
-            if (existingCart.Items.Count == 0) Clear();
+                if (existingCardItem != null)
+                {
+                    if (existingCardItem.Amount > 1) existingCardItem.Amount -= 1;
+                    else { existingCart.Items.Remove(existingCardItem); }
+                }
+                if (existingCart.Items.Count == 0) Clear();
+            }  
         }
 
         public void Clear()

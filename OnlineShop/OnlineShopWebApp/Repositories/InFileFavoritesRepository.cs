@@ -33,10 +33,14 @@ namespace OnlineShopWebApp.Repositories
         public void Decrease(Product product, string userId) {
 
             var existingFavorite = TryGetByUserId(userId);
-            var existingCardItem = existingFavorite.Items.FirstOrDefault(prod => prod.Id == product.Id);
+            if (existingFavorite != null)
+            {
+                var existingCardItem = existingFavorite.Items.FirstOrDefault(prod => prod != null && prod.Id == product.Id);
 
-            if (existingCardItem != null) existingFavorite.Items.Remove(existingCardItem);
-            if (existingFavorite.Items.Count == 0) Clear();
+                if (existingCardItem != null) existingFavorite.Items.Remove(existingCardItem);
+                if (existingFavorite.Items.Count == 0) Clear();
+            }
+            
         }
 
         public void Clear() {
