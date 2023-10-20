@@ -57,3 +57,22 @@ function submitOrder() {
             console.error('Произошла ошибка:', error);
         });
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll(".nav-link");
+    const partialView = document.getElementById("partial-view");
+
+    navLinks.forEach(function (navLink) {
+        navLink.addEventListener("click", function () {
+            const index = this.getAttribute("data-index");
+
+            // Вызов компонента Administrator с передачей индекса
+            fetch(`/Administrator?index=${index}`)
+                .then(response => response.text())
+                .then(data => {
+                    partialView.innerHTML = data;
+                });
+        });
+    });
+});
