@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Controllers
             this.cartRepository = cartRepository;
             this.ordersRepository = ordersRepository;
         }
-        public IActionResult Index(int userId)
+        public IActionResult Index(string userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
             return View(cart);
