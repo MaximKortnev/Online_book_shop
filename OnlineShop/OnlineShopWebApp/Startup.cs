@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShopWebApp.Repositories;
 using OnlineShopWebApp.Interfaces;
+using OnlineShopWebApp.Admin;
 
 namespace OnlineShopWebApp
 {
@@ -25,6 +26,7 @@ namespace OnlineShopWebApp
             services.AddTransient<IOrdersRepository, InFileOrdersRepository>();
             services.AddSingleton<IFavoritesRepository, InFileFavoritesRepository>();
             services.AddSingleton<IComparisonRepository, ComparisonRepository>();
+            services.AddSingleton<IAdminProductsFunctions, AdminProductsFunctions>();
             services.AddControllersWithViews();
 		}
 
