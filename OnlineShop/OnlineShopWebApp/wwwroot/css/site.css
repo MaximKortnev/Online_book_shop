@@ -102,11 +102,3 @@ body {
     height: 200px;
     object-fit: cover;
 }
-
-.tab {
-    display: none;
-}
-
-.active-tab {
-    display: block;
-}
