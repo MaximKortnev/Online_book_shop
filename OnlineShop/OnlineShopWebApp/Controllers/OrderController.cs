@@ -25,14 +25,18 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult OrdersToFile([FromBody] OrderData orderData)
         {
-            if (orderData == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest("Invalid order data.");
+                if (orderData == null)
+                {
+                    return BadRequest("Invalid order data.");
+                }
+                var cart = cartRepository.TryGetByUserId(Constants.UserId);
+                ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
+                cartRepository.Clear();
+                return Ok(new { message = "Order received and processed successfully." });
             }
-            var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
-            cartRepository.Clear();
-            return Ok(new { message = "Order received and processed successfully." });
+            else { return BadRequest(""); }
         }
     }
 }
