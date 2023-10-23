@@ -4,8 +4,8 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Редактирование продукта @Model.Name</h5>
-        <form method="post" action="/Product/Edit">
-            <input type="hidden" name="id" value="1" />
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
 
             <div class="form-group">
                 <label for="name">Название продукта:</label>
@@ -42,7 +42,7 @@
                 <textarea class="form-control" name="Quote" id="Quote">@Model.Quote</textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" asp-action="Save" asp-controller="AdminProducts">Сохранить</button>
+            <button type="submit" class="btn btn-primary" asp-action="SaveEdit" asp-controller="AdminProducts">Сохранить</button>
         </form>
     </div>
 </div>

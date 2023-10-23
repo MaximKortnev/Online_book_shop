@@ -5,6 +5,7 @@
         @await Html.PartialAsync("AdminPanelNavigation")
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <h2 class="text-center mr-5">Список продуктов</h2>
+            <a asp-action="AddProduct" asp-controller="AdminProducts">Добавить новый продукт</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -27,9 +28,9 @@
                             </td>
                             <td>@product.Cost</td>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-route-productId="@product.Id" asp-action="Edit" asp-controller="AdminProducts">Редактировать</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-route-productId="@product.Id" asp-action="ViewEdit" asp-controller="AdminProducts">Редактировать</a>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" href="#">Удалить</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-route-productId="@product.Id" asp-action="Delete" asp-controller="AdminProducts">Удалить</a>
                             </td>
                         </tr>
                     }

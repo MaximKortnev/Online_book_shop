@@ -1,0 +1,48 @@
+﻿@model int
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Редактирование продукта</h5>
+        <form method="post">
+            <input type="hidden" name="id" value="@Model" />
+
+            <div class="form-group">
+                <label for="name">Название продукта:</label>
+                <input type="text" class="form-control" name="name" id="name" value="" />
+            </div>
+
+            <div class="form-group">
+                <label for="author">Автор:</label>
+                <input type="text" class="form-control" name="author" id="author" value="" />
+            </div>
+
+            <div class="form-group">
+                <label for="cost">Цена:</label>
+                <input type="text" class="form-control" name="cost" id="cost" value="" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание:</label>
+                <textarea class="form-control" name="description" id="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutTheBook">О продукте:</label>
+                <textarea class="form-control" name="aboutTheBook" id="aboutTheBook"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutAuthor">О авторе:</label>
+                <textarea class="form-control" name="aboutAuthor" id="aboutAuthor"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="Quote">Цитата из продукта:</label>
+                <textarea class="form-control" name="Quote" id="Quote"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" asp-action="Add" asp-controller="AdminProducts">Сохранить</button>
+        </form>
+    </div>
+</div>
