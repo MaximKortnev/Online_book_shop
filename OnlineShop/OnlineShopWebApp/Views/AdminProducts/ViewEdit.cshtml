@@ -5,41 +5,42 @@
     <div class="card-body">
         <h5 class="card-title">Редактирование продукта @Model.Name</h5>
         <form method="post">
+            <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
             <input type="hidden" name="id" value="@Model.Id" />
 
             <div class="form-group">
                 <label for="name">Название продукта:</label>
-                <input type="text" class="form-control" name="name" id="name" value="@Model.Name" />
+                <input type="text" class="form-control" name="name" id="name" value="@Model.Name" required maxlength="50" />
             </div>
 
             <div class="form-group">
                 <label for="author">Автор:</label>
-                <input type="text" class="form-control" name="author" id="author" value="@Model.Author" />
+                <input type="text" class="form-control" name="author" id="author" value="@Model.Author" required maxlength="50" />
             </div>
 
             <div class="form-group">
                 <label for="cost">Цена:</label>
-                <input type="text" class="form-control" name="cost" id="cost" value="@Model.Cost" />
+                <input type="text" class="form-control" name="cost" id="cost" value="@Model.Cost" required maxlength="10" />
             </div>
 
             <div class="form-group">
                 <label for="description">Описание:</label>
-                <textarea class="form-control" name="description" id="description">@Model.Description</textarea>
+                <textarea class="form-control" name="description" id="description" required>@Model.Description</textarea>
             </div>
 
             <div class="form-group">
                 <label for="aboutTheBook">О продукте:</label>
-                <textarea class="form-control" name="aboutTheBook" id="aboutTheBook">@Model.AboutTheBook</textarea>
+                <textarea class="form-control" name="aboutTheBook" id="aboutTheBook" required>@Model.AboutTheBook</textarea>
             </div>
 
             <div class="form-group">
                 <label for="aboutAuthor">О авторе:</label>
-                <textarea class="form-control" name="aboutAuthor" id="aboutAuthor">@Model.AboutAuthor</textarea>
+                <textarea class="form-control" name="aboutAuthor" id="aboutAuthor" required>@Model.AboutAuthor</textarea>
             </div>
 
             <div class="form-group">
                 <label for="Quote">Цитата из продукта:</label>
-                <textarea class="form-control" name="Quote" id="Quote">@Model.Quote</textarea>
+                <textarea class="form-control" name="Quote" id="Quote" required>@Model.Quote</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary" asp-action="SaveEdit" asp-controller="AdminProducts">Сохранить</button>

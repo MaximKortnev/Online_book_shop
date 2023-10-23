@@ -28,21 +28,34 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult AddProduct()
         {
-            var id = productRepository.GetAll();
-            return View(id.Count + 1);
+            if (ModelState.IsValid)
+            {
+                var id = productRepository.GetAll();
+                return View(id.Count + 1);
+            }
+            else { return BadRequest(""); }
         }
 
         [HttpPost]
         public IActionResult SaveEdit(Product product)
         {
-            adminProductFunction.Edit(product, productRepository.GetAll());
-            return RedirectToAction("GetProducts", "Administrator");
+            if (ModelState.IsValid)
+            {
+                adminProductFunction.Edit(product, productRepository.GetAll());
+                return RedirectToAction("GetProducts", "Administrator");
+            }
+            else { return BadRequest(); }
         }
 
         [HttpPost]
-        public IActionResult Add(Product product) {
-            adminProductFunction.Add(product, productRepository.GetAll());
-            return RedirectToAction("GetProducts", "Administrator");
+        public IActionResult Add(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                adminProductFunction.Add(product, productRepository.GetAll());
+                return RedirectToAction("GetProducts", "Administrator");
+            }
+            else { return BadRequest(); }
         }
     }
 }
