@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -16,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(string login, string email, string password, string confirmPassword, string username)
+        public IActionResult Registration(User user,  string confirmPassword)
         {
             return RedirectToAction("Index", "Home");
         }
