@@ -16,7 +16,7 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 //Поиск пользователя
-                return Ok();
+                RedirectToAction("Index", "Home");
             }  
             return RedirectToAction("Index", "Home");
         }
@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Controllers
         {
 
             if (ModelState.IsValid) {
-                return Ok();
+                RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Index", "Home");
         }
