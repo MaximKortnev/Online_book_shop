@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Admin;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
-using System.ComponentModel;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -19,17 +17,25 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult ViewEdit(int productId)
         {
             var product = productRepository.TryGetProductById(productId);
+            if (product == null)
+            {
+                return View("~/Views/Product/ErrorProduct.cshtml");
+            }
             return View(product);
         }
         public IActionResult Delete(int productId)
         {
+            if (productRepository.TryGetProductById(productId) == null) {
+                return View("~/Views/Product/ErrorProduct.cshtml");
+            }
             adminProductFunction.Delete(productId, productRepository.GetAll());
             return RedirectToAction("GetProducts", "Administrator");
         }
         public IActionResult AddProduct()
         {
-            var id = productRepository.GetAll();
-            return View(id.Count + 1);
+            var products = productRepository.GetAll();
+            var newId = products[products.Count - 1].Id + 1;
+            return View(newId);
         }
 
         [HttpPost]

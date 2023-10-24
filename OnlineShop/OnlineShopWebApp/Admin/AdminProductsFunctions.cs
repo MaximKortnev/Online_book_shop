@@ -20,7 +20,7 @@ namespace OnlineShopWebApp.Admin
         }
         public void Delete(int productId, List<Product> productRepository)
         {
-            int index = productId - 1;
+            int index = productRepository.FindIndex(p=>p.Id == productId);
             productRepository.RemoveAt(index);
             Save(productRepository);
         }
