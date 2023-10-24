@@ -16,8 +16,8 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Search(string productName)
         {
-            var product = productsRepository.GetAll().Where(p => p.Name.Contains(productName)).ToList();
-            if (product == null) { View("ErrorPdoduct", "Product"); }
+            var product = productsRepository.GetAll().Where(p => p.Name.ToLower().Contains(productName.ToLower())).ToList();
+            if (product.Count == 0) { return View("BadSearch");}
             return View(product);
         }
     }
