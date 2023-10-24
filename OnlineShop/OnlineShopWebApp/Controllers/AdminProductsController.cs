@@ -25,7 +25,8 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Delete(int productId)
         {
-            if (productRepository.TryGetProductById(productId) == null) {
+            if (productRepository.TryGetProductById(productId) == null)
+            {
                 return View("~/Views/Product/ErrorProduct.cshtml");
             }
             adminProductFunction.Delete(productId, productRepository.GetAll());
@@ -41,12 +42,21 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult SaveEdit(Product product)
         {
+            if (productRepository.TryGetProductById(product.Id) == null)
+            {
+                return View("~/Views/Product/ErrorProduct.cshtml");
+            }
             adminProductFunction.Edit(product, productRepository.GetAll());
             return RedirectToAction("GetProducts", "Administrator");
         }
 
         [HttpPost]
-        public IActionResult Add(Product product) {
+        public IActionResult Add(Product product)
+        {
+            if (productRepository.TryGetProductById(product.Id) == null)
+            {
+                return View("~/Views/Product/ErrorProduct.cshtml");
+            }
             adminProductFunction.Add(product, productRepository.GetAll());
             return RedirectToAction("GetProducts", "Administrator");
         }
