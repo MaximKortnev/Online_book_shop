@@ -53,10 +53,6 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Add(Product product)
         {
-            if (productRepository.TryGetProductById(product.Id) == null)
-            {
-                return View("~/Views/Product/ErrorProduct.cshtml");
-            }
             adminProductFunction.Add(product);
             return RedirectToAction("GetProducts", "Administrator");
         }
