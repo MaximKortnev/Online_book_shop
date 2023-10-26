@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 return View("~/Views/Product/ErrorProduct.cshtml");
             }
-            adminProductFunction.Delete(productId, productRepository.GetAll());
+            adminProductFunction.Delete(productId);
             return RedirectToAction("GetProducts", "Administrator");
         }
         public IActionResult AddProduct()
@@ -46,7 +46,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 return View("~/Views/Product/ErrorProduct.cshtml");
             }
-            adminProductFunction.Edit(product, productRepository.GetAll());
+            adminProductFunction.Edit(product);
             return RedirectToAction("GetProducts", "Administrator");
         }
 
@@ -57,7 +57,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 return View("~/Views/Product/ErrorProduct.cshtml");
             }
-            adminProductFunction.Add(product, productRepository.GetAll());
+            adminProductFunction.Add(product);
             return RedirectToAction("GetProducts", "Administrator");
         }
     }
