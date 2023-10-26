@@ -15,7 +15,6 @@ namespace OnlineShopWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Поиск пользователя
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
