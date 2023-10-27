@@ -1,13 +1,13 @@
 ﻿<header>
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 <img src="~/logo.png" width="50" height="50" alt="Logo" class="mr-2"> Book Corner
             </a>
 
-            <form class="form-inline my-2 my-lg-0 flex-grow-1">
-                <input class="form-control mr-sm-2 w-75" type="search" placeholder="Поиск товаров" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+            <form method="post" class="form-inline my-2 my-lg-0 flex-grow-1">
+                <input class="form-control mr-sm-2 w-75" type="search" placeholder="Поиск товаров" aria-label="Search" name="productName">
+                <button class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Home" asp-action="Search" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </form>

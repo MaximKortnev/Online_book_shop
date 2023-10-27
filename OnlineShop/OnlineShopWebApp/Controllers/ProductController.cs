@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
+using System.Linq;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -18,5 +19,6 @@ namespace OnlineShopWebApp.Controllers
             if (productCard == null) { return View("ErrorProduct");}
             return View(productCard);
         }
+
     }
 }
