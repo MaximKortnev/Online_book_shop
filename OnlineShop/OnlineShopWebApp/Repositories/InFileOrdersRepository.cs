@@ -22,25 +22,22 @@ namespace OnlineShopWebApp.Repositories
         }
         public void SaveToFileOrders(OrderData orderData, string userId, Cart cart)
         {
-            List<OrderData> existingOrders = new List<OrderData>();
             string filePath = "wwwroot/orders.json";
 
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
-            }
-            //foreach (var product in cart.Items)
-            //{
-            //    orderData.ListProducts += product.Product.Name + " " + product.Amount + "шт., ";
-            //}
-
-            existingOrders.Add(orderData);
-
-            string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
-            File.WriteAllText(filePath, updatedJson);
+                var existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
+                if (existingOrders == null) {
+                    existingOrders = new List<OrderData>
+                    {
+                        orderData
+                    };
+                    string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
+                    File.WriteAllText(filePath, updatedJson);
+                }
+            } 
         }
-
         public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
     }
 }

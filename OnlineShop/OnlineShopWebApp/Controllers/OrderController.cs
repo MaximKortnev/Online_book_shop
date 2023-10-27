@@ -35,6 +35,9 @@ namespace OnlineShopWebApp.Controllers
             //        return BadRequest("Invalid order data.");
             //    }
                 var cart = cartRepository.TryGetByUserId(Constants.UserId);
+                var order = ordersRepository.TryGetByUserId(Constants.UserId);
+                orderData.ListProducts = order.ListProducts;
+                orderData.UserId = order.UserId;
                 ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
                 return Ok(new { message = "Order received and processed successfully." });

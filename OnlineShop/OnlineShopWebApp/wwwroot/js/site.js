@@ -18,6 +18,7 @@ function addToCart(productId) {
 
 function submitOrder() {
     const fullName = $('#fullName').val();
+    const address = $('#address').val()
     const phone = $('#phone').val();
     const email = $('#email').val();
     const deliveryMethod = $('#deliveryMethod').val();
@@ -27,6 +28,7 @@ function submitOrder() {
 
     const orderData = {
         fullName: fullName,
+        address: address,
         phone: phone,
         email: email,
         deliveryMethod: deliveryMethod,

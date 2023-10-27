@@ -10,7 +10,7 @@ namespace OnlineShopWebApp.Models
         [StringLength(40, MinimumLength = 5, ErrorMessage = "ФИО должно содержать от 5 до 40 символов")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Укажите Адресс")]
+        [Required(ErrorMessage = "Укажите Адрес")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Укажите Телефон")]

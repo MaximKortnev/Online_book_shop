@@ -24,7 +24,6 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Registration(User user)
         {
-
             if (ModelState.IsValid) {
                 RedirectToAction("Index", "Home");
             }
