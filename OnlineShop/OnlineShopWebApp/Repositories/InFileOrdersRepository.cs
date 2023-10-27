@@ -13,14 +13,14 @@ namespace OnlineShopWebApp.Repositories
 
         public void Add(Cart cart, string userId)
         {
-                var newOrder = new OrderData()
-                {
-                    UserId = userId,
-                    ListProducts = cart,
-                };
-                orders.Add(newOrder);
+            var newOrder = new OrderData()
+            {
+                UserId = userId,
+                ListProducts = cart,
+            };
+            orders.Add(newOrder);
         }
-        public void SaveToFileOrders(OrderData orderData, string userId, Cart cart)
+        public void SaveOrders(OrderData orderData, string userId, Cart cart)
         {
             string filePath = "wwwroot/orders.json";
 
@@ -28,15 +28,16 @@ namespace OnlineShopWebApp.Repositories
             {
                 string json = File.ReadAllText(filePath);
                 var existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
-                if (existingOrders == null) {
+                if (existingOrders == null)
+                {
                     existingOrders = new List<OrderData>
                     {
                         orderData
                     };
-                    string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
-                    File.WriteAllText(filePath, updatedJson);
                 }
-            } 
+                string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
+                File.WriteAllText(filePath, updatedJson);
+            }
         }
         public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
     }

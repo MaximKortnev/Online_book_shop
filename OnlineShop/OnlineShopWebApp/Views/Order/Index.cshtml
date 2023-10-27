@@ -1,61 +1,74 @@
 ﻿@model OrderData
 
-<div class="container mt-5">
-    <h1>Оформление заказа</h1>
-    <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
-    <div class="form-group">
-        <label for="fullName">ФИО</label>
-        <input type="text" class="form-control" id="fullName" placeholder="Введите ФИО" required>
-    </div>
 
-    <div class="form-group">
-        <label for="address">Адрес</label>
-        <input type="text" class="form-control" id="address" placeholder="Введите Адрес" required>
-    </div>
+@if (Model == null)
+{
+    <h1>Bad</h1>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="phone">Телефон</label>
-            <input type="text" class="form-control" id="phone" data-inputmask="'mask': '(999) 999-9999'" required>
+}
+else
+{
+
+    <div class="container mt-5">
+        <h1>Оформление заказа</h1>
+        <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="FullName">Введите ФИО</label><br />
+            <input type="text" class="form-control" id="fullName" placeholder="Введите ФИО" asp-for="FullName" />
+            <span asp-validation-for="FullName" />
         </div>
 
-        <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Введите email" required>
+        <div class="form-group">
+            <label asp-for="Address">Адрес</label><br />
+            <input type="text" class="form-control" id="address" placeholder="Введите Адрес" asp-for="Address" />
+            <span asp-validation-for="Address" />
         </div>
-    </div>
 
-    <div class="form-group">
-        <label for="deliveryMethod">Способ доставки</label>
-        <select class="form-control" id="deliveryMethod">
-            <option>Самовывоз</option>
-            <option>Курьерская доставка</option>
-        </select>
-    </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Phone">Телефон</label><br />
+                <input type="text" class="form-control" id="phone" data-inputmask="'mask': '+ 7 (999) 999-9999'" asp-for="Phone" />
+                <span asp-validation-for="Phone" />
+            </div>
 
-    <div class="form-group">
-        <label for="paymentMethod">Способ оплаты</label>
-        <select class="form-control" id="paymentMethod">
-            <option>Оплата наличными</option>
-            <option>Оплата картой</option>
-        </select>
-    </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Введите email" required>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label for="promoCode">Промокод</label>
-        <input type="text" class="form-control" id="promoCode" placeholder="Введите промокод">
-    </div>
+        <div class="form-group">
+            <label for="deliveryMethod">Способ доставки</label>
+            <select class="form-control" id="deliveryMethod">
+                <option>Самовывоз</option>
+                <option>Курьерская доставка</option>
+            </select>
+        </div>
 
-    <h3>Состав заказа</h3>
-    <ul>
-        @foreach(var item in Model.ListProducts.Items)
-        {
-            <li>@item.Product.Name - @item.Product.Cost руб. @item.Amount шт.</li>
-        }
-    </ul>
-    <div class="form-group">
-        <label for="totalCost">Итоговая стоимость</label>
-        <input type="text" class="form-control" id="totalCost" value="@Model.ListProducts.Cost руб." readonly>
+        <div class="form-group">
+            <label for="paymentMethod">Способ оплаты</label>
+            <select class="form-control" id="paymentMethod">
+                <option>Оплата наличными</option>
+                <option>Оплата картой</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="promoCode">Промокод</label>
+            <input type="text" class="form-control" id="promoCode" placeholder="Введите промокод">
+        </div>
+
+        <h3>Состав заказа</h3>
+        <ul>
+            @foreach (var item in Model.ListProducts.Items)
+            {
+                <li>@item.Product.Name - @item.Product.Cost руб. @item.Amount шт.</li>
+            }
+        </ul>
+        <div class="form-group">
+            <label for="totalCost">Итоговая стоимость</label>
+            <input type="text" class="form-control" id="totalCost" value="@Model.ListProducts.Cost руб." readonly>
+        </div>
+        <a style="color:white" class="btn btn-primary" onclick="submitOrder()">Оформить заказ</a>
     </div>
-    <a style="color:white" class="btn btn-primary" onclick="submitOrder()">Оформить заказ</a>
-</div>
+}

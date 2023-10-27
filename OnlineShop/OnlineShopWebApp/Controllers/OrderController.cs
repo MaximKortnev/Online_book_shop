@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using System.Net.Http;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -19,7 +20,7 @@ namespace OnlineShopWebApp.Controllers
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
             ordersRepository.Add(cart, Constants.UserId);
             var order = ordersRepository.TryGetByUserId(Constants.UserId);
-           
+
             return View(order);
         }
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
@@ -28,21 +29,17 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult OrdersToFile([FromBody] OrderData orderData)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    if (orderData == null)
-            //    {
-            //        return BadRequest("Invalid order data.");
-            //    }
+            if (ModelState.IsValid)
+            {
                 var cart = cartRepository.TryGetByUserId(Constants.UserId);
                 var order = ordersRepository.TryGetByUserId(Constants.UserId);
                 orderData.ListProducts = order.ListProducts;
                 orderData.UserId = order.UserId;
-                ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
+                ordersRepository.SaveOrders(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
-                return Ok(new { message = "Order received and processed successfully." });
-            //}
-            //else { return BadRequest(""); }
+                return Ok(new { message = "Order received and processed successfully."});
+            }
+            else { return View("BadOrder"); }
         }
     }
 }
