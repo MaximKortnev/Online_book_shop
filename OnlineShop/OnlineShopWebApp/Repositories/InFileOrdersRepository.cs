@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using OnlineShopWebApp.Interfaces;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace OnlineShopWebApp.Repositories
 {
@@ -23,6 +24,12 @@ namespace OnlineShopWebApp.Repositories
         public void SaveOrders(OrderData orderData, string userId, Cart cart)
         {
             string filePath = "wwwroot/orders.json";
+            var order = TryGetByUserId(Constants.UserId);
+            orderData.Id = new Guid();
+            orderData.ListProducts = order.ListProducts;
+            orderData.UserId = order.UserId;
+            orderData.Status = "Создан";
+            orderData.Data = DateTime.Now;
 
             if (File.Exists(filePath))
             {
@@ -41,5 +48,20 @@ namespace OnlineShopWebApp.Repositories
             }
         }
         public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
+        public List<OrderData> ReadOrdersFromJson(string filePath)
+        {
+            var json = "";
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                json = reader.ReadToEnd();
+            }
+            return JsonConvert.DeserializeObject<List<OrderData>>(json);
+        }
+        public List<OrderData> GetAll()
+        {
+            var jsonFilePath = "wwwroot/orders.json";
+            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
+        }
     }
 }

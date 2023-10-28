@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using System;
 using System.Net.Http;
 
 namespace OnlineShopWebApp.Controllers
@@ -31,9 +32,7 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var cart = cartRepository.TryGetByUserId(Constants.UserId);
-                var order = ordersRepository.TryGetByUserId(Constants.UserId);
-                orderData.ListProducts = order.ListProducts;
-                orderData.UserId = order.UserId;
+
                 ordersRepository.SaveOrders(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
                 return View("OrderSuccessfully");

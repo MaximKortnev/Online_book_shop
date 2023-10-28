@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
     public class OrderData
     {
+        public Guid Id { get; set; }
         public string UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите ФИО")]
@@ -27,5 +29,7 @@ namespace OnlineShopWebApp.Models
         public string PromoCode { get; set; }
         public string TotalCost { get; set; }
         public Cart ListProducts { get; set; }
+        public string Status { get; set; }
+        public DateTime Data { get; set; }
     }
 }
