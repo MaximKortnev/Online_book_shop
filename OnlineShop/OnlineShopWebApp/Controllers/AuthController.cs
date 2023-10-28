@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(user);
+            return View("Index", user);
         }
 
         [HttpPost]
@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(user);
+            return View("Index", user);
         }
     }
 }
