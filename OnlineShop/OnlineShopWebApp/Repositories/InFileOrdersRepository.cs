@@ -35,6 +35,7 @@ namespace OnlineShopWebApp.Repositories
                         orderData
                     };
                 }
+                existingOrders.Add(orderData);
                 string updatedJson = JsonConvert.SerializeObject(existingOrders, Formatting.Indented);
                 File.WriteAllText(filePath, updatedJson);
             }

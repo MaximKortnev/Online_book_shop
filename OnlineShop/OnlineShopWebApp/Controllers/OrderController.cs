@@ -25,9 +25,8 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
-
         [HttpPost]
-        public IActionResult OrdersToFile([FromBody] OrderData orderData)
+        public IActionResult SaveOrder(OrderData orderData)
         {
             if (ModelState.IsValid)
             {
@@ -37,9 +36,9 @@ namespace OnlineShopWebApp.Controllers
                 orderData.UserId = order.UserId;
                 ordersRepository.SaveOrders(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
-                return Ok(new { message = "Order received and processed successfully."});
+                return View("OrderSuccessfully");
             }
-            else { return View("BadOrder"); }
+            else { return View("Index", orderData); }
         }
     }
 }
