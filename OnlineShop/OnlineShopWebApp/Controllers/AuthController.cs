@@ -11,23 +11,24 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginUser user) 
+        public IActionResult Login(LoginUser user)
         {
             if (ModelState.IsValid)
             {
-                //Поиск пользователя
-                RedirectToAction("Index", "Home");
-            }  
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Index", user);
         }
 
         [HttpPost]
         public IActionResult Registration(User user)
         {
-            if (ModelState.IsValid) {
-                RedirectToAction("Index", "Home");
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            return View("Index", user);
         }
     }
 }
