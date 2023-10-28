@@ -53,7 +53,6 @@ namespace OnlineShopWebApp.Repositories
             carts.Clear();
         }
 
-
         public Cart TryGetByUserId(string userId) => carts.FirstOrDefault(x => x.UserId == userId);
     }
 };

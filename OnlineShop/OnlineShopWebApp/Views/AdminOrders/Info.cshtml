@@ -1,32 +1,48 @@
 ﻿@model OrderData
-@if (Model == null) { <h1>Bad</h1>}
-else{
-<div class="container-fluid">
-    <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <h2 class="text-center mr-5">Список заказов</h2>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Заказ # @Model.Id</h5>
-                    <p class="card-text">Дата заказа: @Model.Data</p>
-                    <p class="card-text">Полное имя: @Model.FullName</p>
-                    <p class="card-text">Адрес: @Model.Address</p>
-                    <p class="card-text">Телефон: @Model.Phone</p>
-                    <p class="card-text">E-mail: @Model.Email</p>
-                    <p class="card-text">Способ доставки: @Model.DeliveryMethod</p>
-                    <p class="card-text">Способ оплаты: @Model.PaymentMethod</p>
-                    <p class="card-text">Промокод: @Model.PromoCode</p>
-                    <p class="card-text">Итоговая стоимость: @Model.TotalCost руб.</p>
-                    <p class="card-text">Статус: @Model.Status</p>
-                    <h6 class="card-subtitle mb-2 text-muted">Товары в заказе:</h6>
-                    <ul>
-                        @foreach (var item in Model.ListProducts.Items)
-                        {
-                            <li>@item.Product.Name - @item.Product.Cost руб. x @item.Amount шт.</li>
-                        }
-                    </ul>
-                </div>
+@if (Model == null)
+{
+    <h1>Bad</h1>
+}
+else
+{
+    <form method="post">
+        <div class="container-fluid">
+            <div class="row">
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <h2 class="text-center mr-5">Список заказов</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Заказ от  <strong>@Model.Data</strong></h5>
+                            <p class="card-text">ФИО покупателя: <strong>@Model.FullName</strong></p>
+                            <p class="card-text">Адрес: <strong>@Model.Address</strong></p>
+                            <p class="card-text">Телефон: <strong>@Model.Phone</strong></p>
+                            <p class="card-text">E-mail: <strong>@Model.Email</strong></p>
+                            <p class="card-text">Способ доставки: <strong>@Model.DeliveryMethod</strong></p>
+                            <p class="card-text">Способ оплаты: <strong>@Model.PaymentMethod</strong></p>
+                            <p class="card-text">Промокод: <strong>@Model.PromoCode</strong></p>
+                            <p class="card-text">Итоговая стоимость: <strong>@Model.TotalCost</strong></p>
+                            <p class="card-text" style="display: inline;">Статус:</p>
+                            <select class="form-control" id="selectStatus" name="status" asp-for="Status" style="display: inline; width: auto;">
+                                <option value="Создан" selected="@(Model.Status == "Создан")">Создан</option>
+                                <option value="Обработан" selected="@(Model.Status == "Обработан")">Обработан</option>
+                                <option value="В пути" selected="@(Model.Status == "В пути")">В пути</option>
+                                <option value="Отменен" selected="@(Model.Status == "Отменен")">Отменен</option>
+                                <option value="Доставлен" selected="@(Model.Status == "Доставлен")">Доставлен</option>
+                            </select>
+                            <h6 class="card-subtitle mb-2 mt-2 text-muted">Товары в заказе:</h6>
+                            <ul>
+                                @foreach (var item in Model.ListProducts.Items)
+                                {
+                                    <li>@item.Product.Name - @item.Product.Cost руб. x @item.Amount шт.</li>
+                                }
+                            </ul>
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+                            <input type="hidden" name="status" id="status" asp-for="Status" />
+                            <button style="color:white" type="submit" class="btn btn-sm btn-primary" asp-action="Save" asp-controller="AdminOrders">Сохранить</button>
+                        </div>
+                    </div>
+                </main>
             </div>
-        </main>
-    </div>
-</div>}
+        </div>
+    </form>
+}

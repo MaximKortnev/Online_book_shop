@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Repositories
         {
             string filePath = "wwwroot/orders.json";
             var order = TryGetByUserId(Constants.UserId);
-            orderData.Id = new Guid();
+            orderData.Id = Guid.NewGuid();
             orderData.ListProducts = order.ListProducts;
             orderData.UserId = order.UserId;
             orderData.Status = "Создан";
@@ -48,6 +48,8 @@ namespace OnlineShopWebApp.Repositories
             }
         }
         public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
+        public OrderData TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+
         public List<OrderData> ReadOrdersFromJson(string filePath)
         {
             var json = "";
@@ -63,5 +65,26 @@ namespace OnlineShopWebApp.Repositories
             var jsonFilePath = "wwwroot/orders.json";
             return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
         }
+        public void EditStatus(Guid orderId, string status)
+        {
+            var orders = GetAll();
+            var order = TryGetById(orderId);
+            order.Status = status;
+            var index = orders.FindIndex(x => x.Id == orderId);
+            orders[index] = order;
+            SaveAll(orders);
+        }
+        public void Delete(Guid orderId)
+        {
+            var orders = GetAll();
+            orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
+            SaveAll(orders);
+        }
+        public void SaveAll(List<OrderData> orders) {
+            var filePath = "wwwroot/orders.json";
+            string updatedJson = JsonConvert.SerializeObject(orders, Formatting.Indented);
+            File.WriteAllText(filePath, updatedJson);
+        }
+        
     }
 }

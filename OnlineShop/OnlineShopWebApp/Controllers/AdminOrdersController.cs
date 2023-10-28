@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
-using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Repositories;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -13,12 +12,22 @@ namespace OnlineShopWebApp.Controllers
             this.ordersRepository = ordersRepository;
         }
 
-        public IActionResult Info()
+        public IActionResult Info(Guid Id)
         {
-            var order = ordersRepository.TryGetByUserId(Constants.UserId);
+            var order = ordersRepository.TryGetById(Id);
             return View(order);
         }
+        [HttpPost]
+        public IActionResult Save(Guid orderId, string status) {
 
+            ordersRepository.EditStatus(orderId, status);
+            return RedirectToAction("GetOrders", "Administrator");
+        }
+        public IActionResult Delete(Guid orderId)
+        {
+            ordersRepository.Delete(orderId);
+            return RedirectToAction("GetOrders", "Administrator");
+        }
 
     }
 }

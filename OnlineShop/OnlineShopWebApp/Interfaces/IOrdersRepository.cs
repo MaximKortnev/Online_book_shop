@@ -1,4 +1,5 @@
 ﻿using OnlineShopWebApp.Models;
+using System;
 using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Interfaces
@@ -9,5 +10,8 @@ namespace OnlineShopWebApp.Interfaces
         OrderData TryGetByUserId(string userId);
         void Add(Cart cart, string userId);
         List<OrderData> GetAll();
+        OrderData TryGetById(Guid Id);
+        void EditStatus(Guid orderId, string status);
+        void Delete(Guid orderId);
     }
 }
