@@ -65,26 +65,5 @@ namespace OnlineShopWebApp.Repositories
             var jsonFilePath = "wwwroot/orders.json";
             return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
         }
-        public void EditStatus(Guid orderId, string status)
-        {
-            var orders = GetAll();
-            var order = TryGetById(orderId);
-            order.Status = status;
-            var index = orders.FindIndex(x => x.Id == orderId);
-            orders[index] = order;
-            SaveAll(orders);
-        }
-        public void Delete(Guid orderId)
-        {
-            var orders = GetAll();
-            orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
-            SaveAll(orders);
-        }
-        public void SaveAll(List<OrderData> orders) {
-            var filePath = "wwwroot/orders.json";
-            string updatedJson = JsonConvert.SerializeObject(orders, Formatting.Indented);
-            File.WriteAllText(filePath, updatedJson);
-        }
-        
     }
 }
