@@ -8,12 +8,15 @@ namespace OnlineShopWebApp.Models
 
         [Required(ErrorMessage = "Укажите ФИО")]
         [StringLength(40, MinimumLength = 5, ErrorMessage = "ФИО должно содержать от 5 до 40 символов")]
+        [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "Укажите Адрес")]
+        [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Укажите Телефон")]
+        [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Не указан e-mail")]
