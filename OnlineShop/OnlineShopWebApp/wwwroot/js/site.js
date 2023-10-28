@@ -18,6 +18,7 @@ function addToCart(productId) {
 
 function submitOrder() {
     const fullName = $('#fullName').val();
+    const address = $('#address').val();
     const phone = $('#phone').val();
     const email = $('#email').val();
     const deliveryMethod = $('#deliveryMethod').val();
@@ -27,6 +28,7 @@ function submitOrder() {
 
     const orderData = {
         fullName: fullName,
+        address: address,
         phone: phone,
         email: email,
         deliveryMethod: deliveryMethod,
@@ -75,4 +77,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
     });
+});
+
+$(document).ready(function () {
+    $("#phone").inputmask();
+});
+
+document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Предотвратить отправку формы по умолчанию
+    const form = e.target;
+
+    fetch(form.action, {
+        method: form.method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: new FormData(form)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Ответ от сервера:', data);
+            window.location.href = "/Order/OrderSuccessfully";
+        })
+        .catch(error => {
+            console.error('Произошла ошибка:', error);
+        });
 });
