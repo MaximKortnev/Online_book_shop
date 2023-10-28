@@ -28,6 +28,7 @@ namespace OnlineShopWebApp
             services.AddSingleton<IComparisonRepository, ComparisonRepository>();
             services.AddSingleton<IAdminProductsFunctions, AdminProductsFunctions>();
             services.AddSingleton<IRolesRepository, InFileRolesRepository>();
+            services.AddSingleton<IAdminOrdersFunctions, AdminOrdersFunctions>();
             services.AddControllersWithViews();
 		}
 

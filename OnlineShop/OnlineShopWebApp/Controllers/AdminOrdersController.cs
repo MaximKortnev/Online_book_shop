@@ -6,26 +6,26 @@ namespace OnlineShopWebApp.Controllers
 {
     public class AdminOrdersController : Controller
     {
-        private readonly IOrdersRepository ordersRepository;
-        public AdminOrdersController(IOrdersRepository ordersRepository)
+        private readonly IAdminOrdersFunctions adminOrders;
+        public AdminOrdersController(IAdminOrdersFunctions adminOrders)
         {
-            this.ordersRepository = ordersRepository;
+            this.adminOrders = adminOrders;
         }
 
         public IActionResult Info(Guid Id)
         {
-            var order = ordersRepository.TryGetById(Id);
+            var order = adminOrders.TryGetById(Id);
             return View(order);
         }
         [HttpPost]
         public IActionResult Save(Guid orderId, string status) {
 
-            ordersRepository.EditStatus(orderId, status);
+            adminOrders.EditStatus(orderId, status);
             return RedirectToAction("GetOrders", "Administrator");
         }
         public IActionResult Delete(Guid orderId)
         {
-            ordersRepository.Delete(orderId);
+            adminOrders.Delete(orderId);
             return RedirectToAction("GetOrders", "Administrator");
         }
 

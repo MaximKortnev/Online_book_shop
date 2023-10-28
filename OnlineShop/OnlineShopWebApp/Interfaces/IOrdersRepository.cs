@@ -11,7 +11,5 @@ namespace OnlineShopWebApp.Interfaces
         void Add(Cart cart, string userId);
         List<OrderData> GetAll();
         OrderData TryGetById(Guid Id);
-        void EditStatus(Guid orderId, string status);
-        void Delete(Guid orderId);
     }
 }
