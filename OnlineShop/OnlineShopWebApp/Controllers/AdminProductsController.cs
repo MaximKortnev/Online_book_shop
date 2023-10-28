@@ -28,9 +28,9 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult AddProduct()
         {
-                var id = productRepository.GetAll();
-                ViewBag.ProductId = id.Count + 1;
-                return View();
+            var id = productRepository.GetAll();
+            ViewBag.ProductId = id.Count + 1;
+            return View();
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace OnlineShopWebApp.Controllers
                 adminProductFunction.Add(product, productRepository.GetAll());
                 return RedirectToAction("GetProducts", "Administrator");
             }
-            else { return View("AddProduct", product); ; }
+            else { return View("AddProduct", product); }
         }
     }
 }

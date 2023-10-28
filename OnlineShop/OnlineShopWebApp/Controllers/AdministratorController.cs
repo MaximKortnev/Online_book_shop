@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Controllers
     public class AdministratorController : Controller
     {
         private readonly IProductsRepository productRepository;
-        public AdministratorController( IProductsRepository productRepository)
+        public AdministratorController(IProductsRepository productRepository)
         {
             this.productRepository = productRepository;
         }
