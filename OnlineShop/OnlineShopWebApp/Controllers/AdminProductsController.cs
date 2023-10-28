@@ -28,12 +28,9 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult AddProduct()
         {
-            if (ModelState.IsValid)
-            {
                 var id = productRepository.GetAll();
-                return View(id.Count + 1);
-            }
-            else { return BadRequest(""); }
+                ViewBag.ProductId = id.Count + 1;
+                return View();
         }
 
         [HttpPost]
@@ -44,7 +41,7 @@ namespace OnlineShopWebApp.Controllers
                 adminProductFunction.Edit(product, productRepository.GetAll());
                 return RedirectToAction("GetProducts", "Administrator");
             }
-            else { return BadRequest(); }
+            else { return View("ViewEdit", product); }
         }
 
         [HttpPost]
@@ -55,7 +52,7 @@ namespace OnlineShopWebApp.Controllers
                 adminProductFunction.Add(product, productRepository.GetAll());
                 return RedirectToAction("GetProducts", "Administrator");
             }
-            else { return BadRequest(); }
+            else { return View("AddProduct", product); ; }
         }
     }
 }
