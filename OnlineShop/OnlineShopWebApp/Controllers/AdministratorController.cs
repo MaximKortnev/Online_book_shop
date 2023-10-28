@@ -13,7 +13,6 @@ namespace OnlineShopWebApp.Controllers
             this.orderRepository = orderRepository;
         }
 
-
         public IActionResult Index()
         {
             return View();
