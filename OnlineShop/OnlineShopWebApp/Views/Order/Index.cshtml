@@ -7,6 +7,7 @@
 }
 else
 {
+    <form asp-action="OrdersToFile" method="post" class="container mt-5">
     <div class="container mt-5">
         <h1>Оформление заказа</h1>
         <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
@@ -68,6 +69,7 @@ else
             <label for="totalCost">Итоговая стоимость</label>
             <input type="text" class="form-control" id="totalCost" value="@Model.ListProducts.Cost руб." readonly>
         </div>
-        <a style="color:white" class="btn btn-primary" onclick="submitOrder()">Оформить заказ</a>
-    </div>
+            <button style="color:white" class="btn btn-primary" type="submit">Оформить заказ</button>
+        </div>
+    </form>
 }
