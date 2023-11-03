@@ -2,7 +2,7 @@
 
 namespace OnlineShopWebApp.Models
 {
-    public class OrderData
+    public class Order
     {
         public string UserId { get; set; }
 

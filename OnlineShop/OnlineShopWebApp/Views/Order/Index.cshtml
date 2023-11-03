@@ -1,9 +1,8 @@
-﻿@model OrderData
+﻿@model Order
 
-@if (Model == null)
+@if (Model == null || Model.ListProducts.Items == null)
 {
     <h1>Bad</h1>
-
 }
 else
 {

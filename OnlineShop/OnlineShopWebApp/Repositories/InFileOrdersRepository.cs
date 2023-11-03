@@ -9,28 +9,28 @@ namespace OnlineShopWebApp.Repositories
 {
     public class InFileOrdersRepository : IOrdersRepository
     {
-        public List<OrderData> orders = new List<OrderData>();
+        public List<Order> orders = new List<Order>();
 
-        public void Add(Cart cart, string userId)
+        public void AddToListOrders(Cart cart, string userId)
         {
-            var newOrder = new OrderData()
+            var newOrder = new Order()
             {
                 UserId = userId,
                 ListProducts = cart,
             };
             orders.Add(newOrder);
         }
-        public void SaveOrders(OrderData orderData, string userId, Cart cart)
+        public void SaveOrder(Order orderData, string userId, Cart cart)
         {
             string filePath = "wwwroot/orders.json";
 
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                var existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
+                var existingOrders = JsonConvert.DeserializeObject<List<Order>>(json);
                 if (existingOrders == null)
                 {
-                    existingOrders = new List<OrderData>
+                    existingOrders = new List<Order>
                     {
                         orderData
                     };
@@ -40,6 +40,6 @@ namespace OnlineShopWebApp.Repositories
                 File.WriteAllText(filePath, updatedJson);
             }
         }
-        public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
+        public Order TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
     }
 }

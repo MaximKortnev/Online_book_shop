@@ -4,8 +4,8 @@ namespace OnlineShopWebApp.Interfaces
 {
     public interface IOrdersRepository
     {
-        void SaveOrders(OrderData orderData, string userId, Cart existingCart);
-        OrderData TryGetByUserId(string userId);
-        void Add(Cart cart, string userId);
+        void SaveOrder(Order orderData, string userId, Cart existingCart);
+        Order TryGetByUserId(string userId);
+        void AddToListOrders(Cart cart, string userId);
     }
 }

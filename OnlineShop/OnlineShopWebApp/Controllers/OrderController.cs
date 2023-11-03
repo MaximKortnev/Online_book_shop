@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(string userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            ordersRepository.Add(cart, Constants.UserId);
+            ordersRepository.AddToListOrders(cart, Constants.UserId);
             var order = ordersRepository.TryGetByUserId(Constants.UserId);
 
             return View(order);
@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
         [HttpPost]
-        public IActionResult SaveOrder(OrderData orderData)
+        public IActionResult SaveOrder(Order orderData)
         {
             if (ModelState.IsValid)
             {
@@ -34,11 +34,17 @@ namespace OnlineShopWebApp.Controllers
                 var order = ordersRepository.TryGetByUserId(Constants.UserId);
                 orderData.ListProducts = order.ListProducts;
                 orderData.UserId = order.UserId;
-                ordersRepository.SaveOrders(orderData, Constants.UserId, cart);
+                ordersRepository.SaveOrder(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
                 return View("OrderSuccessfully");
             }
-            else { return View("Index", orderData); }
+            else
+            {
+                var order = ordersRepository.TryGetByUserId(Constants.UserId);
+                orderData.ListProducts = order.ListProducts;
+                orderData.UserId = order.UserId;
+                return View("Index", orderData);
+            }
         }
     }
 }
