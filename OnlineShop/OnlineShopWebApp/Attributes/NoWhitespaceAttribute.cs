@@ -2,13 +2,28 @@
 
 public class NoWhitespaceAttribute : ValidationAttribute
 {
+    //public override bool IsValid(object value)
+    //{
+    //    if (value is string str)
+    //    {
+    //        return !string.IsNullOrWhiteSpace(str);
+    //    }
+
+    //    return true;
+    //}
     public override bool IsValid(object value)
     {
         if (value is string str)
         {
-            return !string.IsNullOrWhiteSpace(str);
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                // Строка пуста или состоит только из пробелов
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
