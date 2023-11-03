@@ -11,7 +11,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginUser user)
+        public IActionResult Login(User user)
         {
             if (ModelState.IsValid)
             {

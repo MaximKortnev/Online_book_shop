@@ -6,7 +6,7 @@ public class NoWhitespaceAttribute : ValidationAttribute
     {
         if (value is string str)
         {
-            return !string.IsNullOrWhiteSpace(str);
+            return !string.IsNullOrWhiteSpace(str) && !string.IsNullOrWhiteSpace(str.Trim());
         }
 
         return true;
