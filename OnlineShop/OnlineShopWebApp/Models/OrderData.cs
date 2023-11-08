@@ -3,6 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
+    public enum OrderStatus
+    {
+        Created,
+        Processed,
+        Delivering,
+        Delivered,
+        Canceled
+    }
     public class OrderData
     {
         public Guid Id { get; set; }
@@ -29,7 +37,7 @@ namespace OnlineShopWebApp.Models
         public string PromoCode { get; set; }
         public string TotalCost { get; set; }
         public Cart ListProducts { get; set; }
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public DateTime Data { get; set; }
     }
 }
