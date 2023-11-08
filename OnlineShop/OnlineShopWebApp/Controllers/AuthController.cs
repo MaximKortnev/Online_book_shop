@@ -11,15 +11,24 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string login, string password, bool rememberMe) 
+        public IActionResult Login(User user)
         {
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Index", user);
         }
 
         [HttpPost]
-        public IActionResult Registration(User user,  string confirmPassword)
+        public IActionResult Registration(User user)
         {
-            return RedirectToAction("Index", "Home");
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Index", user);
         }
     }
 }

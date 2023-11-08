@@ -1,13 +1,20 @@
-﻿<div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+﻿@model User
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
     <div class="card text-center">
         <div class="card-body">
             <h2 class="card-title">Вход</h2>
             <form method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="login" placeholder="Логин">
+                <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+                <div>
+                    <label asp-for="Login">Введите логин</label><br />
+                    <input type="text" class="form-control" asp-for="Login" />
+                    <span asp-validation-for="Login" />
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Пароль">
+                <div>
+                    <label asp-for="Password">Введите пароль</label><br />
+                    <input type="text" class="form-control" asp-for="Password" />
+                    <span asp-validation-for="Password" />
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" name="rememberMe" value="true">
@@ -22,22 +29,33 @@
         <div class="card-body">
             <h2 class="card-title">Регистрация</h2>
             <form method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="login" placeholder="Логин">
+                <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+                <div>
+                    <label asp-for="Login">Придумайте логин</label><br />
+                    <input type="text" class="form-control" asp-for="Login" />
+                    <span asp-validation-for="Login" />
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="email" placeholder="Email">
+                <div>
+                    <label asp-for="Email">Введите e-mail</label><br />
+                    <input type="text" class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" />
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Пароль">
+                <div>
+                    <label asp-for="Password">Введите пароль</label><br />
+                    <input type="text" class="form-control" asp-for="Password" />
+                    <span asp-validation-for="Password" />
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="confirmPassword" placeholder="Повторите пароль">
+                <div>
+                    <label asp-for="ConfirmPassword">Подтвердите пароль</label><br />
+                    <input type="text" class="form-control" asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" />
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Имя пользователя">
+                <div>
+                    <label asp-for="UserName">Имя пользователя</label><br />
+                    <input type="text" class="form-control" asp-for="UserName" />
+                    <span asp-validation-for="UserName" />
                 </div>
-                <button type="submit" class="btn btn-success" asp-controller="Auth" asp-action="Registration">Зарегистрироваться</button>
+                <button type="submit" class="btn btn-success mt-2" asp-controller="Auth" asp-action="Registration">Зарегистрироваться</button>
             </form>
         </div>
     </div>
