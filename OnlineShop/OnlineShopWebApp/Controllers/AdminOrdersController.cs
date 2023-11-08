@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
+using OnlineShopWebApp.Models;
 using System;
 
 namespace OnlineShopWebApp.Controllers
@@ -18,7 +19,7 @@ namespace OnlineShopWebApp.Controllers
             return View(order);
         }
         [HttpPost]
-        public IActionResult Save(Guid orderId, string status) {
+        public IActionResult Save(Guid orderId, OrderStatus status) {
 
             adminOrders.EditStatus(orderId, status);
             return RedirectToAction("GetOrders", "Administrator");

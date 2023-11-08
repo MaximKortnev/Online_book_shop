@@ -23,11 +23,11 @@ else
                             <p class="card-text">Итоговая стоимость: <strong>@Model.TotalCost</strong></p>
                             <p class="card-text" style="display: inline;">Статус:</p>
                             <select class="form-control" id="selectStatus" name="status" asp-for="Status" style="display: inline; width: auto;">
-                                <option value="Создан" selected="@(Model.Status == "Создан")">Создан</option>
-                                <option value="Обработан" selected="@(Model.Status == "Обработан")">Обработан</option>
-                                <option value="В пути" selected="@(Model.Status == "В пути")">В пути</option>
-                                <option value="Отменен" selected="@(Model.Status == "Отменен")">Отменен</option>
-                                <option value="Доставлен" selected="@(Model.Status == "Доставлен")">Доставлен</option>
+                                <option value="0">Создан</option>
+                                <option value="1">Обработан</option>
+                                <option value="2">В пути</option>
+                                <option value="3">Отменен</option>
+                                <option value="4">Доставлен</option>
                             </select>
                             <h6 class="card-subtitle mb-2 mt-2 text-muted">Товары в заказе:</h6>
                             <ul>
