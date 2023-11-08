@@ -36,7 +36,6 @@ namespace OnlineShopWebApp.Models
         public string Quote { get; set; }
 
         [Required(ErrorMessage = "Стоимость не указана")]
-        [NoWhitespace(ErrorMessage = "Стоимость не может состоять из пробелов")]
         [JsonProperty("cost")]
         public decimal Cost { get; set; }
 
