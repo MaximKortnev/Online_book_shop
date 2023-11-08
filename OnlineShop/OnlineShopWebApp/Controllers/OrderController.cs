@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using System.Net.Http;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -17,22 +18,30 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(string userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            return View(cart);
+            ordersRepository.AddToListOrders(cart, Constants.UserId);
+            var order = ordersRepository.TryGetByUserId(Constants.UserId);
+
+            return View(order);
         }
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
-
         [HttpPost]
-        public IActionResult OrdersToFile([FromBody] OrderData orderData)
+        public IActionResult SaveOrder(Order orderData)
         {
-            if (orderData == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest("Invalid order data.");
+                var cart = cartRepository.TryGetByUserId(Constants.UserId);
+                var order_ = ordersRepository.TryGetByUserId(Constants.UserId);
+                orderData.ListProducts = order_.ListProducts;
+                orderData.UserId = order_.UserId;
+                ordersRepository.SaveOrder(orderData, Constants.UserId, cart);
+                cartRepository.Clear();
+                return View("OrderSuccessfully");
             }
-            var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            ordersRepository.SaveToFileOrders(orderData, Constants.UserId, cart);
-            cartRepository.Clear();
-            return Ok(new { message = "Order received and processed successfully." });
+                var order = ordersRepository.TryGetByUserId(Constants.UserId);
+                orderData.ListProducts = order.ListProducts;
+                orderData.UserId = order.UserId;
+                return View("Index", orderData);
         }
     }
 }
