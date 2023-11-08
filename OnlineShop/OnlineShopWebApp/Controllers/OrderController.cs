@@ -31,20 +31,17 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var cart = cartRepository.TryGetByUserId(Constants.UserId);
-                var order = ordersRepository.TryGetByUserId(Constants.UserId);
-                orderData.ListProducts = order.ListProducts;
-                orderData.UserId = order.UserId;
+                var order_ = ordersRepository.TryGetByUserId(Constants.UserId);
+                orderData.ListProducts = order_.ListProducts;
+                orderData.UserId = order_.UserId;
                 ordersRepository.SaveOrder(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
                 return View("OrderSuccessfully");
             }
-            else
-            {
                 var order = ordersRepository.TryGetByUserId(Constants.UserId);
                 orderData.ListProducts = order.ListProducts;
                 orderData.UserId = order.UserId;
                 return View("Index", orderData);
-            }
         }
     }
 }
