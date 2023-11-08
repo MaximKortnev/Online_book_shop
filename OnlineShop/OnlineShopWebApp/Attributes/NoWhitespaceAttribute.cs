@@ -9,6 +9,9 @@ public class NoWhitespaceAttribute : ValidationAttribute
             return !string.IsNullOrWhiteSpace(str) && !string.IsNullOrWhiteSpace(str.Trim());
         }
 
-        return true;
+            return true;
+        }
+
+        return false;
     }
 }

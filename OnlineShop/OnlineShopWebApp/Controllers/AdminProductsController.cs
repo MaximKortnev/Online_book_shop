@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Admin;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using System.ComponentModel;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -17,44 +19,40 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult ViewEdit(int productId)
         {
             var product = productRepository.TryGetProductById(productId);
-            if (product == null)
-            {
-                return View("~/Views/Product/ErrorProduct.cshtml");
-            }
             return View(product);
         }
         public IActionResult Delete(int productId)
         {
-            if (productRepository.TryGetProductById(productId) == null)
-            {
-                return View("~/Views/Product/ErrorProduct.cshtml");
-            }
-            adminProductFunction.Delete(productId);
+            adminProductFunction.Delete(productId, productRepository.GetAll());
             return RedirectToAction("GetProducts", "Administrator");
         }
         public IActionResult AddProduct()
         {
-            var products = productRepository.GetAll();
-            var newId = products[products.Count - 1].Id + 1;
-            return View(newId);
+            var id = productRepository.GetAll();
+            ViewBag.ProductId = id.Count + 1;
+            return View();
         }
 
         [HttpPost]
         public IActionResult SaveEdit(Product product)
         {
-            if (productRepository.TryGetProductById(product.Id) == null)
+            if (ModelState.IsValid)
             {
-                return View("~/Views/Product/ErrorProduct.cshtml");
+                adminProductFunction.Edit(product, productRepository.GetAll());
+                return RedirectToAction("GetProducts", "Administrator");
             }
-            adminProductFunction.Edit(product);
-            return RedirectToAction("GetProducts", "Administrator");
+            else { return View("ViewEdit", product); }
         }
 
         [HttpPost]
         public IActionResult Add(Product product)
         {
-            adminProductFunction.Add(product);
-            return RedirectToAction("GetProducts", "Administrator");
+            if (ModelState.IsValid)
+            {
+                adminProductFunction.Add(product, productRepository.GetAll());
+                return RedirectToAction("GetProducts", "Administrator");
+            }
+            else { return View("AddProduct", product); }
         }
     }
 }
