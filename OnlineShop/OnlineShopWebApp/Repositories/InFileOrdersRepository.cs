@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Repositories
             orderData.Id = Guid.NewGuid();
             orderData.ListProducts = order.ListProducts;
             orderData.UserId = order.UserId;
-            orderData.Status = "Создан";
+            orderData.Status = OrderStatus.Created;
             orderData.Data = DateTime.Now;
 
             if (File.Exists(filePath))

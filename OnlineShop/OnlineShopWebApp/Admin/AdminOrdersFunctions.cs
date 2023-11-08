@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Admin
             var jsonFilePath = "wwwroot/orders.json";
             return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
         }
-        public void EditStatus(Guid orderId, string status)
+        public void EditStatus(Guid orderId, OrderStatus status)
         {
             var orders = GetAll();
             var order = TryGetById(orderId);
