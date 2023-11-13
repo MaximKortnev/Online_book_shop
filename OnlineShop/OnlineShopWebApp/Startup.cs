@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShopWebApp.Repositories;
 using OnlineShopWebApp.Interfaces;
-using OnlineShopWebApp.Admin;
 using Serilog;
+using OnlineShopWebApp.Areas.Admin;
 
 namespace OnlineShopWebApp
 {
-	public class Startup
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -57,6 +57,10 @@ namespace OnlineShopWebApp
 
 			app.UseEndpoints(endpoints =>
 			{
+                endpoints.MapControllerRoute(
+                    name: "MyAreas",
+                    pattern: "{area:exists}/{controller=Administrator}/{action=Index}/{id?}");
+
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");

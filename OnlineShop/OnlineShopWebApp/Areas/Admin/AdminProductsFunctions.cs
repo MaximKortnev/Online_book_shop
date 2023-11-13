@@ -4,7 +4,7 @@ using OnlineShopWebApp.Models;
 using System.Collections.Generic;
 using System.IO;
 
-namespace OnlineShopWebApp.Admin
+namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminProductsFunctions : IAdminProductsFunctions
     {

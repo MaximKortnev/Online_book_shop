@@ -3,7 +3,7 @@ using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
 using System.Linq;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     public class AdminRolesController : Controller
     {
@@ -24,7 +24,8 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Роль с таким именем уже существует");
             }
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 rolesRepository.Add(role);
                 return RedirectToAction("GetRoles", "Administrator");
             }

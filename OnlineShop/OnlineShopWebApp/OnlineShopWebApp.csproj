@@ -14,4 +14,8 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Shared\" />
+  </ItemGroup>
+
 </Project>
