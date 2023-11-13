@@ -23,7 +23,7 @@
                         <tr>
                             <td>@(i + 1)</td>
                             <td>@Model[i].TotalCost</td>
-                            <td>@Model[i].Status</td>
+                            <td>@Html.DisplayFor(model => model[i].Status)</td>
                             <td>@Model[i].Email</td>
                             <td>@Model[i].Data</td>
                             <td>

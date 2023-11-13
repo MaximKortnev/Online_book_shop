@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
         [HttpPost]
-        public IActionResult SaveOrder(OrderData orderData)
+        public IActionResult SaveOrder(Order orderData)
         {
             if (ModelState.IsValid)
             {
