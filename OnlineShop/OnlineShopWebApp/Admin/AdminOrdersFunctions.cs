@@ -10,7 +10,7 @@ namespace OnlineShopWebApp.Admin
 {
     public class AdminOrdersFunctions : IAdminOrdersFunctions
     {
-        public List<OrderData> ReadOrdersFromJson(string filePath)
+        public List<Order> ReadOrdersFromJson(string filePath)
         {
             var json = "";
 
@@ -18,13 +18,13 @@ namespace OnlineShopWebApp.Admin
             {
                 json = reader.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<List<OrderData>>(json);
+            return JsonConvert.DeserializeObject<List<Order>>(json);
         }
-        public OrderData TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public List<OrderData> GetAll()
+        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public List<Order> GetAll()
         {
             var jsonFilePath = "wwwroot/orders.json";
-            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
+            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
         }
         public void EditStatus(Guid orderId, OrderStatus status)
         {
@@ -41,7 +41,7 @@ namespace OnlineShopWebApp.Admin
             orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
             SaveAll(orders);
         }
-        public void SaveAll(List<OrderData> orders)
+        public void SaveAll(List<Order> orders)
         {
             var filePath = "wwwroot/orders.json";
             string updatedJson = JsonConvert.SerializeObject(orders, Formatting.Indented);

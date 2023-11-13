@@ -5,13 +5,22 @@ namespace OnlineShopWebApp.Models
 {
     public enum OrderStatus
     {
-        Created,
-        Processed,
-        Delivering,
-        Delivered,
-        Canceled
+        [Display(Name = "Создан")]
+        Created = 0,
+
+        [Display(Name = "Обработан")]
+        Processed = 1,
+
+        [Display(Name = "В пути")]
+        InTransit = 2,
+
+        [Display(Name = "Отменен")]
+        Canceled = 3,
+
+        [Display(Name = "Доставлен")]
+        Delivered = 4
     }
-    public class OrderData
+    public class Order
     {
         public Guid Id { get; set; }
         public string UserId { get; set; }

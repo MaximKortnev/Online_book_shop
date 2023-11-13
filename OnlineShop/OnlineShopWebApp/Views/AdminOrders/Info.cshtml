@@ -1,4 +1,4 @@
-﻿@model OrderData
+﻿@model Order
 @if (Model == null)
 {
     <h1>Bad</h1>
@@ -22,13 +22,7 @@ else
                             <p class="card-text">Промокод: <strong>@Model.PromoCode</strong></p>
                             <p class="card-text">Итоговая стоимость: <strong>@Model.TotalCost</strong></p>
                             <p class="card-text" style="display: inline;">Статус:</p>
-                            <select class="form-control" id="selectStatus" name="status" asp-for="Status" style="display: inline; width: auto;">
-                                <option value="0">Создан</option>
-                                <option value="1">Обработан</option>
-                                <option value="2">В пути</option>
-                                <option value="3">Отменен</option>
-                                <option value="4">Доставлен</option>
-                            </select>
+                            <select asp-for="Status" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-control" id="selectStatus" name="status" style="display: inline; width: auto;"></select>
                             <h6 class="card-subtitle mb-2 mt-2 text-muted">Товары в заказе:</h6>
                             <ul>
                                 @foreach (var item in Model.ListProducts.Items)

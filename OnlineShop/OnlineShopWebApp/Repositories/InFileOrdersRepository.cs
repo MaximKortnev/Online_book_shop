@@ -10,18 +10,18 @@ namespace OnlineShopWebApp.Repositories
 {
     public class InFileOrdersRepository : IOrdersRepository
     {
-        public List<OrderData> orders = new List<OrderData>();
+        public List<Order> orders = new List<Order>();
 
         public void Add(Cart cart, string userId)
         {
-            var newOrder = new OrderData()
+            var newOrder = new Order()
             {
                 UserId = userId,
                 ListProducts = cart,
             };
             orders.Add(newOrder);
         }
-        public void SaveOrders(OrderData orderData, string userId, Cart cart)
+        public void SaveOrders(Order orderData, string userId, Cart cart)
         {
             string filePath = "wwwroot/orders.json";
             var order = TryGetByUserId(Constants.UserId);
@@ -34,10 +34,10 @@ namespace OnlineShopWebApp.Repositories
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                var existingOrders = JsonConvert.DeserializeObject<List<OrderData>>(json);
+                var existingOrders = JsonConvert.DeserializeObject<List<Order>>(json);
                 if (existingOrders == null)
                 {
-                    existingOrders = new List<OrderData>
+                    existingOrders = new List<Order>
                     {
                         orderData
                     };
@@ -47,10 +47,10 @@ namespace OnlineShopWebApp.Repositories
                 File.WriteAllText(filePath, updatedJson);
             }
         }
-        public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
-        public OrderData TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public Order TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
+        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
 
-        public List<OrderData> ReadOrdersFromJson(string filePath)
+        private List<Order> ReadOrdersFromJson(string filePath)
         {
             var json = "";
 
@@ -58,12 +58,12 @@ namespace OnlineShopWebApp.Repositories
             {
                 json = reader.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<List<OrderData>>(json);
+            return JsonConvert.DeserializeObject<List<Order>>(json);
         }
-        public List<OrderData> GetAll()
+        public List<Order> GetAll()
         {
             var jsonFilePath = "wwwroot/orders.json";
-            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<OrderData> { };
+            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
         }
     }
 }
