@@ -10,7 +10,7 @@ namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminUsersFunctions : IAdminUsersFunctions
     {
-        public List<Order> ReadOrdersFromJson(string filePath)
+        public List<User> Read(string filePath)
         {
             var json = "";
 
@@ -18,33 +18,27 @@ namespace OnlineShopWebApp.Areas.Admin
             {
                 json = reader.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<List<Order>>(json);
+            return JsonConvert.DeserializeObject<List<User>>(json);
         }
-        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public List<Order> GetAll()
+        public User TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public List<User> GetAll()
         {
-            var jsonFilePath = "wwwroot/orders.json";
-            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
+            var jsonFilePath = "wwwroot/users.json";
+            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
         }
-        public void EditStatus(Guid orderId, OrderStatus status)
+        public void EditRole()
         {
-            var orders = GetAll();
-            var order = TryGetById(orderId);
-            order.Status = status;
-            var index = orders.FindIndex(x => x.Id == orderId);
-            orders[index] = order;
-            SaveAll(orders);
         }
-        public void Delete(Guid orderId)
+        public void Delete(Guid Id)
         {
-            var orders = GetAll();
-            orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
-            SaveAll(orders);
+            var users = GetAll();
+            users.RemoveAt(users.FindIndex(x => x.Id == Id));
+            SaveAll(users);
         }
-        public void SaveAll(List<Order> orders)
+        public void SaveAll(List<User> users)
         {
-            var filePath = "wwwroot/orders.json";
-            string updatedJson = JsonConvert.SerializeObject(orders, Formatting.Indented);
+            var filePath = "wwwroot/users.json";
+            string updatedJson = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText(filePath, updatedJson);
         }
     }

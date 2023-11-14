@@ -5,6 +5,7 @@ using System;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminUsersController : Controller
     {
         private readonly IAdminUsersFunctions adminUsers;
@@ -15,20 +16,20 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
         public IActionResult Info(Guid Id)
         {
-            var order = adminUsers.TryGetById(Id);
-            return View(order);
+            var user = adminUsers.TryGetById(Id);
+            return View(user);
         }
         [HttpPost]
-        public IActionResult Save(Guid orderId, OrderStatus status)
+        public IActionResult Save()
         {
 
-            adminUsers.EditStatus(orderId, status);
-            return RedirectToAction("GetOrders", "Administrator");
+            adminUsers.EditRole();
+            return RedirectToAction("GetUsers", "Admin");
         }
-        public IActionResult Delete(Guid orderId)
+        public IActionResult Delete(Guid Id)
         {
-            adminUsers.Delete(orderId);
-            return RedirectToAction("GetOrders", "Administrator");
+            adminUsers.Delete(Id);
+            return RedirectToAction("GetUsers", "Admin");
         }
     }
 }

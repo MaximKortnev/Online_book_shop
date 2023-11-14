@@ -73,7 +73,7 @@ else
                 <input type="text" class="form-control" id="totalCost" placeholder="Введите промокод" asp-for="TotalCost" value="@Model.ListProducts.Cost руб." readonly />
                 <span asp-validation-for="TotalCost" />
             </div>
-            <button style="color:white" class="btn btn-primary" type="submit" asp-action="SaveOrder" asp-controller="order">Оформить заказ</button>
+            <button style="color:white" class="btn btn-primary" type="submit" asp-area="" asp-action="SaveOrder" asp-controller="order">Оформить заказ</button>
         </div>
     </form>
 }

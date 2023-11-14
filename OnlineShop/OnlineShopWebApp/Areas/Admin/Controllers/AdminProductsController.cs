@@ -4,6 +4,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminProductsController : Controller
     {
         private readonly IProductsRepository productRepository;

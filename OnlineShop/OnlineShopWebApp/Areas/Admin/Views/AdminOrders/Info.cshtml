@@ -8,8 +8,9 @@ else
     <form method="post">
         <div class="container-fluid">
             <div class="row">
+                @await Html.PartialAsync("~/Areas/Admin/Views/Admin/AdminPanelNavigation.cshtml")
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                    <h2 class="text-center mr-5">Список заказов</h2>
+                    <h2 class="text-center mr-5">Заказ</h2>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Заказ от  <strong>@Model.Data</strong></h5>
@@ -32,7 +33,7 @@ else
                             </ul>
                             <input type="hidden" name="orderId" value="@Model.Id" />
                             <input type="hidden" name="status" id="status" asp-for="Status" />
-                            <button style="color:white" type="submit" class="btn btn-sm btn-primary" asp-action="Save" asp-controller="AdminOrders">Сохранить</button>
+                            <button style="color:white" type="submit" class="btn btn-sm btn-primary" asp-area="Admin" asp-action="Save" asp-controller="AdminOrders">Сохранить</button>
                         </div>
                     </div>
                 </main>

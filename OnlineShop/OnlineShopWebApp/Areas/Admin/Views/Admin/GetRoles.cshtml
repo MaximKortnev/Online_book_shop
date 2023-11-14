@@ -16,12 +16,12 @@
                     {
                         <tr>
                             <td>@role.Name</td>
-                            <td><a style="color:white" class="btn btn-sm btn-info" asp-route-name="@role.Name" asp-action="Delete" asp-controller="AdminRoles">Удалить</a></td>
+                            <td><a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-name="@role.Name" asp-action="Delete" asp-controller="AdminRoles">Удалить</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <a style="color:white" class="btn btn-sm btn-info" asp-action="Add" asp-controller="AdminRoles">Добавить роль</a>
+            <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-action="Add" asp-controller="AdminRoles">Добавить роль</a>
         </main>
     </div>
 </div>

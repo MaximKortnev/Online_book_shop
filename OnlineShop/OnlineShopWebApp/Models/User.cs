@@ -31,5 +31,7 @@ namespace OnlineShopWebApp.Models
         [StringLength(15, MinimumLength = 3, ErrorMessage = "Имя должно содержать от 3 до 15 символов")]
         [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string NickName { get; set; } = string.Empty;
+
+        public Roles Role { get; set; }
     }
 }

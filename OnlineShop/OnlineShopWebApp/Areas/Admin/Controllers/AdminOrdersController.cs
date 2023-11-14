@@ -5,6 +5,7 @@ using System;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminOrdersController : Controller
     {
         private readonly IAdminOrdersFunctions adminOrders;

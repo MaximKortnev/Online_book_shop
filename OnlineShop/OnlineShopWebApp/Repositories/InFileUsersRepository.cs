@@ -31,6 +31,7 @@ namespace OnlineShopWebApp.Repositories
             }
         }
         public User TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public User TryGetByLogin(string Login) => GetAll().FirstOrDefault(x => x.Login == Login);
 
         private List<User> Read(string filePath)
         {
@@ -47,6 +48,8 @@ namespace OnlineShopWebApp.Repositories
             var jsonFilePath = "wwwroot/users.json";
             return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
         }
+
+
 
     }
 }

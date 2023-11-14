@@ -1,12 +1,18 @@
-﻿using OnlineShopWebApp.Models;
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OnlineShopWebApp.Interfaces
 {
     public interface IAdminUsersFunctions
     {
-        Order TryGetById(Guid Id);
-        void EditStatus(Guid orderId, OrderStatus status);
-        void Delete(Guid orderId);
+        List<User> Read(string filePath);
+        User TryGetById(Guid Id);
+        List<User> GetAll();
+        void EditRole();
+        void Delete(Guid Id);
+        void SaveAll(List<User> users);
     }
 }

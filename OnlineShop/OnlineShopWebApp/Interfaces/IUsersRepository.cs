@@ -1,4 +1,5 @@
 ﻿using OnlineShopWebApp.Models;
+using System;
 using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Interfaces
@@ -7,5 +8,7 @@ namespace OnlineShopWebApp.Interfaces
     {
         void Add(User user);
         List<User> GetAll();
+        User TryGetById(Guid Id) ;
+        User TryGetByLogin(string Login);
     }
 }

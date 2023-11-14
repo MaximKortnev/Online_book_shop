@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminRolesController : Controller
     {
         private readonly IRolesRepository rolesRepository;

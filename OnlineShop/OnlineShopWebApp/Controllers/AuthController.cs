@@ -8,9 +8,12 @@ namespace OnlineShopWebApp.Controllers
     {
 
         private readonly IUsersRepository userRepository;
-        public AuthController(IUsersRepository userRepository)
+        private readonly IRolesRepository roleRepository;
+
+        public AuthController(IUsersRepository userRepository, IRolesRepository roleRepository)
         {
             this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
         }
         public IActionResult Index()
         {
@@ -22,6 +25,14 @@ namespace OnlineShopWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var validUser = userRepository.TryGetByLogin(user.Login);
+                if (validUser != null) { 
+                    if (user.Password == validUser.Password) { 
+                        return View();
+                    }
+                    ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
+                    return View("IncorrectPassword", user);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View("Index", user);
@@ -33,6 +44,7 @@ namespace OnlineShopWebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                user.Role = roleRepository.GetAll()[1];
                 userRepository.Add(user);
                 return RedirectToAction("Index", "Home");
             }
