@@ -13,5 +13,7 @@ namespace OnlineShopWebApp.Interfaces
         void Delete(Guid Id);
         void SaveAll(List<User> users);
         void Add(User user);
+        void EditPassword(Guid Id, string password);
+        void Edit(User user);
     }
 }

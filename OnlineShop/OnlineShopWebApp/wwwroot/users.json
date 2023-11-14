@@ -10,10 +10,10 @@
   },
   {
     "Id": "f89a20ae-b681-40f5-a8f1-ee6e47079b64",
-    "Login": "Pavel",
+    "Login": "Pavel_123",
     "Email": "124124@xn--j1aeioo.xn--31a",
-    "Password": "123456789",
-    "ConfirmPassword": "123456789",
+    "Password": "roleRepository",
+    "ConfirmPassword": "roleRepository",
     "NickName": "Pavel",
     "Role": null
   },

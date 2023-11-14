@@ -13,21 +13,23 @@ else
                     <h2 class="text-center mr-5">Список пользователей</h2>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Логин  <strong>@Model.Login</strong></h5>
-                            <p class="card-text">Пароль <strong>@Model.Password</strong></p>
+                            <p class="card-title">Логин: <strong>@Model.Login</strong></p>
+                            <p class="card-text">Пароль: <strong>@Model.Password</strong></p>
                             <p class="card-text">Эл. почта: <strong>@Model.Email</strong></p>
                             <p class="card-text">Имя: <strong>@Model.NickName</strong></p>
-                            <p class="card-text" style="display: inline;">Роль:</p>
+                            <p class="card-text">Роль: </p>
                             <input type="hidden" name="Id" value="@Model.Id" />
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Действия
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Смена пароля</a>
-                                    <a class="dropdown-item" href="#">Редактирование данных</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Удалить пользователя</a>
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Действия
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminUsers" asp-route-Id="@Model.Id" asp-action="EditPassword">Смена пароля</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminUsers" asp-route-Id="@Model.Id" asp-action="Edit">Редактирование данных</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-area="Admin" asp-route-Id="@Model.Id" asp-action="Delete" asp-controller="AdminUsers">Удалить пользователя</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

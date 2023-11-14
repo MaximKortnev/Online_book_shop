@@ -59,5 +59,18 @@ namespace OnlineShopWebApp.Areas.Admin
                 File.WriteAllText(filePath, updatedJson);
             }
         }
+
+        public void EditPassword(Guid Id, string password)
+        {
+            var users = GetAll();
+            users[users.FindIndex(x => x.Id == Id)].Password = password;
+            SaveAll(users);
+        }
+        public void Edit(User user)
+        {
+            var users = GetAll();
+            users[users.FindIndex(x => x.Id == user.Id)] = user;
+            SaveAll(users);
+        }
     }
 }

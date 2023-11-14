@@ -41,5 +41,39 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             adminUsers.Delete(Id);
             return RedirectToAction("GetUsers", "Admin");
         }
+
+        public IActionResult EditPassword(Guid Id)
+        {
+            var user = adminUsers.TryGetById(Id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult EditPassword(Guid Id, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.EditPassword(Id, password);
+                return RedirectToAction("GetUsers", "Admin");
+            }
+            return View();
+        }
+        public IActionResult Edit(Guid Id)
+        {
+            var user = adminUsers.TryGetById(Id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.Edit(user);
+                return RedirectToAction("GetUsers", "Admin");
+            }
+            return View("Edit", user);
+        }
+
     }
 }
