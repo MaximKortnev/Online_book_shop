@@ -30,6 +30,8 @@ namespace OnlineShopWebApp
             services.AddSingleton<IAdminProductsFunctions, AdminProductsFunctions>();
             services.AddSingleton<IRolesRepository, InFileRolesRepository>();
             services.AddSingleton<IAdminOrdersFunctions, AdminOrdersFunctions>();
+            services.AddSingleton<IUsersRepository, InFileUsersRepository>();
+            services.AddSingleton<IAdminUsersFunctions, AdminUsersFunctions>();
             services.AddControllersWithViews();
 		}
 

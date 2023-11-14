@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "00000000-0000-0000-0000-000000000000",
+    "Login": "Max123",
+    "Email": "fafccc@gmail.com",
+    "Password": "12345678",
+    "ConfirmPassword": "12345678",
+    "NickName": "Max"
+  },
+  {
+    "Id": "00000000-0000-0000-0000-000000000000",
+    "Login": "Pavel",
+    "Email": "Pavel@gmail.com",
+    "Password": "87654321",
+    "ConfirmPassword": "87654321",
+    "NickName": "Pavel"
+  }
+]
