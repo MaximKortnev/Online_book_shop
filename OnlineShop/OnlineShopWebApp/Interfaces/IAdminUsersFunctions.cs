@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using OnlineShopWebApp.Models;
+﻿using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace OnlineShopWebApp.Interfaces
 {
@@ -14,5 +12,6 @@ namespace OnlineShopWebApp.Interfaces
         void EditRole();
         void Delete(Guid Id);
         void SaveAll(List<User> users);
+        void Add(User user);
     }
 }

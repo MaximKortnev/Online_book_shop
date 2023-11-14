@@ -19,13 +19,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = adminUsers.TryGetById(Id);
             return View(user);
         }
-        [HttpPost]
-        public IActionResult Save()
-        {
 
-            adminUsers.EditRole();
-            return RedirectToAction("GetUsers", "Admin");
+        public IActionResult Add()
+        {
+            return View();
         }
+
+        [HttpPost]
+        public IActionResult Add(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.Add(user);
+                return RedirectToAction("GetUsers", "Admin");
+            }
+            return View("Add", user);
+        }
+
         public IActionResult Delete(Guid Id)
         {
             adminUsers.Delete(Id);

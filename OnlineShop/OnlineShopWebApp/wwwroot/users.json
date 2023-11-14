@@ -1,24 +1,29 @@
 [
   {
-    "Id": "043a750c-91df-488b-abd3-3087f9b11a7c",
+    "Id": "a769d38f-b024-478d-ad54-e2beea15d846",
     "Login": "Max_123",
     "Email": "fafccc@gmail.com",
-    "Password": "roleRepository",
-    "ConfirmPassword": "roleRepository",
+    "Password": "123456789",
+    "ConfirmPassword": "123456789",
     "NickName": "Max",
-    "Role": {
-      "Name": "Пользователь"
-    }
+    "Role": null
   },
   {
-    "Id": "7e719881-00b3-4964-8570-e495e848005c",
+    "Id": "f89a20ae-b681-40f5-a8f1-ee6e47079b64",
     "Login": "Pavel",
     "Email": "124124@xn--j1aeioo.xn--31a",
-    "Password": "roleRepository",
-    "ConfirmPassword": "roleRepository",
+    "Password": "123456789",
+    "ConfirmPassword": "123456789",
     "NickName": "Pavel",
-    "Role": {
-      "Name": "Пользователь"
-    }
+    "Role": null
+  },
+  {
+    "Id": "7c4950f4-cdcb-4502-b184-3722e67f12bb",
+    "Login": "Olesya123",
+    "Email": "test@test.ru",
+    "Password": "123456789",
+    "ConfirmPassword": "123456789",
+    "NickName": "Olesya",
+    "Role": null
   }
 ]

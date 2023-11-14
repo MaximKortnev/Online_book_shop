@@ -41,5 +41,23 @@ namespace OnlineShopWebApp.Areas.Admin
             string updatedJson = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText(filePath, updatedJson);
         }
+        public void Add(User user)
+        {
+            user.Id = Guid.NewGuid();
+            string filePath = "wwwroot/users.json";
+
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                var existingUsers = JsonConvert.DeserializeObject<List<User>>(json);
+                if (existingUsers == null)
+                {
+                    existingUsers = new List<User> { user };
+                }
+                existingUsers.Add(user);
+                string updatedJson = JsonConvert.SerializeObject(existingUsers, Formatting.Indented);
+                File.WriteAllText(filePath, updatedJson);
+            }
+        }
     }
 }
