@@ -2,6 +2,7 @@
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
 using System;
+using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -20,7 +21,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             ViewBag.AllRoles = rolesRepository.GetAll();
             var user = adminUsers.TryGetById(Id);
-            return View(user);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return View("ExistUser");
         }
 
         public IActionResult Add()
@@ -38,17 +43,38 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             return View("Add", user);
         }
+        public IActionResult Save(Guid Id, string role)
+        {
+            var user = adminUsers.TryGetById(Id);
+            if (user != null)
+            {
+                user.Role.Name = role;
+                adminUsers.EditRole(user);
+                return RedirectToAction("GetUsers", "Home");
+            }
+            return View("ExistUser");
+        }
 
         public IActionResult Delete(Guid Id)
         {
-            adminUsers.Delete(Id);
-            return RedirectToAction("GetUsers", "Home");
+            var user = adminUsers.TryGetById(Id);
+            if (user != null)
+            {
+                adminUsers.Delete(Id);
+                return RedirectToAction("GetUsers", "Home");
+            }
+            return View("ExistUser");
+
         }
 
         public IActionResult EditPassword(Guid Id)
         {
             var user = adminUsers.TryGetById(Id);
-            return View(user);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return View("ExistUser");
         }
 
         [HttpPost]
@@ -56,22 +82,33 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                adminUsers.EditPassword(Id, password);
-                return RedirectToAction("GetUsers", "Home");
+                var user = adminUsers.TryGetById(Id);
+                if (user != null)
+                {
+                    adminUsers.EditPassword(Id, password);
+                    return RedirectToAction("GetUsers", "Home");
+                }
+                return View("ExistUser");
             }
             return View();
         }
         public IActionResult Edit(Guid Id)
         {
+            ViewBag.AllRoles = rolesRepository.GetAll();
             var user = adminUsers.TryGetById(Id);
-            return View(user);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return View("ExistUser");
         }
 
         [HttpPost]
-        public IActionResult Edit(User user)
+        public IActionResult Edit(User user, string role)
         {
             if (ModelState.IsValid)
             {
+                user.Role = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
                 adminUsers.Edit(user);
                 return RedirectToAction("GetUsers", "Home");
             }

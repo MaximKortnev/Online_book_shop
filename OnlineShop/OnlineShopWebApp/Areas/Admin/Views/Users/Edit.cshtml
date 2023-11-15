@@ -1,5 +1,4 @@
 ﻿@model User
-
 @{
     ViewData["Title"] = "Редактирование пользователя";
 }
@@ -39,6 +38,16 @@
             <label asp-for="NickName">Имя</label>
             <input asp-for="NickName" class="form-control" required />
             <span asp-validation-for="NickName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Role">Выберите роль:</label>
+            <select id="role" name="role" class="form-control">
+                @foreach (var role in ViewBag.AllRoles)
+                {
+                    <option value="@role.Name" selected="@(Model.Role != null && Model.Role.Name == role.Name ? "selected" : null)">@role.Name</option>
+                }
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary" asp-area="Admin" asp-action="Edit" asp-controller="Users">Сохранить изменения</button>
