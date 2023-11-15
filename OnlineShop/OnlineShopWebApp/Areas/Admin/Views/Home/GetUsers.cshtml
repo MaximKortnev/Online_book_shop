@@ -13,6 +13,7 @@
                         <th scope="col">Пароль</th>
                         <th scope="col">E-mail</th>
                         <th scope="col">Имя</th>
+                        <th scope="col">Роль</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -25,11 +26,12 @@
                             <td>@Model[i].Password</td>
                             <td>@Model[i].Email</td>
                             <td>@Model[i].NickName</td>
+                            <td>@Model[i].Role.Name</td>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-Id="@Model[i].Id" asp-action="Info" asp-controller="AdminUsers">Инфо</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-Id="@Model[i].Id" asp-action="Info" asp-controller="Users">Инфо</a>
                             </td>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-orderId="@Model[i].Id" asp-action="Delete" asp-controller="AdminUsers">Удалить</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-orderId="@Model[i].Id" asp-action="Delete" asp-controller="Users">Удалить</a>
                             </td>
                         </tr>
                     }

@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
         private readonly IProductsRepository productRepository;
         private readonly IOrdersRepository orderRepository;
         private readonly IRolesRepository rolesRepository;
         private readonly IUsersRepository usersRepository;
-        public AdminController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
+        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
         {
             this.productRepository = productRepository;
             this.orderRepository = orderRepository;

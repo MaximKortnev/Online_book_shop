@@ -6,10 +6,10 @@ using System.Linq;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminRolesController : Controller
+    public class RolesController : Controller
     {
         private readonly IRolesRepository rolesRepository;
-        public AdminRolesController(IRolesRepository rolesRepository)
+        public RolesController(IRolesRepository rolesRepository)
         {
             this.rolesRepository = rolesRepository;
         }
@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 rolesRepository.Add(role);
-                return RedirectToAction("GetRoles", "Admin");
+                return RedirectToAction("GetRoles", "Home");
             }
             return View("Add", role);
         }
@@ -36,7 +36,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Delete(string name)
         {
             rolesRepository.Delete(name);
-            return RedirectToAction("GetRoles", "Admin");
+            return RedirectToAction("GetRoles", "Home");
         }
     }
 }

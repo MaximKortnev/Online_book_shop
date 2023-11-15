@@ -26,8 +26,11 @@ namespace OnlineShopWebApp.Areas.Admin
             var jsonFilePath = "wwwroot/users.json";
             return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
         }
-        public void EditRole()
+        public void EditRole(User user)
         {
+            var users = GetAll();
+            users[users.FindIndex(x=>x.Id == user.Id)] = user;
+            SaveAll(users);
         }
         public void Delete(Guid Id)
         {

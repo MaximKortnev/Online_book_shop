@@ -7,7 +7,7 @@
     "ConfirmPassword": "roleRepository",
     "NickName": "Max",
     "Role": {
-      "Name": "Пользователь"
+      "Name": "Админ"
     }
   },
   {
