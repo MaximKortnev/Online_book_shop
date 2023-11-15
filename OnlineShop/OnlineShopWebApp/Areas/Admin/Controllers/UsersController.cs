@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
+using OnlineShopWebApp.Models;
 using System;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -8,38 +9,74 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly IAdminUsersFunctions adminUsers;
-        private readonly IRolesRepository roleRepository;
-        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository roleRepository)
+        private readonly IRolesRepository rolesRepository;
+        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository rolesRepository)
         {
             this.adminUsers = adminUsers;
-            this.roleRepository = roleRepository;
+            this.rolesRepository = rolesRepository;
         }
 
         public IActionResult Info(Guid Id)
         {
-            ViewBag.AllRoles = roleRepository.GetAll();
+            ViewBag.AllRoles = rolesRepository.GetAll();
             var user = adminUsers.TryGetById(Id);
             return View(user);
         }
 
-        [HttpPost]
-        public IActionResult Save(Guid Id, string role)
+        public IActionResult Add()
         {
-            var user = adminUsers.TryGetById(Id);
-            user.Role.Name = role;
-            adminUsers.EditRole(user);
-            return RedirectToAction("GetUsers", "Home");
+            return View();
         }
+
+        [HttpPost]
+        public IActionResult Add(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.Add(user);
+                return RedirectToAction("GetUsers", "Home");
+            }
+            return View("Add", user);
+        }
+
         public IActionResult Delete(Guid Id)
         {
             adminUsers.Delete(Id);
             return RedirectToAction("GetUsers", "Home");
         }
 
-        public IActionResult Add(Guid Id)
+        public IActionResult EditPassword(Guid Id)
         {
-            adminUsers.Add(Id);
-            return RedirectToAction("GetUsers", "Home");
+            var user = adminUsers.TryGetById(Id);
+            return View(user);
         }
+
+        [HttpPost]
+        public IActionResult EditPassword(Guid Id, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.EditPassword(Id, password);
+                return RedirectToAction("GetUsers", "Home");
+            }
+            return View();
+        }
+        public IActionResult Edit(Guid Id)
+        {
+            var user = adminUsers.TryGetById(Id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                adminUsers.Edit(user);
+                return RedirectToAction("GetUsers", "Home");
+            }
+            return View("Edit", user);
+        }
+
     }
 }
