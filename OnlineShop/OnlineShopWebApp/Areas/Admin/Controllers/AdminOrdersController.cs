@@ -9,14 +9,16 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class AdminOrdersController : Controller
     {
         private readonly IAdminOrdersFunctions adminOrders;
-        public AdminOrdersController(IAdminOrdersFunctions adminOrders)
+        private readonly IOrdersRepository ordersRepository;
+        public AdminOrdersController(IAdminOrdersFunctions adminOrders, IOrdersRepository ordersRepository)
         {
             this.adminOrders = adminOrders;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Info(Guid Id)
         {
-            var order = adminOrders.TryGetById(Id);
+            var order = ordersRepository.TryGetById(Id);
             return View(order);
         }
         [HttpPost]

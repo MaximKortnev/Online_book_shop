@@ -22,13 +22,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Delete(int productId)
         {
-            adminProductFunction.Delete(productId, productRepository.GetAll());
+            adminProductFunction.Delete(productId);
             return RedirectToAction("GetProducts", "Admin");
         }
         public IActionResult AddProduct()
         {
-            var id = productRepository.GetAll();
-            ViewBag.ProductId = id.Count + 1;
+            var products = productRepository.GetAll();
+            ViewBag.ProductId = products.Count + 1;
             return View();
         }
 
@@ -37,7 +37,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                adminProductFunction.Edit(product, productRepository.GetAll());
+                adminProductFunction.Edit(product);
                 return RedirectToAction("GetProducts", "Admin");
             }
             else { return View("ViewEdit", product); }
@@ -48,7 +48,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                adminProductFunction.Add(product, productRepository.GetAll());
+                adminProductFunction.Add(product);
                 return RedirectToAction("GetProducts", "Admin");
             }
             else { return View("AddProduct", product); }
