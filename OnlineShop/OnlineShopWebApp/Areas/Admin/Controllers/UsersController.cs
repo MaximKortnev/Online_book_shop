@@ -35,5 +35,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             adminUsers.Delete(Id);
             return RedirectToAction("GetUsers", "Home");
         }
+
+        public IActionResult Add(Guid Id)
+        {
+            adminUsers.Add(Id);
+            return RedirectToAction("GetUsers", "Home");
+        }
     }
 }
