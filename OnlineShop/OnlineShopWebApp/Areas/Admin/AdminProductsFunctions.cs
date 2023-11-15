@@ -8,25 +8,33 @@ namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminProductsFunctions : IAdminProductsFunctions
     {
-        public void Edit(Product product, List<Product> productRepository)
+        private readonly IProductsRepository productRepository;
+
+        public AdminProductsFunctions(IProductsRepository productRepository)
+        {
+            this.productRepository = productRepository;
+        }
+        public void Edit(Product product)
         {
             int index = product.Id - 1;
-
+            var products = productRepository.GetAll();
             product.ImagePath = "image.jpg";
-            productRepository[index] = product;
-            Save(productRepository);
+            products[index] = product;
+            Save(products);
         }
-        public void Delete(int productId, List<Product> productRepository)
+        public void Delete(int productId)
         {
+            var products = productRepository.GetAll();
             int index = productId - 1;
-            productRepository.RemoveAt(index);
-            Save(productRepository);
+            products.RemoveAt(index);
+            Save(products);
         }
-        public void Add(Product product, List<Product> productRepository)
+        public void Add(Product product)
         {
+            var products = productRepository.GetAll();
             product.ImagePath = "image.jpg";
-            productRepository.Add(product);
-            Save(productRepository);
+            products.Add(product);
+            Save(products);
         }
 
         public void Save(List<Product> productRepository)

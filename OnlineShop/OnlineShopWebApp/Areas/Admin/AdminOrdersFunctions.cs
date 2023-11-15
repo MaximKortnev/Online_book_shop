@@ -4,32 +4,22 @@ using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminOrdersFunctions : IAdminOrdersFunctions
     {
-        public List<Order> ReadOrdersFromJson(string filePath)
-        {
-            var json = "";
+        private readonly IOrdersRepository orderRepository;
 
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                json = reader.ReadToEnd();
-            }
-            return JsonConvert.DeserializeObject<List<Order>>(json);
-        }
-        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public List<Order> GetAll()
+        public AdminOrdersFunctions(IOrdersRepository orderRepository)
         {
-            var jsonFilePath = "wwwroot/orders.json";
-            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
+            this.orderRepository = orderRepository;
         }
+
         public void EditStatus(Guid orderId, OrderStatus status)
         {
-            var orders = GetAll();
-            var order = TryGetById(orderId);
+            var orders = orderRepository.GetAll();
+            var order = orderRepository.TryGetById(orderId);
             order.Status = status;
             var index = orders.FindIndex(x => x.Id == orderId);
             orders[index] = order;
@@ -37,7 +27,7 @@ namespace OnlineShopWebApp.Areas.Admin
         }
         public void Delete(Guid orderId)
         {
-            var orders = GetAll();
+            var orders = orderRepository.GetAll();
             orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
             SaveAll(orders);
         }
