@@ -24,12 +24,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
 
             adminOrders.EditStatus(orderId, status);
-            return RedirectToAction("GetOrders", "Administrator");
+            return RedirectToAction("GetOrders", "Admin");
         }
         public IActionResult Delete(Guid orderId)
         {
             adminOrders.Delete(orderId);
-            return RedirectToAction("GetOrders", "Administrator");
+            return RedirectToAction("GetOrders", "Admin");
         }
 
     }
