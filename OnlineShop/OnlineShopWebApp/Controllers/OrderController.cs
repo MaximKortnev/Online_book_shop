@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(string userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            ordersRepository.AddToListOrders(cart, Constants.UserId);
+            ordersRepository.Add(cart, Constants.UserId);
             var order = ordersRepository.TryGetByUserId(Constants.UserId);
 
             return View(order);
