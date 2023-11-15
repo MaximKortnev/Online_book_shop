@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using OnlineShopWebApp.Repositories;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Admin;
+using Serilog;
 
 namespace OnlineShopWebApp
 {
@@ -47,6 +48,8 @@ namespace OnlineShopWebApp
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+
+			app.UseSerilogRequestLogging();
 
 			app.UseRouting();
 
