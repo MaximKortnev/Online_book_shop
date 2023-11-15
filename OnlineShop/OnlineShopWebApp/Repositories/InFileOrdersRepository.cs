@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using OnlineShopWebApp.Interfaces;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace OnlineShopWebApp.Repositories
 {
@@ -20,9 +21,15 @@ namespace OnlineShopWebApp.Repositories
             };
             orders.Add(newOrder);
         }
-        public void SaveOrder(Order orderData, string userId, Cart cart)
+        public void SaveOrders(Order orderData, string userId, Cart cart)
         {
             string filePath = "wwwroot/orders.json";
+            var order = TryGetByUserId(Constants.UserId);
+            orderData.Id = Guid.NewGuid();
+            orderData.ListProducts = order.ListProducts;
+            orderData.UserId = order.UserId;
+            orderData.Status = OrderStatus.Created;
+            orderData.Data = DateTime.Now;
 
             if (File.Exists(filePath))
             {
@@ -41,5 +48,23 @@ namespace OnlineShopWebApp.Repositories
             }
         }
         public Order TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
+        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+
+        private List<Order> ReadOrdersFromJson(string filePath)
+        {
+            var json = "";
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                json = reader.ReadToEnd();
+            }
+            return JsonConvert.DeserializeObject<List<Order>>(json);
+        }
+        public List<Order> GetAll()
+        {
+            var jsonFilePath = "wwwroot/orders.json";
+            return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
+        }
+        public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
     }
 }
