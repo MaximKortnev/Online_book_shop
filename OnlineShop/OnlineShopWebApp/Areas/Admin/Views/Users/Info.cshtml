@@ -8,15 +8,22 @@ else
     <form method="post">
         <div class="container-fluid">
             <div class="row">
-                @await Html.PartialAsync("~/Areas/Admin/Views/Admin/AdminPanelNavigation.cshtml")
+                @await Html.PartialAsync("~/Areas/Admin/Views/Home/AdminPanelNavigation.cshtml")
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <h2 class="text-center mr-5">Список пользователей</h2>
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Логин: <strong>@Model.Login</strong></p>
-                            <p class="card-text">Пароль: <strong>@Model.Password</strong></p>
+                            <p class="card-title">Логин <strong>@Model.Login</strong></p>
+                            <p class="card-text">Пароль <strong>@Model.Password</strong></p>
                             <p class="card-text">Эл. почта: <strong>@Model.Email</strong></p>
                             <p class="card-text">Имя: <strong>@Model.NickName</strong></p>
+                            <label for="roleSelect">Выберите роль:</label>
+                            <select id="roleSelect" name="role">
+                                @foreach (var role in ViewBag.AllRoles)
+                                {
+                                    <option value="@role.Name" selected="@(Model.Role.Name == role.Name ? "selected" : null)">@role.Name</option>
+                                }
+                            </select>
                             <p class="card-text">Роль: </p>
                             <input type="hidden" name="Id" value="@Model.Id" />
                             <div class="d-flex justify-content-between align-items-end">

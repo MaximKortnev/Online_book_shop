@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Interfaces
         List<User> Read(string filePath);
         User TryGetById(Guid Id);
         List<User> GetAll();
-        void EditRole();
+        void EditRole(User user);
         void Delete(Guid Id);
         void SaveAll(List<User> users);
         void Add(User user);

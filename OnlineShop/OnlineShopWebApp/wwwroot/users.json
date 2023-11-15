@@ -6,7 +6,9 @@
     "Password": "123456789",
     "ConfirmPassword": "123456789",
     "NickName": "Max",
-    "Role": null
+    "Role": {
+      "Name": "Админ"
+    }
   },
   {
     "Id": "f89a20ae-b681-40f5-a8f1-ee6e47079b64",
@@ -15,15 +17,8 @@
     "Password": "roleRepository",
     "ConfirmPassword": "roleRepository",
     "NickName": "Pavel",
-    "Role": null
-  },
-  {
-    "Id": "7c4950f4-cdcb-4502-b184-3722e67f12bb",
-    "Login": "Olesya123",
-    "Email": "test@test.ru",
-    "Password": "123456789",
-    "ConfirmPassword": "123456789",
-    "NickName": "Olesya",
-    "Role": null
+    "Role": {
+      "Name": "Пользователь"
+    }
   }
 ]

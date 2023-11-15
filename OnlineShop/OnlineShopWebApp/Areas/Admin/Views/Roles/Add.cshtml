@@ -7,5 +7,5 @@
         <input type="text" class="form-control" name="name" id="name" asp-for="Name" />
         <span asp-validation-for="Name" />
     </div>
-    <button type="submit" class="btn btn-primary" asp-action="Add" asp-controller="AdminRoles">Сохранить</button>
+    <button type="submit" class="btn btn-primary" asp-area="Admin" asp-action="Add" asp-controller="Roles">Сохранить</button>
 </form>
