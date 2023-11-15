@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 rolesRepository.Add(role);
-                return RedirectToAction("GetRoles", "Administrator");
+                return RedirectToAction("GetRoles", "Admin");
             }
             return View("Add", role);
         }
@@ -36,7 +36,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Delete(string name)
         {
             rolesRepository.Delete(name);
-            return RedirectToAction("GetRoles", "Administrator");
+            return RedirectToAction("GetRoles", "Admin");
         }
     }
 }

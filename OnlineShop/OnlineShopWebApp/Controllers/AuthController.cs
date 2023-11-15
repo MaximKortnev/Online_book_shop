@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using System.Linq;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -44,7 +45,7 @@ namespace OnlineShopWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                user.Role = roleRepository.GetAll()[1];
+                user.Role = roleRepository.GetAll().FirstOrDefault(x=> x.Name.ToLower() == "пользователь");
                 userRepository.Add(user);
                 return RedirectToAction("Index", "Home");
             }
