@@ -12,7 +12,7 @@ namespace OnlineShopWebApp.Repositories
     {
         public List<Order> orders = new List<Order>();
 
-        public void AddToListOrders(Cart cart, string userId)
+        public void Add(Cart cart, string userId)
         {
             var newOrder = new Order()
             {
@@ -65,6 +65,5 @@ namespace OnlineShopWebApp.Repositories
             var jsonFilePath = "wwwroot/orders.json";
             return File.Exists(jsonFilePath) ? ReadOrdersFromJson(jsonFilePath) : new List<Order> { };
         }
-        public OrderData TryGetByUserId(string userId) => orders.FirstOrDefault(x => x.UserId == userId);
     }
 }
