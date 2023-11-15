@@ -25,14 +25,12 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
         [HttpPost]
-        public IActionResult SaveOrder(OrderData orderData)
+        public IActionResult SaveOrder(Order orderData)
         {
             if (ModelState.IsValid)
             {
                 var cart = cartRepository.TryGetByUserId(Constants.UserId);
-                var order = ordersRepository.TryGetByUserId(Constants.UserId);
-                orderData.ListProducts = order.ListProducts;
-                orderData.UserId = order.UserId;
+
                 ordersRepository.SaveOrders(orderData, Constants.UserId, cart);
                 cartRepository.Clear();
                 return View("OrderSuccessfully");
