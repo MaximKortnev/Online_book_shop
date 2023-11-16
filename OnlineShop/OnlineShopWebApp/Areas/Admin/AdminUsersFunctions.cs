@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Areas.Admin
         public void EditRole(User user)
         {
             var users = GetAll();
-            users[users.FindIndex(x=>x.Id == user.Id)] = user;
+            users[users.FindIndex(x => x.Id == user.Id)] = user;
             SaveAll(users);
         }
         public void Delete(Guid Id)

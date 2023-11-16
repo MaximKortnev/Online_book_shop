@@ -18,17 +18,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult ViewEdit(int productId)
         {
             var product = productRepository.TryGetProductById(productId);
-            return View(product);
+            if (product != null) { return View(product); }
+            return View("ErrorProduct");
         }
         public IActionResult Delete(int productId)
         {
-            adminProductFunction.Delete(productId);
-            return RedirectToAction("GetProducts", "Home");
+            var product = productRepository.TryGetProductById(productId);
+            if (product != null)
+            {
+                adminProductFunction.Delete(productId);
+                return RedirectToAction("GetProducts", "Home");
+            }
+            return View("ErrorProduct");
         }
         public IActionResult AddProduct()
         {
             var products = productRepository.GetAll();
-            ViewBag.ProductId = products.Count + 1;
+            ViewBag.ProductId = products[products.Count - 1].Id + 1;
             return View();
         }
 
