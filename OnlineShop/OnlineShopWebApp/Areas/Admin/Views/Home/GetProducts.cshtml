@@ -28,9 +28,9 @@
                             </td>
                             <td>@Model[i].Cost</td>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@product.Id" asp-action="ViewEdit" asp-controller="Products">Редактировать</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@Model[i].Id" asp-action="ViewEdit" asp-controller="Products">Редактировать</a>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@product.Id" asp-action="Delete" asp-controller="Products">Удалить</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@Model[i].Id" asp-action="Delete" asp-controller="Products">Удалить</a>
                             </td>
                         </tr>
                     }

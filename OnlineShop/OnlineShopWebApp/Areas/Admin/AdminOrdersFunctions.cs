@@ -9,17 +9,17 @@ namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminOrdersFunctions : IAdminOrdersFunctions
     {
-        private readonly IOrdersRepository orderRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public AdminOrdersFunctions(IOrdersRepository orderRepository)
+        public AdminOrdersFunctions(IOrdersRepository ordersRepository)
         {
-            this.orderRepository = orderRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         public void EditStatus(Guid orderId, OrderStatus status)
         {
-            var orders = orderRepository.GetAll();
-            var order = orderRepository.TryGetById(orderId);
+            var orders = ordersRepository.GetAll();
+            var order = ordersRepository.TryGetById(orderId);
             order.Status = status;
             var index = orders.FindIndex(x => x.Id == orderId);
             orders[index] = order;
@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Areas.Admin
         }
         public void Delete(Guid orderId)
         {
-            var orders = orderRepository.GetAll();
+            var orders = ordersRepository.GetAll();
             orders.RemoveAt(orders.FindIndex(x => x.Id == orderId));
             SaveAll(orders);
         }

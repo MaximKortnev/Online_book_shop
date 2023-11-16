@@ -23,8 +23,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = adminUsers.TryGetById(Id);
             if (user != null)
             {
-            return View(user);
-        }
+                return View(user);
+            }
             return View("ExistUser");
         }
 
@@ -45,13 +45,15 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Save(Guid Id, string role)
         {
+            var correctRole = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
+            if (correctRole == null) { return View("BadRole"); }
             var user = adminUsers.TryGetById(Id);
             if (user != null)
             {
-            user.Role.Name = role;
-            adminUsers.EditRole(user);
-            return RedirectToAction("GetUsers", "Home");
-        }
+                user.Role.Name = role;
+                adminUsers.EditRole(user);
+                return RedirectToAction("GetUsers", "Home");
+            }
             return View("ExistUser");
         }
 
@@ -60,9 +62,9 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = adminUsers.TryGetById(Id);
             if (user != null)
             {
-            adminUsers.Delete(Id);
-            return RedirectToAction("GetUsers", "Home");
-        }
+                adminUsers.Delete(Id);
+                return RedirectToAction("GetUsers", "Home");
+            }
             return View("ExistUser");
 
         }
