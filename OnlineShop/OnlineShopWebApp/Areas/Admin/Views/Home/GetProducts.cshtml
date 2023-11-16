@@ -5,7 +5,7 @@
         @await Html.PartialAsync("AdminPanelNavigation")
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <h2 class="text-center mr-5">Список продуктов</h2>
-            <a asp-area="Admin" asp-action="AddProduct" asp-controller="AdminProducts">Добавить новый продукт</a>
+            <a asp-action="AddProduct" asp-controller="AdminProducts">Добавить новый продукт</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -17,20 +17,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var product in Model)
+                    @for (int i = 0; i < Model.Count; i++)
                     {
                         <tr>
-                            <td>@product.Id</td>
+                            <td>@(i + 1)</td>
                             <td>
-                                <a style="color:black" href="/product/index?productId=@product.Id">
-                                    @product.Name
+                                <a style="color:black" asp-area="" asp-controller="Product" asp-action="index" asp-route-productId="@Model[i].Id">
+                                    @Model[i].Name
                                 </a>
                             </td>
-                            <td>@product.Cost</td>
+                            <td>@Model[i].Cost</td>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@product.Id" asp-action="ViewEdit" asp-controller="Products">Редактировать</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-route-productId="@Model[i].Id" asp-action="ViewEdit" asp-controller="AdminProducts">Редактировать</a>
                             <td>
-                                <a style="color:white" class="btn btn-sm btn-info" asp-area="Admin" asp-route-productId="@product.Id" asp-action="Delete" asp-controller="Products">Удалить</a>
+                                <a style="color:white" class="btn btn-sm btn-info" asp-route-productId="@Model[i].Id" asp-action="Delete" asp-controller="AdminProducts">Удалить</a>
                             </td>
                         </tr>
                     }
