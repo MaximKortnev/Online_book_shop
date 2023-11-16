@@ -6,11 +6,11 @@ using System;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class OrdersController : Controller
+    public class AdminOrdersController : Controller
     {
         private readonly IAdminOrdersFunctions adminOrders;
         private readonly IOrdersRepository ordersRepository;
-        public OrdersController(IAdminOrdersFunctions adminOrders, IOrdersRepository ordersRepository)
+        public AdminOrdersController(IAdminOrdersFunctions adminOrders, IOrdersRepository ordersRepository)
         {
             this.adminOrders = adminOrders;
             this.ordersRepository = ordersRepository;
@@ -19,19 +19,31 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Info(Guid Id)
         {
             var order = ordersRepository.TryGetById(Id);
-            return View(order);
+            if (order != null) { return View(order); }
+            return View("BadOrder");
         }
         [HttpPost]
         public IActionResult Save(Guid orderId, OrderStatus status)
         {
+            var order = ordersRepository.TryGetById(orderId);
+            if (order != null)
+            {
+                adminOrders.EditStatus(orderId, status);
+                return RedirectToAction("GetOrders", "Admin");
+            }
+            return View("BadOrder");
 
-            adminOrders.EditStatus(orderId, status);
-            return RedirectToAction("GetOrders", "Home");
         }
         public IActionResult Delete(Guid orderId)
         {
-            adminOrders.Delete(orderId);
-            return RedirectToAction("GetOrders", "Home");
+            var order = ordersRepository.TryGetById(orderId);
+            if (order != null)
+            {
+                adminOrders.Delete(orderId);
+                return RedirectToAction("GetOrders", "Admin");
+            }
+            return View("BadOrder");
+
         }
 
     }
