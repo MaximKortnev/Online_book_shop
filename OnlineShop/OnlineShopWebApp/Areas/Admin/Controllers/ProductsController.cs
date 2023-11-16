@@ -5,11 +5,11 @@ using OnlineShopWebApp.Models;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminProductsController : Controller
+    public class ProductsController : Controller
     {
         private readonly IProductsRepository productRepository;
         private readonly IAdminProductsFunctions adminProductFunction;
-        public AdminProductsController(IProductsRepository productRepository, IAdminProductsFunctions adminProductFunction)
+        public ProductsController(IProductsRepository productRepository, IAdminProductsFunctions adminProductFunction)
         {
             this.productRepository = productRepository;
             this.adminProductFunction = adminProductFunction;
@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (product != null)
             {
                 adminProductFunction.Delete(productId);
-                return RedirectToAction("GetProducts", "Admin");
+                return RedirectToAction("GetProducts", "Home");
             }
             return View("ErrorProduct");
         }
@@ -44,7 +44,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 adminProductFunction.Edit(product);
-                return RedirectToAction("GetProducts", "Admin");
+                return RedirectToAction("GetProducts", "Home");
             }
             else { return View("ViewEdit", product); }
         }
@@ -55,7 +55,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 adminProductFunction.Add(product);
-                return RedirectToAction("GetProducts", "Admin");
+                return RedirectToAction("GetProducts", "Home");
             }
             else { return View("AddProduct", product); }
         }

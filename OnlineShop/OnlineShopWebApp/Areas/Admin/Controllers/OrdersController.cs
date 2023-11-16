@@ -6,11 +6,11 @@ using System;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminOrdersController : Controller
+    public class OrdersController : Controller
     {
         private readonly IAdminOrdersFunctions adminOrders;
         private readonly IOrdersRepository ordersRepository;
-        public AdminOrdersController(IAdminOrdersFunctions adminOrders, IOrdersRepository ordersRepository)
+        public OrdersController(IAdminOrdersFunctions adminOrders, IOrdersRepository ordersRepository)
         {
             this.adminOrders = adminOrders;
             this.ordersRepository = ordersRepository;
@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (order != null)
             {
                 adminOrders.EditStatus(orderId, status);
-                return RedirectToAction("GetOrders", "Admin");
+                return RedirectToAction("GetOrders", "Home");
             }
             return View("BadOrder");
 
@@ -40,7 +40,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (order != null)
             {
                 adminOrders.Delete(orderId);
-                return RedirectToAction("GetOrders", "Admin");
+                return RedirectToAction("GetOrders", "Home");
             }
             return View("BadOrder");
 
