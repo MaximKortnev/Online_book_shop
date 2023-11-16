@@ -16,17 +16,15 @@ namespace OnlineShopWebApp.Areas.Admin
         }
         public void Edit(Product product)
         {
-            int index = product.Id - 1;
             var products = productRepository.GetAll();
             product.ImagePath = "image.jpg";
-            products[index] = product;
+            products[products.FindIndex(x=>x.Id == product.Id)] = product;
             Save(products);
         }
         public void Delete(int productId)
         {
             var products = productRepository.GetAll();
-            int index = productId - 1;
-            products.RemoveAt(index);
+            products.RemoveAt(products.FindIndex(x => x.Id == productId));
             Save(products);
         }
         public void Add(Product product)

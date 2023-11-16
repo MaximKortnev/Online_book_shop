@@ -19,19 +19,31 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Info(Guid Id)
         {
             var order = ordersRepository.TryGetById(Id);
-            return View(order);
+            if (order != null) { return View(order); }
+            return View("BadOrder");
         }
         [HttpPost]
         public IActionResult Save(Guid orderId, OrderStatus status)
         {
+            var order = ordersRepository.TryGetById(orderId);
+            if (order != null)
+            {
+                adminOrders.EditStatus(orderId, status);
+                return RedirectToAction("GetOrders", "Admin");
+            }
+            return View("BadOrder");
 
-            adminOrders.EditStatus(orderId, status);
-            return RedirectToAction("GetOrders", "Admin");
         }
         public IActionResult Delete(Guid orderId)
         {
-            adminOrders.Delete(orderId);
-            return RedirectToAction("GetOrders", "Admin");
+            var order = ordersRepository.TryGetById(orderId);
+            if (order != null)
+            {
+                adminOrders.Delete(orderId);
+                return RedirectToAction("GetOrders", "Admin");
+            }
+            return View("BadOrder");
+
         }
 
     }
