@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using System;
+using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -25,6 +26,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Save(Guid Id, string role)
         {
+            var correctRole = roleRepository.GetAll().FirstOrDefault(x => x.Name == role);
+            if (correctRole == null) { return View("BadRole"); }
             var user = adminUsers.TryGetById(Id);
             user.Role.Name = role;
             adminUsers.EditRole(user);

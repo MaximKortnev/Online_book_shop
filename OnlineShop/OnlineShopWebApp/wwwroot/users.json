@@ -20,5 +20,16 @@
     "Role": {
       "Name": "Пользователь"
     }
+  },
+  {
+    "Id": "7aa07138-9f72-4587-b8f5-8e3f57ac7443",
+    "Login": "Genri_123",
+    "Email": "Genri@ggg.com",
+    "Password": "password",
+    "ConfirmPassword": "password",
+    "NickName": "Genri",
+    "Role": {
+      "Name": "Пользователь"
+    }
   }
 ]

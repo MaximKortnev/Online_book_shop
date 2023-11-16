@@ -45,7 +45,15 @@ namespace OnlineShopWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                user.Role = roleRepository.GetAll().FirstOrDefault(x=> x.Name.ToLower() == "пользователь");
+                var roles = roleRepository.GetAll();
+                user.Role = roles.FirstOrDefault(x=> x.Name.ToLower() == "пользователь");
+                if (user.Role == null)
+                {
+                    var role = new Roles();
+                    role.Name = "Пользователь";
+                    roleRepository.Add(role);
+                    user.Role = role;
+                }
                 userRepository.Add(user);
                 return RedirectToAction("Index", "Home");
             }
