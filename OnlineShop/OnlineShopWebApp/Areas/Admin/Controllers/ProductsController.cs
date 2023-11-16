@@ -5,11 +5,11 @@ using OnlineShopWebApp.Models;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductsController : Controller
+    public class AdminProductsController : Controller
     {
         private readonly IProductsRepository productRepository;
         private readonly IAdminProductsFunctions adminProductFunction;
-        public ProductsController(IProductsRepository productRepository, IAdminProductsFunctions adminProductFunction)
+        public AdminProductsController(IProductsRepository productRepository, IAdminProductsFunctions adminProductFunction)
         {
             this.productRepository = productRepository;
             this.adminProductFunction = adminProductFunction;
@@ -18,17 +18,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult ViewEdit(int productId)
         {
             var product = productRepository.TryGetProductById(productId);
-            return View(product);
+            if (product != null) { return View(product); }
+            return View("ErrorProduct");
         }
         public IActionResult Delete(int productId)
         {
-            adminProductFunction.Delete(productId);
-            return RedirectToAction("GetProducts", "Home");
+            var product = productRepository.TryGetProductById(productId);
+            if (product != null)
+            {
+                adminProductFunction.Delete(productId);
+                return RedirectToAction("GetProducts", "Admin");
+            }
+            return View("ErrorProduct");
         }
         public IActionResult AddProduct()
         {
             var products = productRepository.GetAll();
-            ViewBag.ProductId = products.Count + 1;
+            ViewBag.ProductId = products[products.Count - 1].Id + 1;
             return View();
         }
 
@@ -38,7 +44,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 adminProductFunction.Edit(product);
-                return RedirectToAction("GetProducts", "Home");
+                return RedirectToAction("GetProducts", "Admin");
             }
             else { return View("ViewEdit", product); }
         }
@@ -49,7 +55,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 adminProductFunction.Add(product);
-                return RedirectToAction("GetProducts", "Home");
+                return RedirectToAction("GetProducts", "Admin");
             }
             else { return View("AddProduct", product); }
         }
