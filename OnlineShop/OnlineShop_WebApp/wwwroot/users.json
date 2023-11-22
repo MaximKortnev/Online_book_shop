@@ -1,0 +1,35 @@
+[
+  {
+    "Id": "043a750c-91df-488b-abd3-3087f9b11a7c",
+    "Login": "Maxim",
+    "Email": "fafccc@gmail.com",
+    "Password": "123456789",
+    "ConfirmPassword": "123456789",
+    "NickName": "Max",
+    "Role": {
+      "Name": "Админ"
+    }
+  },
+  {
+    "Id": "7e719881-00b3-4964-8570-e495e848005c",
+    "Login": "Pavel",
+    "Email": "124124@xn--j1aeioo.xn--31a",
+    "Password": "roleRepository",
+    "ConfirmPassword": "roleRepository",
+    "NickName": "Pavel",
+    "Role": {
+      "Name": "Пользователь"
+    }
+  },
+  {
+    "Id": "7aa07138-9f72-4587-b8f5-8e3f57ac7443",
+    "Login": "Genri_123",
+    "Email": "Genri@ggg.com",
+    "Password": "password",
+    "ConfirmPassword": "password",
+    "NickName": "Genri",
+    "Role": {
+      "Name": "Пользователь"
+    }
+  }
+]

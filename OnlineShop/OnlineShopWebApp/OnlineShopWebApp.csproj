@@ -19,8 +19,4 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OnlineShop.DataBase\OnlineShop.DataBase.csproj" />
-  </ItemGroup>
-
 </Project>
