@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Product
+    public class ProductViewModel
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Имя не указано")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Имя должно содержать от 3 до 50 символов")]
@@ -47,9 +48,6 @@ namespace OnlineShopWebApp.Models
 
         [JsonProperty("imagePath")]
         public string ImagePath { get; set; }
-
-
-        public override string ToString() => $"Product ID: {Id}\nName: {Name}\nCost: {Cost}";
     }
 }
 

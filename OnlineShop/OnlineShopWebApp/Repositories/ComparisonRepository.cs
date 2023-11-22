@@ -11,7 +11,7 @@ namespace OnlineShopWebApp.Repositories
 
         public List<Comparison> comparesonProducts = new List<Comparison>();
 
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var existingCompareson = TryGetByUserId(userId);
             if (existingCompareson == null)
@@ -20,7 +20,7 @@ namespace OnlineShopWebApp.Repositories
                 {
                     Id = Guid.NewGuid(),
                     UserId = userId,
-                    Items = new List<Product>{ product } 
+                    Items = new List<ProductViewModel>{ product } 
                 };
                 comparesonProducts.Add(newCompare);
             }

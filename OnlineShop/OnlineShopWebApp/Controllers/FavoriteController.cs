@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using OnlineShop.DataBase.Interfaces;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -21,17 +23,17 @@ namespace OnlineShopWebApp.Controllers
             return View(favorite);
         }
 
-        public IActionResult Add(int productId) {
+        public IActionResult Add(Guid productId) {
             var productCard = productsRepository.TryGetProductById(productId);
             if (productCard == null) return View("ErrorAddFavorite");
-            favoriteRepository.Add(productCard, Constants.UserId);
+            //favoriteRepository.Add(productCard, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult Decrease(int productId)
+        public IActionResult Decrease(Guid productId)
         {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorAddFavorite"); }
-            favoriteRepository.Decrease(product, Constants.UserId);
+            //favoriteRepository.Decrease(product, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Clear()

@@ -11,7 +11,7 @@ namespace OnlineShopWebApp.Repositories
     {
         public List<Favorite> favoriteProducts = new List<Favorite>();
 
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var existingFavorite = TryGetByUserId(userId);
             if (existingFavorite == null)
@@ -20,7 +20,7 @@ namespace OnlineShopWebApp.Repositories
                 {
                     Id = Guid.NewGuid(),
                     UserId = userId,
-                    Items = new List<Product> { product }
+                    Items = new List<ProductViewModel> { product }
                 };
                 favoriteProducts.Add(newCompare);
             }
@@ -30,7 +30,7 @@ namespace OnlineShopWebApp.Repositories
             }
         }
 
-        public void Decrease(Product product, string userId) {
+        public void Decrease(ProductViewModel product, string userId) {
 
             var existingFavorite = TryGetByUserId(userId);
             if (existingFavorite != null)

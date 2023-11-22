@@ -5,8 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShopWebApp.Repositories;
 using OnlineShopWebApp.Interfaces;
+using OnlineShop.DataBase.Interfaces;
 using Serilog;
 using OnlineShopWebApp.Areas.Admin;
+using OnlineShop.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShopWebApp
 {
@@ -22,7 +25,10 @@ namespace OnlineShopWebApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton<IProductsRepository, InFileProductsRepository>();
+			string connection = Configuration.GetConnectionString("online_shop");
+			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+
+			services.AddSingleton<IProductsRepository, ProductsDBRepository>();
             services.AddSingleton<ICartsRepository, InFileCartsRepository>();
             services.AddSingleton<IOrdersRepository, InFileOrdersRepository>();
             services.AddSingleton<IFavoritesRepository, InFileFavoritesRepository>();

@@ -11,7 +11,7 @@ namespace OnlineShopWebApp.Repositories
     {
         public List<Cart> carts = new List<Cart>();
 
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var existingCart = TryGetByUserId(userId);
             if (existingCart == null)
@@ -33,7 +33,7 @@ namespace OnlineShopWebApp.Repositories
             }
         }
 
-        public void DecreaseAmount(Product product, string userId)
+        public void DecreaseAmount(ProductViewModel product, string userId)
         {
             var existingCart = TryGetByUserId(userId);
             if (existingCart != null) {

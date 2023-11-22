@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Interfaces;
-using System.Linq;
+using OnlineShop.DataBase.Interfaces;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -12,7 +12,7 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index(int productId)
+        public IActionResult Index(Guid productId)
         {
             var productCard = productsRepository.TryGetProductById(productId);
 

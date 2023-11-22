@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Interfaces;
 using OnlineShopWebApp.Models;
+using OnlineShop.DataBase.Interfaces;
+using System;
+using OnlineShop.DataBase.Models;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -15,7 +18,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.adminProductFunction = adminProductFunction;
         }
 
-        public IActionResult ViewEdit(int productId)
+        public IActionResult ViewEdit(Guid productId)
         {
             var product = productRepository.TryGetProductById(productId);
             if (product != null) { return View(product); }
@@ -23,23 +26,21 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Delete(int productId)
         {
-            var product = productRepository.TryGetProductById(productId);
-            if (product != null)
-            {
-                adminProductFunction.Delete(productId);
-                return RedirectToAction("GetProducts", "Home");
-            }
+            //var product = productRepository.TryGetProductById(productId);
+            //if (product != null)
+            //{
+            //    adminProductFunction.Delete(productId);
+            //    return RedirectToAction("GetProducts", "Home");
+            //}
             return View("ErrorProduct");
         }
         public IActionResult AddProduct()
         {
-            var products = productRepository.GetAll();
-            ViewBag.ProductId = products[products.Count - 1].Id + 1;
             return View();
         }
 
         [HttpPost]
-        public IActionResult SaveEdit(Product product)
+        public IActionResult SaveEdit(ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
@@ -50,11 +51,22 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Product product)
+        public IActionResult Add(ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
-                adminProductFunction.Add(product);
+                var productDB = new Product
+                {
+                    Name = product.Name,
+                    Author = product.Author,
+                    AboutTheBook = product.AboutTheBook,
+                    AboutAuthor = product.AboutAuthor,
+                    Quote = product.Quote,
+                    Cost = product.Cost,
+                    Description = product.Description,
+                    ImagePath = product.ImagePath,
+                };
+                productRepository.Add(productDB);
                 return RedirectToAction("GetProducts", "Home");
             }
             else { return View("AddProduct", product); }

@@ -5,9 +5,9 @@ namespace OnlineShopWebApp.Interfaces
 {
     public interface IAdminProductsFunctions
     {
-        void Edit(Product product);
+        void Edit(ProductViewModel product);
         void Delete(int productId);
-        void Add(Product product);
-        void Save(List<Product>productRepository);
+        //void Add(Product product);
+        void Save(List<ProductViewModel>productRepository);
     }
 }
