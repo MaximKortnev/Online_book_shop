@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Models
 {
@@ -32,6 +30,6 @@ namespace OnlineShop_WebApp.Models
         [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string NickName { get; set; } = string.Empty;
 
-        public Roles Role { get; set; }
+        public Roles? Role { get; set; }
     }
 }

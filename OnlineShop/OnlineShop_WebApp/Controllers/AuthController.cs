@@ -41,7 +41,7 @@ namespace OnlineShop_WebApp.Controllers
         [HttpPost]
         public IActionResult Registration(User user)
         {
-
+            
             if (ModelState.IsValid)
             {
                 var roles = roleRepository.GetAll();
@@ -53,6 +53,7 @@ namespace OnlineShop_WebApp.Controllers
                     roleRepository.Add(role);
                     user.Role = role;
                 }
+                user.Id = Guid.NewGuid();
                 userRepository.Add(user);
                 return RedirectToAction("Index", "Home");
             }
