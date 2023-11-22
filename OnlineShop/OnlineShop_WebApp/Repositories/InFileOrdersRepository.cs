@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OnlineShop_WebApp.Models;
-using System.Collections.Generic;
 using OnlineShop_WebApp.Interfaces;
-using System.IO;
-using System.Linq;
-using System;
 
 namespace OnlineShop_WebApp.Repositories
 {

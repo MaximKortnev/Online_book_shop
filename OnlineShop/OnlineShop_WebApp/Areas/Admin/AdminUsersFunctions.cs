@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace OnlineShop_WebApp.Areas.Admin
 {

@@ -2,7 +2,6 @@
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Interfaces;
-using System;
 using OnlineShop.Db.Models;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers

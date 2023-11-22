@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
-using System.Linq;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
