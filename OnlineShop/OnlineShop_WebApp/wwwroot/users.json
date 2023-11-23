@@ -31,16 +31,5 @@
     "Role": {
       "Name": "Пользователь"
     }
-  },
-  {
-    "Id": "061c31e3-4add-4383-9ab2-714ee37415dc",
-    "Login": "Anri_123",
-    "Email": "Anri@mail.ru",
-    "Password": "123456789",
-    "ConfirmPassword": "123456789",
-    "NickName": "Anri",
-    "Role": {
-      "Name": "Пользователь"
-    }
   }
 ]
