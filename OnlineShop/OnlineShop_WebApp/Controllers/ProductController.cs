@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
+using OnlineShop_WebApp.Models;
 
 namespace OnlineShop_WebApp.Controllers
 {
@@ -13,10 +15,22 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index(Guid productId)
         {
-            var productCard = productsRepository.TryGetProductById(productId);
+            var product = productsRepository.TryGetProductById(productId);
 
-            if (productCard == null) { return View("ErrorProduct");}
-            return View(productCard);
+            if (product == null) { return View("ErrorProduct");}
+            var productViewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Author = product.Author,
+                AboutTheBook = product.AboutTheBook,
+                AboutAuthor = product.AboutAuthor,
+                Quote = product.Quote,
+                Cost = product.Cost,
+                Description = product.Description,
+                ImagePath = product.ImagePath,
+            };
+            return View(productViewModel);
         }
 
     }

@@ -30,7 +30,7 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product)
         {
-            product.ImagePath = "image.jpg";
+            product.ImagePath = "wwwroot/image.jpg";
             databaseContext.Products.Add(product);
             databaseContext.SaveChanges();
         }

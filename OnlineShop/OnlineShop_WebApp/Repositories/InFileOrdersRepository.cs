@@ -54,8 +54,10 @@ namespace OnlineShop_WebApp.Repositories
             {
                 json = reader.ReadToEnd();
             }
+
             return JsonConvert.DeserializeObject<List<Order>>(json);
         }
+
         public List<Order> GetAll()
         {
             var jsonFilePath = "wwwroot/orders.json";

@@ -23,7 +23,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             if (product != null) { return View(product); }
             return View("ErrorProduct");
         }
-        public IActionResult Delete(int productId)
+        public IActionResult Delete(Guid productId)
         {
             //var product = productRepository.TryGetProductById(productId);
             //if (product != null)
@@ -46,7 +46,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                 adminProductFunction.Edit(product);
                 return RedirectToAction("GetProducts", "Home");
             }
-            else { return View("ViewEdit", product); }
+            return View("ViewEdit", product);
         }
 
         [HttpPost]
@@ -62,13 +62,12 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                     AboutAuthor = product.AboutAuthor,
                     Quote = product.Quote,
                     Cost = product.Cost,
-                    Description = product.Description,
-                    ImagePath = product.ImagePath,
+                    Description = product.Description
                 };
                 productRepository.Add(productDB);
                 return RedirectToAction("GetProducts", "Home");
             }
-            else { return View("AddProduct", product); }
+            return View("AddProduct", product);
         }
     }
 }

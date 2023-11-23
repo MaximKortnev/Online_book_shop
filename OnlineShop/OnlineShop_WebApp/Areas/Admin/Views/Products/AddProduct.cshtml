@@ -6,7 +6,6 @@
         <h5 class="card-title">Редактирование продукта</h5>
         <form method="post">
             <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
-            <input type="hidden" name="id" value="@ViewBag.ProductId" />
 
             <div class="form-group">
                 <label asp-for="Name">Название продукта:</label><br />
@@ -18,12 +17,11 @@
                 <label asp-for="Author">Автор:</label><br />
                 <input type="text" class="form-control" name="author" id="author" asp-for="Author" />
                 <span asp-validation-for="Author" />
-
             </div>
 
             <div class="form-group">
                 <label asp-for="Cost">Цена:</label><br />
-                <input type="text" class="form-control" name="cost" id="cost" asp-for="Cost" />
+                <input type="number" class="form-control" name="cost" id="cost" asp-for="Cost" />
                 <span asp-validation-for="Cost" />
             </div>
 
