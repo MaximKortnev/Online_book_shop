@@ -27,8 +27,8 @@ else{
                     <td>@item.Amount</td>
                     <td>@item.Cost</td>
                     <td>
-                            <a style="color:white" class=" btn btn-sm btn-success" href="/cart/add?productId=@item.Product.Id">Увеличить</a>
-                            <a style="color:white" class="btn btn-sm btn-danger" href="/cart/DecreaseAmount?productId=@item.Product.Id">Уменьшить</a>
+                        <a style="color:white" class=" btn btn-sm btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-productId="@item.Product.Id">Увеличить</a>
+                        <a style="color:white" class="btn btn-sm btn-danger" asp-area="" asp-controller="Cart" asp-action="DecreaseAmount" asp-route-productId="@item.Product.Id">Уменьшить</a>
                     </td>
                 </tr>
                 }
@@ -37,8 +37,8 @@ else{
 
         <div class="text-right">
             <p><strong>Итоговая сумма: @Model.Cost</strong></p>
-            <a style="color:white" class="btn btn-primary" href="/order/index">Перейти к оформлению</a>
-            <a style="color:white" class="btn btn-warning" href="/cart/clear">Очистить корзину</a>
+            <a style="color:white" class="btn btn-primary" asp-area="" asp-controller="Order" asp-action="Index">Перейти к оформлению</a>
+            <a style="color:white" class="btn btn-warning" asp-area="" asp-controller="Cart" asp-action="Clear">Очистить корзину</a>
         </div>
     </div>
 }

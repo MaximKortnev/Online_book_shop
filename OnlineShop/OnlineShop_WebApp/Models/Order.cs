@@ -25,9 +25,9 @@ namespace OnlineShop_WebApp.Models
         public string Email { get; set; }
         public string DeliveryMethod { get; set; }
         public string PaymentMethod { get; set; }
-        public string PromoCode { get; set; }
+        public string? PromoCode { get; set; }
         public string TotalCost { get; set; }
-        public CartViewModel ListProducts { get; set; }
+        public CartViewModel? ListProducts { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime Data { get; set; }
     }

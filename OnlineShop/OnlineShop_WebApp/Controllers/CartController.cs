@@ -31,7 +31,7 @@ namespace OnlineShop_WebApp.Controllers
         {
             var product = productRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorAddCart"); }
-            //cartRepository.DecreaseAmount(product, Constants.UserId);
+            cartRepository.DecreaseAmount(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear() {

@@ -7,5 +7,7 @@ namespace OnlineShop.Db.Interfaces
         Product TryGetProductById(Guid productId);
         List<Product> GetAll();
         void Add(Product product);
+        void Delete(Guid productId);
+        void Edit(Product product);
     }
 }

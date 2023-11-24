@@ -11,16 +11,7 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        //public List<Product> ReadProductsFromJson(string filePath)
-        //{
-        //    var json = "";
-
-        //    using (StreamReader reader = new StreamReader(filePath))
-        //    {
-        //        json = reader.ReadToEnd();
-        //    }
-        //    return JsonConvert.DeserializeObject<List<Product>>(json);
-        //}
+        
         public Product TryGetProductById(Guid id) => databaseContext.Products.FirstOrDefault(p => p.Id == id);
 
         public List<Product> GetAll()
@@ -30,17 +21,37 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product)
         {
-            product.ImagePath = "wwwroot/image.jpg";
+            product.ImagePath = "image.jpg";
             databaseContext.Products.Add(product);
             databaseContext.SaveChanges();
         }
+        public void Delete(Guid productId)
+        {
+            var productToDelete = databaseContext.Products.FirstOrDefault(x => x.Id == productId);
+
+            if (productToDelete != null)
+            {
+                databaseContext.Products.Remove(productToDelete);
+                databaseContext.SaveChanges();
+            }
+        }
         public void Edit(Product product)
         {
-            var existingProduct = databaseContext.Products.FirstOrDefault(x=> x.Id == product.Id);
-            if (existingProduct == null) { return; }
-            existingProduct = product;
-            existingProduct.ImagePath = "image.jpg";
-            databaseContext.SaveChanges();
+            var existingProduct = databaseContext.Products.FirstOrDefault(x => x.Id == product.Id);
+
+            if (existingProduct != null)
+            {
+                existingProduct.Name = product.Name;
+                existingProduct.Author = product.Author;
+                existingProduct.Cost = product.Cost;
+                existingProduct.Description = product.Description;
+                existingProduct.Quote = product.Quote;
+                existingProduct.AboutAuthor = product.AboutAuthor;
+                existingProduct.AboutTheBook = product.AboutTheBook;
+                existingProduct.ImagePath = "image.jpg";
+
+                databaseContext.SaveChanges();
+            }
         }
     }
 }

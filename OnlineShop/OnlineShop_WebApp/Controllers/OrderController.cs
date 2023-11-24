@@ -32,7 +32,7 @@ namespace OnlineShop_WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", orderData); 
+                return View("Index", orderData);
             }
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
             var cartViewModel = Mapping.ToCartViewModel(cart);

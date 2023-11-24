@@ -10,27 +10,30 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsRepository productRepository;
-        private readonly IAdminProductsFunctions adminProductFunction;
-        public ProductsController(IProductsRepository productRepository, IAdminProductsFunctions adminProductFunction)
+        public ProductsController(IProductsRepository productRepository)
         {
             this.productRepository = productRepository;
-            this.adminProductFunction = adminProductFunction;
         }
 
         public IActionResult ViewEdit(Guid productId)
         {
             var product = productRepository.TryGetProductById(productId);
-            if (product != null) { return View(product); }
-            return View("ErrorProduct");
+            if (product == null)
+            {
+                return View("ErrorProduct");
+            }
+            var productViewModel = Mapping.ToProductViewModel(product);
+            return View(productViewModel);
+           
         }
         public IActionResult Delete(Guid productId)
         {
-            //var product = productRepository.TryGetProductById(productId);
-            //if (product != null)
-            //{
-            //    adminProductFunction.Delete(productId);
-            //    return RedirectToAction("GetProducts", "Home");
-            //}
+            var product = productRepository.TryGetProductById(productId);
+            if (product != null)
+            {
+                productRepository.Delete(productId);
+                return RedirectToAction("GetProducts", "Home");
+            }
             return View("ErrorProduct");
         }
         public IActionResult AddProduct()
@@ -43,7 +46,8 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                adminProductFunction.Edit(product);
+                var productDB = Mapping.ToProductDB(product);
+                productRepository.Edit(productDB);
                 return RedirectToAction("GetProducts", "Home");
             }
             return View("ViewEdit", product);

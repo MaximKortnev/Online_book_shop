@@ -37,6 +37,7 @@ namespace OnlineShop_WebApp.Mappings
         {
             var productDB = new Product
             {
+                Id = product.Id,
                 Name = product.Name,
                 Author = product.Author,
                 AboutTheBook = product.AboutTheBook,
