@@ -2,7 +2,7 @@
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Interfaces;
-using OnlineShop.Db.Models;
+using OnlineShop_WebApp.Mappings;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -54,17 +54,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productDB = new Product
-                {
-                    Name = product.Name,
-                    Author = product.Author,
-                    AboutTheBook = product.AboutTheBook,
-                    AboutAuthor = product.AboutAuthor,
-                    Quote = product.Quote,
-                    Cost = product.Cost,
-                    Description = product.Description
-                };
-                productRepository.Add(productDB);
+                productRepository.Add(Mapping.ToProductDB(product));
                 return RedirectToAction("GetProducts", "Home");
             }
             return View("AddProduct", product);

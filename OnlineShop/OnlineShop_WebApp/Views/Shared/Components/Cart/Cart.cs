@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
+using OnlineShop.Db.Interfaces;
+using OnlineShop_WebApp.Mappings;
 
 namespace OnlineShop_WebApp.Views.Shared.Components.Cart
 {
@@ -7,17 +8,19 @@ namespace OnlineShop_WebApp.Views.Shared.Components.Cart
     {
         private readonly ICartsRepository cartsRepository;
 
-        public Cart(ICartsRepository cartsRepository) 
-        { 
+        public Cart(ICartsRepository cartsRepository)
+        {
             this.cartsRepository = cartsRepository;
         }
 
-        public IViewComponentResult Invoke() 
+        public IViewComponentResult Invoke()
         {
-            var carts = cartsRepository.TryGetByUserId(Constants.UserId);
-            var productCounts = carts?.Amount ?? 0;
-            
-            return View("Cart", productCounts); 
+            var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+            var cartViewModel = Mapping.ToCartViewModel(cart);
+
+            var productCounts = cartViewModel?.Amount ?? 0;
+
+            return View("Cart", productCounts);
         }
     }
 }

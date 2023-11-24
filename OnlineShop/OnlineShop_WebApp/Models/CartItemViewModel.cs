@@ -1,7 +1,6 @@
-﻿using System;
-namespace OnlineShop_WebApp.Models
+﻿namespace OnlineShop_WebApp.Models
 {
-    public class CartItem
+    public class CartItemViewModel
     {
         public Guid Id { get; set; }
         public ProductViewModel Product { get; set; }

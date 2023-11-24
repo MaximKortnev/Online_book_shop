@@ -8,7 +8,7 @@ namespace OnlineShop_WebApp.Repositories
     {
         public List<Order> orders = new List<Order>();
 
-        public void Add(Cart cart, string userId)
+        public void Add(CartViewModel cart, string userId)
         {
             var newOrder = new Order()
             {
@@ -17,7 +17,7 @@ namespace OnlineShop_WebApp.Repositories
             };
             orders.Add(newOrder);
         }
-        public void SaveOrders(Order orderData, string userId, Cart cart)
+        public void SaveOrders(Order orderData, string userId, CartViewModel cart)
         {
             string filePath = "wwwroot/orders.json";
             var order = TryGetByUserId(Constants.UserId);

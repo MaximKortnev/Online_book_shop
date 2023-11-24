@@ -1,14 +1,13 @@
 ﻿using OnlineShop_WebApp.Models;
-using System;
-using System.Collections.Generic;
+using OnlineShop.Db.Models;
 
 namespace OnlineShop_WebApp.Interfaces
 {
     public interface IOrdersRepository
     {
-        void SaveOrders(Order orderData, string userId, Cart existingCart);
+        void SaveOrders(Order orderData, string userId, CartViewModel existingCart);
         Order TryGetByUserId(string userId);
-        void Add(Cart cart, string userId);
+        void Add(CartViewModel cart, string userId);
         List<Order> GetAll();
         Order TryGetById(Guid Id);
     }
