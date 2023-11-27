@@ -11,7 +11,7 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        
+
         public Product TryGetProductById(Guid id) => databaseContext.Products.FirstOrDefault(p => p.Id == id);
 
         public List<Product> GetAll()
@@ -52,6 +52,12 @@ namespace OnlineShop.Db.Repositories
 
                 databaseContext.SaveChanges();
             }
+        }
+
+        public List<Product> Search(string productName)
+        {
+            var products = databaseContext.Products.Where(p => p.Name.Contains(productName)).ToList();
+            return products;
         }
     }
 }

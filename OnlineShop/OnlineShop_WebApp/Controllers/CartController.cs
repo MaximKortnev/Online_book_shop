@@ -14,10 +14,10 @@ namespace OnlineShop_WebApp.Controllers
             this.productRepository = productRepository;
         }
 
-        public IActionResult Index(int userId)
+        public IActionResult Index(Guid userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            if (cart == null) { }
+            if (cart == null) { return RedirectToAction("Home", "Index");}
             var cartViewModel = Mapping.ToCartViewModel(cart);
             return View(cartViewModel);
         }
