@@ -60,7 +60,6 @@ namespace OnlineShop_WebApp.Mappings
             };
         }
 
-
         public static List<CartItemViewModel> ToCartItemViewModels(List<CartItem> cartDbItems)
         {
             var cartItems = new List<CartItemViewModel>();
@@ -76,7 +75,6 @@ namespace OnlineShop_WebApp.Mappings
             }
             return cartItems;
         }
-
     }
 }
 

@@ -24,19 +24,19 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Add(Guid productId) {
             var productCard = productsRepository.TryGetProductById(productId);
             if (productCard == null) return View("ErrorAddFavorite");
-            //favoriteRepository.Add(productCard, Constants.UserId);
+            favoriteRepository.Add(productCard, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Decrease(Guid productId)
         {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorAddFavorite"); }
-            //favoriteRepository.Decrease(product, Constants.UserId);
+            favoriteRepository.Decrease(product, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Clear()
         {
-            favoriteRepository.Clear();
+            favoriteRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
     }

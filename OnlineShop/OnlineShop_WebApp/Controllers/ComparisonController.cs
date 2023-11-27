@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop.Db.Interfaces;
+using OnlineShop_WebApp.Mappings;
 
 namespace OnlineShop_WebApp.Controllers
 {
@@ -17,14 +18,30 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index()
         {
-            var сomparison = сomparisonRepository.TryGetByUserId(Constants.UserId);
-            return View(сomparison);
+            var сomparison = сomparisonRepository.GetAll(Constants.UserId);
+            var comparisonViewModel = сomparison != null ? Mapping.ToProductViewModels(сomparison) : null;
+            return View(comparisonViewModel);
         }
 
-        public IActionResult Add(Guid productId) {
-            var productCard = productsRepository.TryGetProductById(productId);
-            if (productCard == null) { return View("ErrorAddComparison");}
-            сomparisonRepository.Add(productCard, Constants.UserId);
+        public IActionResult Add(Guid productId)
+        {
+            var product = productsRepository.TryGetProductById(productId);
+            if (product == null) { return View("ErrorComparison"); }
+            сomparisonRepository.Add(product, Constants.UserId);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Delete(Guid productId)
+        {
+            var product = productsRepository.TryGetProductById(productId);
+            if (product == null) { return View("ErrorComparison"); }
+            сomparisonRepository.Delete(product, Constants.UserId);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Clear()
+        {
+            сomparisonRepository.Clear();
             return RedirectToAction("Index", "Home");
         }
     }

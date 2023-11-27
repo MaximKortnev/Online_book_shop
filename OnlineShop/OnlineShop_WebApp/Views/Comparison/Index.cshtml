@@ -1,4 +1,4 @@
-﻿@model ComparisonViewModel
+﻿@model List<ProductViewModel>
 
 @if (Model == null)
 {
@@ -7,8 +7,9 @@
         <a class="btn btn-primary btn-sm mt-2 ml-3" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться к покупкам</a>
     </div>
 }
-else{
-<div class="container">
+else
+{
+    <div class="container">
         <h1>Сравнение товаров</h1>
 
         <table class="table">
@@ -20,22 +21,23 @@ else{
                 </tr>
             </thead>
             <tbody>
-                @foreach(var product in Model.Items){
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.Author</td>
-                    <td>
-                            <a style="color:white" class=" btn btn-sm btn-success" href="#">Удалить</a>
-                            <a style="color:white" class="btn btn-sm btn-danger" href="#">В корзину</a>
-                    </td>
-                </tr>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Author</td>
+                        <td>
+                            <a style="color:white" class=" btn btn-sm btn-success" asp-area="" asp-controller="Comparison" asp-action="Delete" asp-route-productId="@product.Id">Удалить</a>
+                            <a style="color:white" class="btn btn-sm btn-danger" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-productId="@product.Id">В корзину</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
 
         <div class="text-right">
-            <a style="color:white" class="btn btn-primary" href="#">Назад</a>
-            <a style="color:white" class="btn btn-warning" href="#">Очистить</a>
+            <a style="color:white" class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Назад</a>
+            <a style="color:white" class="btn btn-warning" asp-area="" asp-controller="Comparison" asp-action="Clear">Очистить</a>
         </div>
     </div>
 }

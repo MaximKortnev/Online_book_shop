@@ -1,5 +1,6 @@
 ﻿using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShop.Db.Repositories
 {
@@ -14,24 +15,36 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product, string userId)
         {
-            var existingCompareson = TryGetByUserId(userId);
-            if (existingCompareson == null)
+            var existingProduct = databaseContext.Comparisons
+                .FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
+            if (existingProduct == null)
             {
-                var newCompare = new Comparison()
-                {
-                    UserId = userId,
-                    Items = new List<Product>{ product } 
-                };
-                databaseContext.Comparisons.Add(newCompare);
+                databaseContext.Comparisons.Add(new Comparison { Product = product, UserId = userId });
+                databaseContext.SaveChanges();
             }
-            else if (existingCompareson.Items.FirstOrDefault(prod=> prod.Id == product.Id) == null)
-            {
-                existingCompareson.Items.Add(product);
-            }
+        }
+
+        public List<Product> GetAll(string userId)
+        {
+            return databaseContext.Comparisons.Where(u => u.UserId == userId).Include(x => x.Product).Select(x => x.Product).ToList();
+        }
+
+        public void Delete(Product product, string userId)
+        {
+            var removingCompare = databaseContext.Comparisons.FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
+            databaseContext.Comparisons.Remove(removingCompare);
             databaseContext.SaveChanges();
         }
 
-        public Comparison TryGetByUserId(string userId) => databaseContext.Comparisons.FirstOrDefault(x => x.UserId == userId);
+        public void Clear()
+        {
+            var itemsToRemove = databaseContext.Comparisons.ToList();
 
+            if (itemsToRemove.Any())
+            {
+                databaseContext.Comparisons.RemoveRange(itemsToRemove);
+                databaseContext.SaveChanges();
+            }
+        }
     }
 }

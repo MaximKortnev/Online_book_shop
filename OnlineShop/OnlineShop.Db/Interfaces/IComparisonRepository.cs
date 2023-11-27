@@ -5,6 +5,8 @@ namespace OnlineShop.Db.Interfaces
     public interface IComparisonRepository
     {
         void Add(Product product, string userId);
-        public Comparison TryGetByUserId(string userId);
+        void Delete(Product product, string userId);
+        void Clear();
+        List<Product> GetAll(string userId);
     }
 }
