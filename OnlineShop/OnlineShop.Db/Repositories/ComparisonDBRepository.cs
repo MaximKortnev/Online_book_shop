@@ -15,8 +15,7 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product, string userId)
         {
-            var existingProduct = databaseContext.Comparisons
-                .FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
+            var existingProduct = databaseContext.Comparisons.FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
             if (existingProduct == null)
             {
                 databaseContext.Comparisons.Add(new Comparison { Product = product, UserId = userId });

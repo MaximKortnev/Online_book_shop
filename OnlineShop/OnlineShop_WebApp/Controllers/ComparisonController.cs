@@ -19,7 +19,7 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Index()
         {
             var сomparison = сomparisonRepository.GetAll(Constants.UserId);
-            var comparisonViewModel = сomparison != null ? Mapping.ToProductViewModels(сomparison) : null;
+            var comparisonViewModel = Mapping.ToProductViewModels(сomparison);
             return View(comparisonViewModel);
         }
 

@@ -7,7 +7,7 @@ namespace OnlineShop.Db.Interfaces
         void Add(Product product, string userId);
         void Decrease(Product product, string userId);
         void Clear(string userId);
-        Favorite TryGetByUserId(string userId);
+        List<Product> GetAll(string userId);
 
     }
 }

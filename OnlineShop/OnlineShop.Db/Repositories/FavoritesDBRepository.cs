@@ -1,5 +1,6 @@
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace OnlineShop.Db.Repositories
@@ -15,46 +16,34 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product, string userId)
         {
-            var existingFavorite = TryGetByUserId(userId);
-            if (existingFavorite == null)
+            var existingProduct = databaseContext.Favorites.FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
+            if (existingProduct == null)
             {
-                var newCompare = new Favorite()
-                {
-                    UserId = userId,
-                    Items = new List<Product> { product }
-                };
-                databaseContext.Favorites.Add(newCompare);
+                databaseContext.Favorites.Add(new Favorite { Product = product, UserId = userId });
+                databaseContext.SaveChanges();
             }
-            else if (existingFavorite.Items.FirstOrDefault(prod => prod.Id == product.Id) == null)
-            {
-                existingFavorite.Items.Add(product);
-            }
-            databaseContext.SaveChanges();
         }
 
         public void Decrease(Product product, string userId)
         {
-            var existingFavorite = TryGetByUserId(userId);
-            if (existingFavorite != null)
-            {
-                var existingCardItem = existingFavorite.Items.FirstOrDefault(prod => prod != null && prod.Id == product.Id);
-
-                if (existingCardItem != null) existingFavorite.Items.Remove(existingCardItem);
-                if (existingFavorite.Items.Count == 0) Clear(userId);
-            }
+            var removingFavorite = databaseContext.Favorites.FirstOrDefault(x => x.UserId == userId && x.Product.Id == product.Id);
+            databaseContext.Favorites.Remove(removingFavorite);
             databaseContext.SaveChanges();
         }
 
         public void Clear(string userId)
         {
-            var existingFavorites = TryGetByUserId(userId);
-            if (existingFavorites != null)
+            var itemsToRemove = databaseContext.Favorites.ToList();
+
+            if (itemsToRemove.Any())
             {
-                databaseContext.Favorites.Remove(existingFavorites);
+                databaseContext.Favorites.RemoveRange(itemsToRemove);
                 databaseContext.SaveChanges();
             }
         }
-
-        public Favorite TryGetByUserId(string userId) => databaseContext.Favorites.FirstOrDefault(x => x.UserId == userId);
+        public List<Product> GetAll(string userId)
+        {
+            return databaseContext.Favorites.Where(u => u.UserId == userId).Include(x => x.Product).Select(x => x.Product).ToList();
+        }
     }
 };
