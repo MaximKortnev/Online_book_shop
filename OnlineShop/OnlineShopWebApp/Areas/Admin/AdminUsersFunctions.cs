@@ -10,31 +10,20 @@ namespace OnlineShopWebApp.Areas.Admin
 {
     public class AdminUsersFunctions : IAdminUsersFunctions
     {
-        public List<User> Read(string filePath)
+        private readonly IUsersRepository usersRepository;
+        public AdminUsersFunctions(IUsersRepository usersRepository)
         {
-            var json = "";
-
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                json = reader.ReadToEnd();
-            }
-            return JsonConvert.DeserializeObject<List<User>>(json);
-        }
-        public User TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public List<User> GetAll()
-        {
-            var jsonFilePath = "wwwroot/users.json";
-            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
+           this.usersRepository = usersRepository;
         }
         public void EditRole(User user)
         {
-            var users = GetAll();
+            var users = usersRepository.GetAll();
             users[users.FindIndex(x => x.Id == user.Id)] = user;
             SaveAll(users);
         }
         public void Delete(Guid Id)
         {
-            var users = GetAll();
+            var users = usersRepository.GetAll();
             users.RemoveAt(users.FindIndex(x => x.Id == Id));
             SaveAll(users);
         }

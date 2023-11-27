@@ -9,17 +9,19 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly IAdminUsersFunctions adminUsers;
+        private readonly IUsersRepository usersRepository;
         private readonly IRolesRepository roleRepository;
-        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository roleRepository)
+        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository roleRepository, IUsersRepository usersRepository)
         {
             this.adminUsers = adminUsers;
             this.roleRepository = roleRepository;
+            this.usersRepository = usersRepository;
         }
 
         public IActionResult Info(Guid Id)
         {
             ViewBag.AllRoles = roleRepository.GetAll();
-            var user = adminUsers.TryGetById(Id);
+            var user = usersRepository.TryGetById(Id);
             return View(user);
         }
 
@@ -28,7 +30,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             var correctRole = roleRepository.GetAll().FirstOrDefault(x => x.Name == role);
             if (correctRole == null) { return View("BadRole"); }
-            var user = adminUsers.TryGetById(Id);
+            var user = usersRepository.TryGetById(Id);
             user.Role.Name = role;
             adminUsers.EditRole(user);
             return RedirectToAction("GetUsers", "Home");
