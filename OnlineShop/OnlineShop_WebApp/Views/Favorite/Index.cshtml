@@ -1,10 +1,10 @@
-﻿@model Favorite
+﻿@model FavoriteViewModel
 
 @if (Model == null)
 {
      <div class="container mt-5 text-center">
         <h1>Список избранного пуст</h1>
-        <a class="btn btn-primary btn-sm mt-2 ml-3" href="/home/index/" role="button">Вернуться к покупкам</a>
+        <a class="btn btn-primary btn-sm mt-2 ml-3" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться к покупкам</a>
     </div>
 }
 else{
@@ -25,8 +25,8 @@ else{
                     <td>@item.Name</td>
                     <td>@item.Cost</td>
                     <td>
-                        <a style="color:white" class=" btn btn-sm btn-success" href="/favorite/Decrease?productId=@item.Id">Удалить</a>
-                        <a style="color:white" class="btn btn-sm btn-danger" href="/cart/add?productId=@item.Id">В корзину</a>
+                            <a style="color:white" class=" btn btn-sm btn-success" asp-area="" asp-controller="Favorite" asp-action="Decrease" asp-route-productId="@item.Id">Удалить</a>
+                            <a style="color:white" class="btn btn-sm btn-danger" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-productId="@item.Id">В корзину</a>
                     </td>
                 </tr>
                 }

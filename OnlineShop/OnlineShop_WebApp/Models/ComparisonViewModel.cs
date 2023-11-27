@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineShop_WebApp.Models
+﻿namespace OnlineShop_WebApp.Models
 {
-    public class Comparison
+    public class ComparisonViewModel
     {
         public Guid Id { get; set; }
         public string UserId { get; set; }

@@ -24,7 +24,7 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Add(Guid productId) {
             var productCard = productsRepository.TryGetProductById(productId);
             if (productCard == null) { return View("ErrorAddComparison");}
-            //сomparisonRepository.Add(productCard, Constants.UserId);
+            сomparisonRepository.Add(productCard, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
     }

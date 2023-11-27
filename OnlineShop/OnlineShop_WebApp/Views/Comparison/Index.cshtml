@@ -1,10 +1,10 @@
-﻿@model Comparison
+﻿@model ComparisonViewModel
 
 @if (Model == null)
 {
     <div class="container mt-5 text-center">
         <h1>Список сравнения пуст</h1>
-        <a class="btn btn-primary btn-sm mt-2 ml-3" href="/home/index/" role="button">Вернуться к покупкам</a>
+        <a class="btn btn-primary btn-sm mt-2 ml-3" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться к покупкам</a>
     </div>
 }
 else{
