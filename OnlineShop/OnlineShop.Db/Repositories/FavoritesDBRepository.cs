@@ -33,7 +33,9 @@ namespace OnlineShop.Db.Repositories
 
         public void Clear(string userId)
         {
-            var itemsToRemove = databaseContext.Favorites.ToList();
+            var itemsToRemove = databaseContext.Favorites
+                .Where(x => x.UserId == userId)
+                .ToList();
 
             if (itemsToRemove.Any())
             {

@@ -35,9 +35,11 @@ namespace OnlineShop.Db.Repositories
             databaseContext.SaveChanges();
         }
 
-        public void Clear()
+        public void Clear(string userId)
         {
-            var itemsToRemove = databaseContext.Comparisons.ToList();
+            var itemsToRemove = databaseContext.Comparisons
+        .Where(x => x.UserId == userId)
+        .ToList();
 
             if (itemsToRemove.Any())
             {
