@@ -1,4 +1,4 @@
-﻿@model Order
+﻿@model OrderViewModel
 @if (Model == null)
 {
     <h1>Bad</h1>
@@ -23,10 +23,10 @@ else
                             <p class="card-text">Промокод: <strong>@Model.PromoCode</strong></p>
                             <p class="card-text">Итоговая стоимость: <strong>@Model.TotalCost</strong></p>
                             <p class="card-text" style="display: inline;">Статус:</p>
-                            <select asp-for="Status" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-control" id="selectStatus" name="status" style="display: inline; width: auto;"></select>
+                            <select asp-for="Status" asp-items="Html.GetEnumSelectList<OrderStatusViewModel>()" class="form-control" id="selectStatus" name="status" style="display: inline; width: auto;"></select>
                             <h6 class="card-subtitle mb-2 mt-2 text-muted">Товары в заказе:</h6>
                             <ul>
-                                @foreach (var item in Model.ListProducts.Items)
+                                @foreach (var item in Model.ListProducts)
                                 {
                                     <li>@item.Product.Name - @item.Product.Cost руб. x @item.Amount шт.</li>
                                 }

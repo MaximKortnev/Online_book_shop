@@ -2,7 +2,7 @@
 
 namespace OnlineShop_WebApp.Models
 {
-        public enum OrderStatus
+        public enum OrderStatusViewModel
         {
             [Display(Name = "Создан")]
             Created = 0,

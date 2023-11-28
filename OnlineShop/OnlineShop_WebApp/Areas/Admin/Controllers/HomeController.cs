@@ -2,6 +2,7 @@
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
+using OnlineShop_WebApp.Models;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -28,7 +29,13 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         public IActionResult GetOrders()
         {
             var orders = orderRepository.GetAll();
-            return View(orders);
+            var ordersViewModel = new List<OrderViewModel>();
+
+            foreach (var order in orders)
+            {
+                ordersViewModel.Add(Mapping.ToOrderViewModel(order));
+            }
+            return View(ordersViewModel);
         }
 
         public IActionResult GetUsers()

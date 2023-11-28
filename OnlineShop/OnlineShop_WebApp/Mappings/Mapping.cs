@@ -75,6 +75,62 @@ namespace OnlineShop_WebApp.Mappings
             }
             return cartItems;
         }
+        public static List<CartItem> ToCartItemDB(List<CartItemViewModel> cartItems)
+        {
+            var cartItemsDB = new List<CartItem>();
+            foreach (var cartDbItem in cartItems)
+            {
+                var cartItem = new CartItem
+                {
+                    Id = cartDbItem.Id,
+                    Amount = cartDbItem.Amount,
+                    Product = ToProductDB(cartDbItem.Product)
+                };
+                cartItemsDB.Add(cartItem);
+            }
+            return cartItemsDB;
+        }
+
+        public static Order ToOrderDB(OrderViewModel order)
+        {
+            var orderDB = new Order
+            {
+                Id = order.Id,
+                UserId = order.UserId,
+                FullName = order.FullName,
+                Address = order.Address,
+                Phone = order.Phone,
+                Email = order.Email,
+                DeliveryMethod = order.DeliveryMethod,
+                PaymentMethod = order.PaymentMethod,
+                PromoCode = order.PromoCode,
+                TotalCost = order.TotalCost,
+                Status = (OrderStatus)(OrderStatusViewModel)(int)order.Status,
+                Data = order.Data
+            };
+            return orderDB;
+        }
+        public static OrderViewModel ToOrderViewModel(Order order)
+        {
+            var orderViewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                UserId = order.UserId,
+                FullName = order.FullName,
+                Address = order.Address,
+                Phone = order.Phone,
+                Email = order.Email,
+                DeliveryMethod = order.DeliveryMethod,
+                PaymentMethod = order.PaymentMethod,
+                PromoCode = order.PromoCode,
+                TotalCost = order.TotalCost,
+                ListProducts = ToCartItemViewModels(order.ListProducts),
+                Status = (OrderStatusViewModel)(OrderStatus)(int)order.Status,
+                Data = order.Data
+            };
+            return orderViewModel;
+
+        }
     }
 }
 
