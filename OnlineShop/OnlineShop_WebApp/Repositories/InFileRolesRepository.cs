@@ -9,15 +9,15 @@ namespace OnlineShop_WebApp.Repositories
 {
     public class InFileRolesRepository: IRolesRepository 
     {
-        public List<Roles> roles = new List<Roles>() { };
+        public List<RoleViewModel> roles = new List<RoleViewModel>() { };
         public InFileRolesRepository() {
             roles = LoadRolesFromFile();
         }
 
-        public List<Roles> LoadRolesFromFile()
+        public List<RoleViewModel> LoadRolesFromFile()
         {
             var filePath = "wwwroot/roles.txt";
-            List<Roles> roles = new List<Roles>();
+            List<RoleViewModel> roles = new List<RoleViewModel>();
 
             if (File.Exists(filePath))
             {
@@ -25,12 +25,12 @@ namespace OnlineShop_WebApp.Repositories
 
                 foreach (var roleLine in roleLines)
                 {
-                    roles.Add(new Roles { Name = roleLine });
+                    roles.Add(new RoleViewModel { Name = roleLine });
                 }
             }
             return roles;
         }
-        public void Save(List<Roles> roles)
+        public void Save(List<RoleViewModel> roles)
         {
             var filePath = "wwwroot/roles.txt";
             List<string> roleLines = new List<string>();
@@ -40,12 +40,12 @@ namespace OnlineShop_WebApp.Repositories
             }
             File.WriteAllLines(filePath, roleLines);
         }
-        public List<Roles> GetAll()
+        public List<RoleViewModel> GetAll()
         {
             return roles;
         }
 
-        public void Add(Roles role)
+        public void Add(RoleViewModel role)
         {
             roles.Add(role);
             Save(roles);

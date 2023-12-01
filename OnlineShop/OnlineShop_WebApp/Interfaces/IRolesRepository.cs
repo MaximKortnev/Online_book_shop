@@ -5,8 +5,8 @@ namespace OnlineShop_WebApp.Interfaces
 {
     public interface IRolesRepository
     {
-        void Add(Roles role);
+        void Add(RoleViewModel role);
         void Delete(string name);
-        List<Roles> GetAll();
+        List<RoleViewModel> GetAll();
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db;
+using Microsoft.AspNetCore.Identity;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -10,10 +10,11 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class RolesController : Controller
     {
-        private readonly IRolesRepository rolesRepository;
-        public RolesController(IRolesRepository rolesRepository)
+
+        private readonly RoleManager<IdentityRole> rolesManager;
+        public RolesController(RoleManager<IdentityRole> rolesManager)
         {
-            this.rolesRepository = rolesRepository;
+            this.rolesManager = rolesManager;
         }
         public IActionResult Add()
         {
@@ -21,23 +22,27 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Roles role)
+        public IActionResult Add(RoleViewModel role)
         {
-            if (rolesRepository.GetAll().Any(r => r.Name.ToLower() == role.Name.ToLower()))
+            var result = rolesManager.CreateAsync(new IdentityRole(role.Name)).Result;
+            if (result.Succeeded)
             {
-                ModelState.AddModelError("", "Роль с таким именем уже существует");
-            }
-            if (ModelState.IsValid)
-            {
-                rolesRepository.Add(role);
                 return RedirectToAction("GetRoles", "Home");
             }
-            return View("Add", role);
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(role);
         }
 
         public IActionResult Delete(string name)
         {
-            rolesRepository.Delete(name);
+            var role = rolesManager.FindByNameAsync(name).Result;
+            if (role != null)
+            {
+                rolesManager.DeleteAsync(role).Wait();
+            }
             return RedirectToAction("GetRoles", "Home");
         }
     }

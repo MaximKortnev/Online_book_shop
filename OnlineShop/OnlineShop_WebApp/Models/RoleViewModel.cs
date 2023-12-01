@@ -2,7 +2,7 @@
 
 namespace OnlineShop_WebApp.Models
 {
-    public class Roles
+    public class RoleViewModel
     {
         [Required(ErrorMessage = "Не указано имя роли")]
         [StringLength(25, MinimumLength = 3, ErrorMessage = "Имя роли должно содержать от 3 до 25 символов")]

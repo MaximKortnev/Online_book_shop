@@ -18,12 +18,15 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         private readonly IOrdersRepository orderRepository;
         private readonly IRolesRepository rolesRepository;
         private readonly UserManager<User> usersManager;
-        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, UserManager<User> usersManager)
+        private readonly RoleManager<IdentityRole> rolesManager;
+        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, UserManager<User> usersManager, RoleManager<IdentityRole> rolesManager)
         {
             this.productRepository = productRepository;
             this.orderRepository = orderRepository;
             this.rolesRepository = rolesRepository;
             this.usersManager = usersManager;
+            this.rolesManager = rolesManager;
+            this.rolesManager = rolesManager;
         }
 
         public IActionResult Index()
@@ -46,13 +49,13 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         public IActionResult GetUsers()
         {
             var users = usersManager.Users.ToList();
-            return View(users.Select(x=>x.ToUserViewModel()).ToList());
+            return View(users.Select(x => x.ToUserViewModel()).ToList());
         }
 
         public IActionResult GetRoles()
         {
-            var roles = rolesRepository.GetAll();
-            return View(roles);
+            var roles = rolesManager.Roles.ToList();
+            return View(roles.Select(x => new RoleViewModel { Name = x.Name }).ToList());
         }
 
         public IActionResult GetProducts()
