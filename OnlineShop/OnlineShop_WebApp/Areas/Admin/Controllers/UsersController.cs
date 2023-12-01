@@ -16,19 +16,21 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly IAdminUsersFunctions adminUsers;
-        private readonly IRolesRepository rolesRepository;
+        private readonly RoleManager<IdentityRole> rolesManager;
 
         private readonly UserManager<User> usersManager;
-        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository rolesRepository, UserManager<User> usersManager)
+        public UsersController(IAdminUsersFunctions adminUsers, RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
         {
             this.adminUsers = adminUsers;
-            this.rolesRepository = rolesRepository;
             this.usersManager = usersManager;
+            this.rolesManager = rolesManager;
         }
 
         public IActionResult Info(string name)
         {
-            ViewBag.AllRoles = rolesRepository.GetAll();
+            var roles = rolesManager.Roles.ToList();
+            ViewBag.AllRoles = roles.Select(x => new RoleViewModel { Name = x.Name }).ToList();
+            
             var user = usersManager.FindByNameAsync(name).Result;
             if (user != null)
             {
@@ -42,16 +44,6 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Add(UserViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                adminUsers.Add(user);
-                return RedirectToAction("GetUsers", "Home");
-            }
-            return View("Add", user);
-        }
         public IActionResult Save(Guid Id, string role)
         {
             var correctRole = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);

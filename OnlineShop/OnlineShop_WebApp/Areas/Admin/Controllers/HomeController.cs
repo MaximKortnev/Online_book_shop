@@ -16,16 +16,13 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     {
         private readonly IProductsRepository productRepository;
         private readonly IOrdersRepository orderRepository;
-        private readonly IRolesRepository rolesRepository;
         private readonly UserManager<User> usersManager;
         private readonly RoleManager<IdentityRole> rolesManager;
-        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, UserManager<User> usersManager, RoleManager<IdentityRole> rolesManager)
+        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, UserManager<User> usersManager, RoleManager<IdentityRole> rolesManager)
         {
             this.productRepository = productRepository;
             this.orderRepository = orderRepository;
-            this.rolesRepository = rolesRepository;
             this.usersManager = usersManager;
-            this.rolesManager = rolesManager;
             this.rolesManager = rolesManager;
         }
 
