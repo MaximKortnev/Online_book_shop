@@ -2,9 +2,12 @@
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
+using Microsoft.AspNetCore.Authorization;
+using OnlineShop.Db;
 
 namespace OnlineShop_WebApp.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ICartsRepository cartRepository;

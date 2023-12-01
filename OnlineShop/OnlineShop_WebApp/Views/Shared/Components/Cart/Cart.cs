@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
+using OnlineShop.Db;
 
 namespace OnlineShop_WebApp.Views.Shared.Components.Cart
 {

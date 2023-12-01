@@ -2,12 +2,14 @@
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Models;
-using OnlineShop_WebApp.Interfaces;
+using OnlineShop.Db;
 using OnlineShop_WebApp.Mappings;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository ordersRepository;
