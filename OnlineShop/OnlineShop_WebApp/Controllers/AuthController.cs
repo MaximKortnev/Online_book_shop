@@ -22,9 +22,9 @@ namespace OnlineShop_WebApp.Controllers
             _singInManager = singInManager;
             this._userManager = _userManager;
         }
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new LoginUser() { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace OnlineShop_WebApp.Controllers
                 var result = _singInManager.PasswordSignInAsync(loginUser.Login, loginUser.Password, loginUser.rememberMe, false).Result;
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(loginUser.ReturnUrl);
                 }
                 ModelState.AddModelError("", "Неправильный пароль");
             }

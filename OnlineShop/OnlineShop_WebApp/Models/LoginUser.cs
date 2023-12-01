@@ -14,5 +14,7 @@ namespace OnlineShop_WebApp.Models
         public string Password { get; set; }
 
         public bool rememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
