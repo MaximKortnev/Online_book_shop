@@ -5,7 +5,7 @@
         <div class="card-body">
             <h2 class="card-title">Вход</h2>
             <form method="post">
-                <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+                <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
                 <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
                 <div class="form-group">
                     <label asp-for="Login" class="form-label">Введите логин</label>

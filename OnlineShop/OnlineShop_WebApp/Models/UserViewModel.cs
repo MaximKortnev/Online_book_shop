@@ -31,6 +31,6 @@ namespace OnlineShop_WebApp.Models
         public string NickName { get; set; } = string.Empty;
 
         public Roles? Role { get; set; }
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OnlineShop.Db.Models;
 using OnlineShop_WebApp.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Mappings
 {
@@ -129,7 +130,15 @@ namespace OnlineShop_WebApp.Mappings
                 Data = order.Data
             };
             return orderViewModel;
+        }
 
+        public static UserViewModel ToUserViewModel(this User user)
+        {
+            return new UserViewModel
+            {
+                Login = user.UserName,
+                Email = user.Email
+            };
         }
     }
 }
