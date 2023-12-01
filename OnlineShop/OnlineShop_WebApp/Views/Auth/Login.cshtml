@@ -24,7 +24,7 @@
                 <button type="submit" class="btn btn-primary" asp-area="" asp-controller="Auth" asp-action="Login">Войти</button>
             </form>
             <div class="mt-3">
-                <p>Нет аккаунта? <a asp-area="" asp-controller="Auth" asp-action="Registration">Зарегистрируйтесь</a>.</p>
+                <p>Нет аккаунта? <a asp-area="" asp-controller="Auth" asp-action="Registration" asp-route-ReturnUrl="@Model.ReturnUrl">Зарегистрируйтесь</a>.</p>
             </div>
         </div>
     </div>

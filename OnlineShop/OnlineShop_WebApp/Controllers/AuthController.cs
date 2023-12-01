@@ -35,15 +35,15 @@ namespace OnlineShop_WebApp.Controllers
                 var result = _singInManager.PasswordSignInAsync(loginUser.Login, loginUser.Password, loginUser.rememberMe, false).Result;
                 if (result.Succeeded)
                 {
-                    return Redirect(loginUser.ReturnUrl);
+                    return Redirect(loginUser.ReturnUrl ?? "/Home");
                 }
                 ModelState.AddModelError("", "Неправильный пароль");
             }
             return View("Login", loginUser);
         }
-        public IActionResult Registration()
+        public IActionResult Registration(string returnUrl)
         {
-            return View();
+            return View(new UserViewModel() { ReturnUrl = returnUrl });
         }
         [HttpPost]
         public async Task<IActionResult> Registration(UserViewModel userView)
@@ -56,7 +56,7 @@ namespace OnlineShop_WebApp.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Пользователь");
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(userView.ReturnUrl ?? "/Home");
                 }
 
                 foreach (var error in result.Errors)
