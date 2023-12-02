@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
 using OnlineShop_WebApp.Models;

@@ -20,7 +20,7 @@ else
                             <select id="roleSelect" name="role">
                                 @foreach (var role in ViewBag.AllRoles)
                                 {
-                                    <option value="@role.Name">@role.Name</option>
+                                    <option value="@role.Name" selected="@(Model.Role?.Name == role.Name ? "selected" : null)">@role.Name</option>
                                 }
                             </select>
                             <input type="hidden" name="Login" value="@Model.Login" />
