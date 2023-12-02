@@ -55,7 +55,7 @@ namespace OnlineShop_WebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Пользователь");
+                    await _userManager.AddToRoleAsync(user, "User");
                     return Redirect(userView.ReturnUrl ?? "/Home");
                 }
 
