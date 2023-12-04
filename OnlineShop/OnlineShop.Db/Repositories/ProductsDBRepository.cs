@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Repositories
 
         public void Add(Product product)
         {
-            product.ImagePath = "image.jpg";
+            //product.ImagePath = "image.jpg";
             databaseContext.Products.Add(product);
             databaseContext.SaveChanges();
         }
@@ -48,7 +48,7 @@ namespace OnlineShop.Db.Repositories
                 existingProduct.Quote = product.Quote;
                 existingProduct.AboutAuthor = product.AboutAuthor;
                 existingProduct.AboutTheBook = product.AboutTheBook;
-                existingProduct.ImagePath = "image.jpg";
+                existingProduct.ImagePath = product.ImagePath;
 
                 databaseContext.SaveChanges();
             }

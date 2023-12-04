@@ -44,7 +44,8 @@ namespace OnlineShop_WebApp.Mappings
                 AboutAuthor = product.AboutAuthor,
                 Quote = product.Quote,
                 Cost = product.Cost,
-                Description = product.Description
+                Description = product.Description,
+                ImagePath = product.ImagePath
             };
             return productDB;
         }

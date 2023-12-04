@@ -12,9 +12,11 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsRepository productRepository;
-        public ProductsController(IProductsRepository productRepository)
+        private readonly IWebHostEnvironment appEnvironment;
+        public ProductsController(IProductsRepository productRepository, IWebHostEnvironment appEnvironment)
         {
             this.productRepository = productRepository;
+            this.appEnvironment = appEnvironment;
         }
 
         public IActionResult ViewEdit(Guid productId)
@@ -26,7 +28,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             }
             var productViewModel = Mapping.ToProductViewModel(product);
             return View(productViewModel);
-           
+
         }
         public IActionResult Delete(Guid productId)
         {
@@ -60,8 +62,23 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                productRepository.Add(Mapping.ToProductDB(product));
-                return RedirectToAction("GetProducts", "Home");
+                if (product.ImageFile != null)
+                {
+                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
+                    if (!Directory.Exists(productImagesPath))
+                    {
+                        Directory.CreateDirectory(productImagesPath);
+                    }
+
+                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
+                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
+                    {
+                        product.ImageFile.CopyTo(fileStream);
+                    }
+                    product.ImagePath = "/images/products/" + filename;
+                    productRepository.Add(Mapping.ToProductDB(product));
+                    return RedirectToAction("GetProducts", "Home");
+                }
             }
             return View("AddProduct", product);
         }
