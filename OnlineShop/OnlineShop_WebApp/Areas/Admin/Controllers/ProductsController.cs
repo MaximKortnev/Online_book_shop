@@ -50,9 +50,25 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productDB = Mapping.ToProductDB(product);
-                productRepository.Edit(productDB);
-                return RedirectToAction("GetProducts", "Home");
+                if (product.ImageFile != null)
+                {
+                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
+                    if (!Directory.Exists(productImagesPath))
+                    {
+                        Directory.CreateDirectory(productImagesPath);
+                    }
+
+                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
+                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
+                    {
+                        product.ImageFile.CopyTo(fileStream);
+                    }
+                    product.ImagePath = "/images/products/" + filename;
+
+                    var productDB = Mapping.ToProductDB(product);
+                    productRepository.Edit(productDB);
+                    return RedirectToAction("GetProducts", "Home");
+                } 
             }
             return View("ViewEdit", product);
         }
