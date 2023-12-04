@@ -4,8 +4,6 @@ using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Repositories;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
-using OnlineShop_WebApp.Interfaces;
-using OnlineShop_WebApp.Areas.Admin;
 using Serilog;
 
 
@@ -33,7 +31,6 @@ builder.Services.AddTransient<ICartsRepository, CartsDBRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDBRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDBRepository>();
 builder.Services.AddTransient<IComparisonRepository, ComparisonDBRepository>();
-builder.Services.AddSingleton<IAdminUsersFunctions, AdminUsersFunctions>();
 
 var app = builder.Build();
 

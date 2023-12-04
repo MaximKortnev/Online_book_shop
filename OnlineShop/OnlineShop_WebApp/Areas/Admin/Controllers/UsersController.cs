@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop_WebApp.Mappings;
 using OnlineShop.Db.Models;
@@ -15,13 +14,11 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class UsersController : Controller
     {
-        private readonly IAdminUsersFunctions adminUsers;
         private readonly RoleManager<IdentityRole> rolesManager;
 
         private readonly UserManager<User> usersManager;
-        public UsersController(IAdminUsersFunctions adminUsers, RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
+        public UsersController(RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
         {
-            this.adminUsers = adminUsers;
             this.usersManager = usersManager;
             this.rolesManager = rolesManager;
         }
@@ -118,28 +115,42 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             }
             return View();
         }
-        //public IActionResult Edit(Guid Id)
-        //{
-        //    //ViewBag.AllRoles = rolesRepository.GetAll();
-        //    //var user = adminUsers.TryGetById(Id);
-        //    //if (user != null)
-        //    //{
-        //    //    return View(user);
-        //    //}
-        //    return View("ExistUser");
-        //}
+        public IActionResult Edit(string name)
+        {
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
 
-        //[HttpPost]
-        //public IActionResult Edit(UserViewModel user, string role)
-        //{
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    //    user.Role = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
-        //    //    adminUsers.Edit(user);
-        //    //    return RedirectToAction("GetUsers", "Home");
-        //    //}
-        //    return View("Edit", user);
-        //}
+            var userViewModel = user.ToUserViewModel();
 
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UserViewModel userViewModel, string oldName)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = usersManager.FindByNameAsync(oldName).Result;
+
+                if (user != null)
+                {
+                    user.UserName = userViewModel.Login;
+                    user.Email = userViewModel.Email;
+
+                    var result = usersManager.UpdateAsync(user).Result;
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Ошибка при обновлении пользователя.");
+                    }
+                }
+            }
+            return View(userViewModel);
+        }
     }
+
 }
