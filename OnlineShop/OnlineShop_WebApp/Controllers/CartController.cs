@@ -19,7 +19,7 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index(Guid userId)
         {
-            var cart = cartRepository.TryGetByUserId(Constants.UserId);
+            var cart = cartRepository.TryGetByUserId(User.Identity.Name);
             if (cart == null) { return View();}
             var cartViewModel = Mapping.ToCartViewModel(cart);
             return View(cartViewModel);
@@ -27,18 +27,18 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Add(Guid productId) { 
             var product = productRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorAddCart");}
-            cartRepository.Add(product, Constants.UserId);
+            cartRepository.Add(product, User.Identity.Name);
             return RedirectToAction("Index");
         }
         public IActionResult DecreaseAmount(Guid productId)
         {
             var product = productRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorAddCart"); }
-            cartRepository.DecreaseAmount(product, Constants.UserId);
+            cartRepository.DecreaseAmount(product, User.Identity.Name);
             return RedirectToAction("Index");
         }
         public IActionResult Clear() {
-            cartRepository.Clear(Constants.UserId);
+            cartRepository.Clear(User.Identity.Name);
             return RedirectToAction("Index");
         }
     }

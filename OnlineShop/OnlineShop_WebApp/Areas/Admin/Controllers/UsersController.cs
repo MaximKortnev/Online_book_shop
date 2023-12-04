@@ -28,12 +28,17 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
 
         public IActionResult Info(string name)
         {
-            var roles = rolesManager.Roles.ToList();
-            ViewBag.AllRoles = roles.Select(x => new RoleViewModel { Name = x.Name }).ToList();
-            
             var user = usersManager.FindByNameAsync(name).Result;
             if (user != null)
             {
+                var roles = usersManager.GetRolesAsync(user).Result;
+                var listRoles = roles.Select(x => new RoleViewModel { Name = x }).ToList();
+                string allRoles = "";
+                foreach (var role in listRoles)
+                {
+                    allRoles += $"{role.Name}, ";
+                }
+                ViewBag.AllRoles = allRoles.TrimEnd(' ', ',');
                 return View(user.ToUserViewModel());
             }
             return View("ExistUser");
@@ -44,20 +49,34 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Save(string name, string role)
+        public IActionResult EditRights(string name)
         {
             var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
             var roles = usersManager.GetRolesAsync(user).Result;
-            //var correctRole = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
-            //if (correctRole == null) { return View("BadRole"); }
-            //var user = adminUsers.TryGetById(Id);
-            //if (user != null)
-            //{
-            //    user.Role.Name = role;
-            //    adminUsers.EditRole(user);
-            //    return RedirectToAction("GetUsers", "Home");
-            //}
-            return View("ExistUser");
+            var allRoles = rolesManager.Roles.ToList();
+
+            var model = new EditRightsViewModel
+            {
+                UserName = user.UserName,
+                Roles = roles.Select(x => new RoleViewModel { Name = x }).ToList(),
+                AllRoles = allRoles.Select(x => new RoleViewModel { Name = x.Name }).ToList()
+            };
+            return View(model);
+
+        }
+        [HttpPost]
+        public IActionResult SaveEditRights(string name, Dictionary<string, string> userRolesViewModel)
+        {
+            var userSelectedRoles = userRolesViewModel.Select(x => x.Key);
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
+            var roles = usersManager.GetRolesAsync(user).Result;
+
+            usersManager.RemoveFromRolesAsync(user, roles).Wait();
+            usersManager.AddToRolesAsync(user, userSelectedRoles).Wait();
+
+            return Redirect($"/Admin/Users/Info?name={name}");
         }
 
         public IActionResult Delete(string name)
@@ -99,28 +118,28 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             }
             return View();
         }
-        public IActionResult Edit(Guid Id)
-        {
-            //ViewBag.AllRoles = rolesRepository.GetAll();
-            //var user = adminUsers.TryGetById(Id);
-            //if (user != null)
-            //{
-            //    return View(user);
-            //}
-            return View("ExistUser");
-        }
+        //public IActionResult Edit(Guid Id)
+        //{
+        //    //ViewBag.AllRoles = rolesRepository.GetAll();
+        //    //var user = adminUsers.TryGetById(Id);
+        //    //if (user != null)
+        //    //{
+        //    //    return View(user);
+        //    //}
+        //    return View("ExistUser");
+        //}
 
-        [HttpPost]
-        public IActionResult Edit(UserViewModel user, string role)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    user.Role = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
-            //    adminUsers.Edit(user);
-            //    return RedirectToAction("GetUsers", "Home");
-            //}
-            return View("Edit", user);
-        }
+        //[HttpPost]
+        //public IActionResult Edit(UserViewModel user, string role)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    user.Role = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
+        //    //    adminUsers.Edit(user);
+        //    //    return RedirectToAction("GetUsers", "Home");
+        //    //}
+        //    return View("Edit", user);
+        //}
 
     }
 }

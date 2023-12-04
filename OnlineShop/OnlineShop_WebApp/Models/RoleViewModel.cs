@@ -8,5 +8,11 @@ namespace OnlineShop_WebApp.Models
         [StringLength(25, MinimumLength = 3, ErrorMessage = "Имя роли должно содержать от 3 до 25 символов")]
         [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string Name { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var role = (RoleViewModel)obj;
+            return Name == role.Name;
+        }
     }
 }
