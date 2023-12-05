@@ -19,7 +19,6 @@ namespace OnlineShop.Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            SeedData.Initialize(modelBuilder);
         }
     }
 }
