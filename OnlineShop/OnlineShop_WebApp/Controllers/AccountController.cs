@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
+using OnlineShop_WebApp.Areas.Admin.Models;
 using OnlineShop_WebApp.Mappings;
 using OnlineShop_WebApp.Models;
 
@@ -12,11 +13,13 @@ namespace OnlineShop_WebApp.Controllers
         private readonly IOrdersRepository orderRepository;
         private readonly UserManager<User> usersManager;
         private readonly IWebHostEnvironment appEnvironment;
-        public AccountController(IOrdersRepository orderRepository, UserManager<User> usersManager, IWebHostEnvironment appEnvironment)
+        private readonly SignInManager<User> _singInManager;
+        public AccountController(IOrdersRepository orderRepository, UserManager<User> usersManager, IWebHostEnvironment appEnvironment, SignInManager<User> singInManager)
         {
             this.orderRepository = orderRepository;
             this.usersManager = usersManager;
             this.appEnvironment = appEnvironment;
+            _singInManager = singInManager;
         }
 
 
@@ -50,7 +53,8 @@ namespace OnlineShop_WebApp.Controllers
         {
             var user = usersManager.FindByNameAsync(name).Result;
             if (user == null) { return View("ExistUser"); }
-            return View(new UserEditAvatarViewModel { 
+            return View(new UserEditAvatarViewModel
+            {
                 Login = user.UserName,
                 AvatarImagePath = user.AvatarImagePath
             });
@@ -80,5 +84,63 @@ namespace OnlineShop_WebApp.Controllers
             return RedirectToAction("Main");
         }
 
+        public IActionResult Edit(string name)
+        {
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
+
+            var userViewModel = user.ToUserViewModel();
+
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SaveEdit(UserViewModel userViewModel, string oldName)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userViewModel.Password != userViewModel.ConfirmPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Пароли не совпадают");
+                }
+                else
+                {
+                    var user = usersManager.FindByNameAsync(oldName).Result;
+
+                    if (user != null)
+                    {
+                        user.UserName = userViewModel.Login;
+                        user.Email = userViewModel.Email;
+                        user.NickName = userViewModel.NickName;
+                        var newHashPassword = usersManager.PasswordHasher.HashPassword(user, userViewModel.Password);
+                        user.PasswordHash = newHashPassword;
+
+                        var result = usersManager.UpdateAsync(user).Result;
+
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Main");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Ошибка при обновлении пользователя.");
+                        }
+                    }
+                }
+            }
+            return View(userViewModel);
+        }
+        public IActionResult Delete(string name)
+        {
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user != null)
+            {
+                usersManager.DeleteAsync(user).Wait();
+                _singInManager.SignOutAsync().Wait();
+                return RedirectToAction("Login", "Auth");
+            }
+            return View("ExistUser");
+
+        }
     }
 }

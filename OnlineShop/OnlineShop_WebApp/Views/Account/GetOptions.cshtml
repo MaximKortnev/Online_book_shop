@@ -19,7 +19,7 @@ else
                             <p>
                                 @if (!string.IsNullOrEmpty(Model.AvatarImagePath))
                                 {
-                                    <img src="@Model.AvatarImagePath" alt="Аватар" class="img-thumbnail" />
+                                    <img src="@Model.AvatarImagePath" alt="Аватар" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
                                 }
                                 else
                                 {
@@ -32,11 +32,10 @@ else
                                         Действия
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-route-name="@Model.Login" asp-action="EditPassword">Смена пароля</a>
                                         <a class="dropdown-item" asp-area="" asp-controller="Account" asp-route-name="@Model.Login" asp-action="Edit">Редактирование данных</a>
                                         <button type="submit" class="dropdown-item" asp-area="" asp-controller="Account" asp-action="EditAvatar" asp-route-name="@Model.Login">Добавить аватар</button>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-area="" asp-route-name="@Model.Login" asp-action="" asp-controller="Account">Удалить пользователя</a>
+                                        <a class="dropdown-item" asp-area="" asp-route-name="@Model.Login" asp-action="Delete" asp-controller="Account">Удалить пользователя</a>
                                     </div>
                                 </div>
                             </div>
