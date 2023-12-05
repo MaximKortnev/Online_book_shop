@@ -55,6 +55,7 @@ namespace OnlineShop.Db.Repositories
         public void Clear(string userId)
         {
             var existingCart = TryGetByUserId(userId);
+            databaseContext.CartItems.RemoveRange(existingCart.Items);
             databaseContext.Carts.Remove(existingCart);
             databaseContext.SaveChanges();
         }

@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Repositories
             databaseContext.SaveChanges();
         }
 
-        public Order TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public Order TryGetById(Guid Id) => databaseContext.Orders.FirstOrDefault(x => x.Id == Id);
 
         public List<Order> GetAll()
         {
