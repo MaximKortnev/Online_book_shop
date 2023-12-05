@@ -158,6 +158,7 @@ namespace OnlineShop.Db.Migrations
                 name: "IX_Favorites_ProductId",
                 table: "Favorites",
                 column: "ProductId");
+
         }
 
         /// <inheritdoc />

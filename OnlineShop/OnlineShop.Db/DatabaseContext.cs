@@ -13,7 +13,13 @@ namespace OnlineShop.Db
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
+
             Database.Migrate();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            SeedData.Initialize(modelBuilder);
         }
     }
 }

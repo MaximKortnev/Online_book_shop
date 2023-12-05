@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 string connection = builder.Configuration.GetConnectionString("online_shop");
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection), ServiceLifetime.Scoped);
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddTransient<IProductsRepository, ProductsDBRepository>();
 builder.Services.AddTransient<ICartsRepository, CartsDBRepository>();
@@ -28,11 +28,6 @@ builder.Services.AddSingleton<IAdminUsersFunctions, AdminUsersFunctions>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    SeedData.Initialize(services);
-}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
