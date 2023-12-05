@@ -37,8 +37,9 @@ namespace OnlineShop_WebApp.Models
         [NoWhitespace(ErrorMessage = "Описание не может состоять из пробелов")]
         public string Description { get; set; }
         [BindNever]
+        public List<string>? ImagePaths { get; set; }
         public string? ImagePath { get; set; }
-        public IFormFile ImageFile { get; set; }
+        public List<IFormFile>? ImageFiles { get; set; }
     }
 }
 

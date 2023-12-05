@@ -50,20 +50,29 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (product.ImageFile != null)
+                if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
                     string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
                     if (!Directory.Exists(productImagesPath))
                     {
                         Directory.CreateDirectory(productImagesPath);
                     }
+                    var imagePaths = new List<string>();
 
-                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
+                    foreach (var imageFile in product.ImageFiles)
                     {
-                        product.ImageFile.CopyTo(fileStream);
+                        var filename = Guid.NewGuid() + "." + imageFile.FileName.Split('.').Last();
+                        var filePath = Path.Combine(productImagesPath, filename);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            imageFile.CopyTo(fileStream);
+                        }
+
+                        imagePaths.Add("/images/products/" + filename);
                     }
-                    product.ImagePath = "/images/products/" + filename;
+                    product.ImagePath = imagePaths.FirstOrDefault();
+                    product.ImagePaths = imagePaths;
 
                     var productDB = Mapping.ToProductDB(product);
                     productRepository.Edit(productDB);
@@ -78,24 +87,43 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (product.ImageFile != null)
+                if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
                     string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
                     if (!Directory.Exists(productImagesPath))
                     {
                         Directory.CreateDirectory(productImagesPath);
                     }
+                    var imagePaths = new List<string>();
 
-                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
+                    foreach (var imageFile in product.ImageFiles)
                     {
-                        product.ImageFile.CopyTo(fileStream);
+                        var filename = Guid.NewGuid() + "." + imageFile.FileName.Split('.').Last();
+                        var filePath = Path.Combine(productImagesPath, filename);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            imageFile.CopyTo(fileStream);
+                        }
+
+                        imagePaths.Add("/images/products/" + filename);
                     }
-                    product.ImagePath = "/images/products/" + filename;
+                    product.ImagePath = imagePaths.FirstOrDefault();
+                    product.ImagePaths = imagePaths;
                     productRepository.Add(Mapping.ToProductDB(product));
                     return RedirectToAction("GetProducts", "Home");
                 }
             }
+            foreach (var key in ModelState.Keys)
+            {
+                var modelStateEntry = ModelState[key];
+                foreach (var error in modelStateEntry.Errors)
+                {
+                    // Здесь вы можете вывести информацию об ошибках
+                    Console.WriteLine($"Error in field '{key}': {error.ErrorMessage}");
+                }
+            }
+            Console.WriteLine("111");
             return View("AddProduct", product);
         }
     }
