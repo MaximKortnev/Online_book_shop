@@ -50,20 +50,11 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (product.ImageFile != null)
+                if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                    if (!Directory.Exists(productImagesPath))
-                    {
-                        Directory.CreateDirectory(productImagesPath);
-                    }
-
-                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
-                    {
-                        product.ImageFile.CopyTo(fileStream);
-                    }
-                    product.ImagePath = "/images/products/" + filename;
+                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
+                    product.ImagePath = imagePaths.FirstOrDefault();
+                    product.ImagePaths = imagePaths;
 
                     var productDB = Mapping.ToProductDB(product);
                     productRepository.Edit(productDB);
@@ -78,24 +69,24 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (product.ImageFile != null)
+                if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                    if (!Directory.Exists(productImagesPath))
-                    {
-                        Directory.CreateDirectory(productImagesPath);
-                    }
-
-                    var filename = Guid.NewGuid() + "." + product.ImageFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
-                    {
-                        product.ImageFile.CopyTo(fileStream);
-                    }
-                    product.ImagePath = "/images/products/" + filename;
+                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
+                    product.ImagePath = imagePaths.FirstOrDefault();
+                    product.ImagePaths = imagePaths;
                     productRepository.Add(Mapping.ToProductDB(product));
                     return RedirectToAction("GetProducts", "Home");
                 }
             }
+            foreach (var key in ModelState.Keys)
+            {
+                var modelStateEntry = ModelState[key];
+                foreach (var error in modelStateEntry.Errors)
+                {
+                    Console.WriteLine($"Error in field '{key}': {error.ErrorMessage}");
+                }
+            }
+            Console.WriteLine("111");
             return View("AddProduct", product);
         }
     }
