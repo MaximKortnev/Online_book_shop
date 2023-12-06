@@ -59,7 +59,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                     var productDB = Mapping.ToProductDB(product);
                     productRepository.Edit(productDB);
                     return RedirectToAction("GetProducts", "Home");
-                } 
+                }
             }
             return View("ViewEdit", product);
         }

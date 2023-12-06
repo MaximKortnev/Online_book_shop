@@ -28,5 +28,22 @@ namespace OnlineShop_WebApp.Mappings
 
             return imagePaths;
         }
+
+
+        public static string PathImageForAvatar(UserEditAvatarViewModel userView, IWebHostEnvironment appEnvironment)
+        {
+            string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/users/");
+            if (!Directory.Exists(productImagesPath))
+            {
+                Directory.CreateDirectory(productImagesPath);
+            }
+
+            var filename = Guid.NewGuid() + "." + userView.UploadNewAvatar.FileName.Split('.').Last();
+            using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
+            {
+                userView.UploadNewAvatar.CopyTo(fileStream);
+            }
+            return "/images/users/" + filename;
+        }
     }
 }
