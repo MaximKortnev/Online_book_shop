@@ -52,25 +52,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             {
                 if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                    if (!Directory.Exists(productImagesPath))
-                    {
-                        Directory.CreateDirectory(productImagesPath);
-                    }
-                    var imagePaths = new List<string>();
-
-                    foreach (var imageFile in product.ImageFiles)
-                    {
-                        var filename = Guid.NewGuid() + "." + imageFile.FileName.Split('.').Last();
-                        var filePath = Path.Combine(productImagesPath, filename);
-
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            imageFile.CopyTo(fileStream);
-                        }
-
-                        imagePaths.Add("/images/products/" + filename);
-                    }
+                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
 
@@ -89,25 +71,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             {
                 if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                    if (!Directory.Exists(productImagesPath))
-                    {
-                        Directory.CreateDirectory(productImagesPath);
-                    }
-                    var imagePaths = new List<string>();
-
-                    foreach (var imageFile in product.ImageFiles)
-                    {
-                        var filename = Guid.NewGuid() + "." + imageFile.FileName.Split('.').Last();
-                        var filePath = Path.Combine(productImagesPath, filename);
-
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            imageFile.CopyTo(fileStream);
-                        }
-
-                        imagePaths.Add("/images/products/" + filename);
-                    }
+                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
                     productRepository.Add(Mapping.ToProductDB(product));
@@ -119,7 +83,6 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                 var modelStateEntry = ModelState[key];
                 foreach (var error in modelStateEntry.Errors)
                 {
-                    // Здесь вы можете вывести информацию об ошибках
                     Console.WriteLine($"Error in field '{key}': {error.ErrorMessage}");
                 }
             }
