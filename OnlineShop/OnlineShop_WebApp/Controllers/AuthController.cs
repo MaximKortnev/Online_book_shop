@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
+using OnlineShop.Db.Models;
 
 namespace OnlineShop_WebApp.Controllers
 {
@@ -9,55 +11,65 @@ namespace OnlineShop_WebApp.Controllers
 
         private readonly IUsersRepository userRepository;
         private readonly IRolesRepository roleRepository;
+        //private readonly IUserManager userManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _singInManager;
 
-        public AuthController(IUsersRepository userRepository, IRolesRepository roleRepository)
+        public AuthController(IUsersRepository userRepository, IRolesRepository roleRepository, SignInManager<User> singInManager, UserManager<User> _userManager)
         {
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
+            _singInManager = singInManager;
+            this._userManager = _userManager;
         }
-        public IActionResult Index()
+        public IActionResult Login(string returnUrl)
+        {
+            return View(new LoginUser() { ReturnUrl = returnUrl });
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginUser loginUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _singInManager.PasswordSignInAsync(loginUser.Login, loginUser.Password, loginUser.rememberMe, false).Result;
+                if (result.Succeeded)
+                {
+                    return Redirect(loginUser.ReturnUrl);
+                }
+                ModelState.AddModelError("", "Неправильный пароль");
+            }
+            return View("Login", loginUser);
+        }
+        public IActionResult Registration()
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult Login(LoginUser user)
+        public async Task<IActionResult> Registration(UserViewModel userView)
         {
             if (ModelState.IsValid)
             {
-                var validUser = userRepository.TryGetByLogin(user.Login);
-                if (validUser != null) { 
-                    if (user.Password == validUser.Password) { 
-                        return View();
-                    }
-                    ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
-                    return View("IncorrectPassword", user);
-                }
-                return RedirectToAction("Index", "Home");
-            }
-            return View("Index", user);
-        }
+                var user = new User { UserName = userView.Login, Email = userView.Email };
+                var result = await _userManager.CreateAsync(user, userView.Password);
 
-        [HttpPost]
-        public IActionResult Registration(User user)
-        {
-            
-            if (ModelState.IsValid)
-            {
-                var roles = roleRepository.GetAll();
-                user.Role = roles.FirstOrDefault(x=> x.Name.ToLower() == "пользователь");
-                if (user.Role == null)
+                if (result.Succeeded)
                 {
-                    var role = new Roles();
-                    role.Name = "Пользователь";
-                    roleRepository.Add(role);
-                    user.Role = role;
+                    await _userManager.AddToRoleAsync(user, "Пользователь");
+                    return RedirectToAction("Index", "Home");
                 }
-                user.Id = Guid.NewGuid();
-                userRepository.Add(user);
-                return RedirectToAction("Index", "Home");
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            return View("Index", user);
+            return View("Registration", userView);
+        }
+        public IActionResult Logout()
+        {
+            _singInManager.SignOutAsync().Wait();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace OnlineShop_WebApp.Models
 {
-    public class User
+    public class UserViewModel
     {
         public Guid Id { get; set; }
 

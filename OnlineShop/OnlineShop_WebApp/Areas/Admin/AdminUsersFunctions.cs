@@ -6,7 +6,7 @@ namespace OnlineShop_WebApp.Areas.Admin
 {
     public class AdminUsersFunctions : IAdminUsersFunctions
     {
-        public List<User> Read(string filePath)
+        public List<UserViewModel> Read(string filePath)
         {
             var json = "";
 
@@ -14,15 +14,15 @@ namespace OnlineShop_WebApp.Areas.Admin
             {
                 json = reader.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<List<User>>(json);
+            return JsonConvert.DeserializeObject<List<UserViewModel>>(json);
         }
-        public User TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public List<User> GetAll()
+        public UserViewModel TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public List<UserViewModel> GetAll()
         {
             var jsonFilePath = "wwwroot/users.json";
-            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
+            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<UserViewModel> { };
         }
-        public void EditRole(User user)
+        public void EditRole(UserViewModel user)
         {
             var users = GetAll();
             users[users.FindIndex(x => x.Id == user.Id)] = user;
@@ -34,13 +34,13 @@ namespace OnlineShop_WebApp.Areas.Admin
             users.RemoveAt(users.FindIndex(x => x.Id == Id));
             SaveAll(users);
         }
-        public void SaveAll(List<User> users)
+        public void SaveAll(List<UserViewModel> users)
         {
             var filePath = "wwwroot/users.json";
             string updatedJson = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText(filePath, updatedJson);
         }
-        public void Add(User user)
+        public void Add(UserViewModel user)
         {
             user.Id = Guid.NewGuid();
             string filePath = "wwwroot/users.json";
@@ -48,10 +48,10 @@ namespace OnlineShop_WebApp.Areas.Admin
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                var existingUsers = JsonConvert.DeserializeObject<List<User>>(json);
+                var existingUsers = JsonConvert.DeserializeObject<List<UserViewModel>>(json);
                 if (existingUsers == null)
                 {
-                    existingUsers = new List<User> { user };
+                    existingUsers = new List<UserViewModel> { user };
                 }
                 existingUsers.Add(user);
                 string updatedJson = JsonConvert.SerializeObject(existingUsers, Formatting.Indented);
@@ -65,7 +65,7 @@ namespace OnlineShop_WebApp.Areas.Admin
             users[users.FindIndex(x => x.Id == Id)].Password = password;
             SaveAll(users);
         }
-        public void Edit(User user)
+        public void Edit(UserViewModel user)
         {
             var users = GetAll();
             users[users.FindIndex(x => x.Id == user.Id)] = user;

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
+using OnlineShop.Db;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class UsersController : Controller
     {
         private readonly IAdminUsersFunctions adminUsers;
@@ -32,7 +35,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(User user)
+        public IActionResult Add(UserViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +107,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(User user, string role)
+        public IActionResult Edit(UserViewModel user, string role)
         {
             if (ModelState.IsValid)
             {

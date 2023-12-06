@@ -10,9 +10,9 @@ namespace OnlineShop_WebApp.Repositories
 {
     public class InFileUsersRepository : IUsersRepository
     {
-        public List<User> users = new List<User>();
+        public List<UserViewModel> users = new List<UserViewModel>();
 
-        public void Add(User user)
+        public void Add(UserViewModel user)
         {
             user.Id = Guid.NewGuid();
             string filePath = "wwwroot/users.json";
@@ -20,20 +20,20 @@ namespace OnlineShop_WebApp.Repositories
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                var existingUsers = JsonConvert.DeserializeObject<List<User>>(json);
+                var existingUsers = JsonConvert.DeserializeObject<List<UserViewModel>>(json);
                 if (existingUsers == null)
                 {
-                    existingUsers = new List<User> { user };
+                    existingUsers = new List<UserViewModel> { user };
                 }
                 existingUsers.Add(user);
                 string updatedJson = JsonConvert.SerializeObject(existingUsers, Formatting.Indented);
                 File.WriteAllText(filePath, updatedJson);
             }
         }
-        public User TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
-        public User TryGetByLogin(string Login) => GetAll().FirstOrDefault(x => x.Login == Login);
+        public UserViewModel TryGetById(Guid Id) => GetAll().FirstOrDefault(x => x.Id == Id);
+        public UserViewModel TryGetByLogin(string Login) => GetAll().FirstOrDefault(x => x.Login == Login);
 
-        private List<User> Read(string filePath)
+        private List<UserViewModel> Read(string filePath)
         {
             var json = "";
 
@@ -41,12 +41,12 @@ namespace OnlineShop_WebApp.Repositories
             {
                 json = reader.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<List<User>>(json);
+            return JsonConvert.DeserializeObject<List<UserViewModel>>(json);
         }
-        public List<User> GetAll()
+        public List<UserViewModel> GetAll()
         {
             var jsonFilePath = "wwwroot/users.json";
-            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<User> { };
+            return File.Exists(jsonFilePath) ? Read(jsonFilePath) : new List<UserViewModel> { };
         }
 
 

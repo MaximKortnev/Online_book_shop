@@ -6,9 +6,9 @@ namespace OnlineShop_WebApp.Interfaces
 {
     public interface IUsersRepository
     {
-        void Add(User user);
-        List<User> GetAll();
-        User TryGetById(Guid Id) ;
-        User TryGetByLogin(string Login);
+        void Add(UserViewModel user);
+        List<UserViewModel> GetAll();
+        UserViewModel TryGetById(Guid Id) ;
+        UserViewModel TryGetByLogin(string Login);
     }
 }

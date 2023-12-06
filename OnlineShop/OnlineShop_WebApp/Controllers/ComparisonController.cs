@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
+using Microsoft.AspNetCore.Authorization;
+using OnlineShop.Db;
 
 namespace OnlineShop_WebApp.Controllers
 {
+    [Authorize]
     public class ComparisonController : Controller
     {
 
