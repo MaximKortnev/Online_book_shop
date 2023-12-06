@@ -9,10 +9,11 @@ namespace OnlineShop.Db
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Comparison> Comparisons { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
     }
 }

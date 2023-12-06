@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Models
 {
-    public class Order
+    public class OrderViewModel
     {
         public Guid Id { get; set; }
-        public string UserId { get; set; }
+
+        [BindNever]
+        public string? UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите ФИО")]
         [StringLength(40, MinimumLength = 5, ErrorMessage = "ФИО должно содержать от 5 до 40 символов")]
@@ -27,8 +30,8 @@ namespace OnlineShop_WebApp.Models
         public string PaymentMethod { get; set; }
         public string? PromoCode { get; set; }
         public string TotalCost { get; set; }
-        public CartViewModel? ListProducts { get; set; }
-        public OrderStatus Status { get; set; }
+        public List<CartItemViewModel>? ListProducts { get; set; }
+        public OrderStatusViewModel Status { get; set; }
         public DateTime Data { get; set; }
     }
 }

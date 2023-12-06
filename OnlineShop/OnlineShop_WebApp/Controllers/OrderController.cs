@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Interfaces;
 using OnlineShop_WebApp.Mappings;
@@ -19,24 +18,24 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Index(string userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            var cartViewModel = Mapping.ToCartViewModel(cart);
-            ordersRepository.Add(cartViewModel, Constants.UserId);
-            var order = ordersRepository.TryGetByUserId(Constants.UserId);
-
-            return View(order);
+            ViewBag.Items = cart.Items;
+            ViewBag.TotalCost = Mapping.ToCartViewModel(cart).Cost;
+            return View();
         }
         public IActionResult OrderSuccessfully() => View("OrderSuccessfully");
 
         [HttpPost]
-        public IActionResult SaveOrder(Order orderData)
+        public IActionResult SaveOrder(OrderViewModel order)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", orderData);
+                return View("Index", order);
             }
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            var cartViewModel = Mapping.ToCartViewModel(cart);
-            ordersRepository.SaveOrders(orderData, Constants.UserId, cartViewModel);
+            order.UserId = Constants.UserId;
+            var orderDB = Mapping.ToOrderDB(order);
+            orderDB.ListProducts = cart.Items;
+            ordersRepository.SaveOrders(orderDB, Constants.UserId, cart);
             cartRepository.Clear(Constants.UserId);
             return View("OrderSuccessfully");
         }
