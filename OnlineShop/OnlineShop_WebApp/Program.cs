@@ -19,8 +19,8 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 builder.Services.AddTransient<IProductsRepository, ProductsDBRepository>();
 builder.Services.AddTransient<ICartsRepository, CartsDBRepository>();
 builder.Services.AddSingleton<IOrdersRepository, InFileOrdersRepository>();
-builder.Services.AddSingleton<IFavoritesRepository, InFileFavoritesRepository>();
-builder.Services.AddSingleton<IComparisonRepository, ComparisonRepository>();
+builder.Services.AddTransient<IFavoritesRepository, FavoritesDBRepository>();
+builder.Services.AddTransient<IComparisonRepository, ComparisonDBRepository>();
 builder.Services.AddSingleton<IRolesRepository, InFileRolesRepository>();
 builder.Services.AddSingleton<IAdminOrdersFunctions, AdminOrdersFunctions>();
 builder.Services.AddSingleton<IUsersRepository, InFileUsersRepository>();

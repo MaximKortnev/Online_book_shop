@@ -17,7 +17,7 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Index(Guid userId)
         {
             var cart = cartRepository.TryGetByUserId(Constants.UserId);
-            if (cart == null) { return RedirectToAction("Home", "Index");}
+            if (cart == null) { return View();}
             var cartViewModel = Mapping.ToCartViewModel(cart);
             return View(cartViewModel);
         }

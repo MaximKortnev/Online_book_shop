@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop.Db.Interfaces;
+using OnlineShop_WebApp.Mappings;
 
 namespace OnlineShop_WebApp.Controllers
 {
@@ -17,26 +17,27 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index()
         {
-            var favorite = favoriteRepository.TryGetByUserId(Constants.UserId);
-            return View(favorite);
+            var favorite = favoriteRepository.GetAll(Constants.UserId);
+            var favoriteViewModel = Mapping.ToProductViewModels(favorite);
+            return View(favoriteViewModel);
         }
 
         public IActionResult Add(Guid productId) {
-            var productCard = productsRepository.TryGetProductById(productId);
-            if (productCard == null) return View("ErrorAddFavorite");
-            //favoriteRepository.Add(productCard, Constants.UserId);
+            var product = productsRepository.TryGetProductById(productId);
+            if (product == null) return View("ErrorFavorite");
+            favoriteRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Decrease(Guid productId)
         {
             var product = productsRepository.TryGetProductById(productId);
-            if (product == null) { return View("ErrorAddFavorite"); }
-            //favoriteRepository.Decrease(product, Constants.UserId);
+            if (product == null) { return View("ErrorFavorite"); }
+            favoriteRepository.Decrease(product, Constants.UserId);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Clear()
         {
-            favoriteRepository.Clear();
+            favoriteRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
     }

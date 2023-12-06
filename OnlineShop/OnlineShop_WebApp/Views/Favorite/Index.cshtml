@@ -1,10 +1,10 @@
-﻿@model Favorite
+﻿@model List<ProductViewModel>
 
-@if (Model == null)
+@if (Model == null || Model.Count == 0)
 {
      <div class="container mt-5 text-center">
         <h1>Список избранного пуст</h1>
-        <a class="btn btn-primary btn-sm mt-2 ml-3" href="/home/index/" role="button">Вернуться к покупкам</a>
+        <a class="btn btn-primary btn-sm mt-2 ml-3" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться к покупкам</a>
     </div>
 }
 else{
@@ -20,13 +20,13 @@ else{
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.Items){
+                @foreach(var item in Model){
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.Cost</td>
                     <td>
-                        <a style="color:white" class=" btn btn-sm btn-success" href="/favorite/Decrease?productId=@item.Id">Удалить</a>
-                        <a style="color:white" class="btn btn-sm btn-danger" href="/cart/add?productId=@item.Id">В корзину</a>
+                            <a style="color:white" class=" btn btn-sm btn-success" asp-area="" asp-controller="Favorite" asp-action="Decrease" asp-route-productId="@item.Id">Удалить</a>
+                            <a style="color:white" class="btn btn-sm btn-danger" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-productId="@item.Id">В корзину</a>
                     </td>
                 </tr>
                 }
@@ -34,8 +34,8 @@ else{
         </table>
 
         <div class="text-right">
-            <a style="color:white" class="btn btn-primary" href="/home/index">На главную</a>
-            <a style="color:white" class="btn btn-warning" href="/favorite/clear">Очистить избранное</a>
+            <a style="color:white" class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
+            <a style="color:white" class="btn btn-warning" asp-area="" asp-controller="Favorite" asp-action="Clear">Очистить избранное</a>
         </div>
     </div>
 }
