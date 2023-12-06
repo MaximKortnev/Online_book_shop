@@ -20,7 +20,7 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index()
         {
-            var favorite = favoriteRepository.GetAll(Constants.UserId);
+            var favorite = favoriteRepository.GetAll(User.Identity.Name);
             var favoriteViewModel = Mapping.ToProductViewModels(favorite);
             return View(favoriteViewModel);
         }
@@ -28,19 +28,19 @@ namespace OnlineShop_WebApp.Controllers
         public IActionResult Add(Guid productId) {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) return View("ErrorFavorite");
-            favoriteRepository.Add(product, Constants.UserId);
+            favoriteRepository.Add(product, User.Identity.Name);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Decrease(Guid productId)
         {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorFavorite"); }
-            favoriteRepository.Decrease(product, Constants.UserId);
+            favoriteRepository.Decrease(product, User.Identity.Name);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Clear()
         {
-            favoriteRepository.Clear(Constants.UserId);
+            favoriteRepository.Clear(User.Identity.Name);
             return RedirectToAction("Index");
         }
     }

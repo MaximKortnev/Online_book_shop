@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop_WebApp.Mappings;
 using OnlineShop.Db.Models;
@@ -15,23 +14,28 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class UsersController : Controller
     {
-        private readonly IAdminUsersFunctions adminUsers;
-        private readonly IRolesRepository rolesRepository;
+        private readonly RoleManager<IdentityRole> rolesManager;
 
         private readonly UserManager<User> usersManager;
-        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository rolesRepository, UserManager<User> usersManager)
+        public UsersController(RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
         {
-            this.adminUsers = adminUsers;
-            this.rolesRepository = rolesRepository;
             this.usersManager = usersManager;
+            this.rolesManager = rolesManager;
         }
 
         public IActionResult Info(string name)
         {
-            ViewBag.AllRoles = rolesRepository.GetAll();
             var user = usersManager.FindByNameAsync(name).Result;
             if (user != null)
             {
+                var roles = usersManager.GetRolesAsync(user).Result;
+                var listRoles = roles.Select(x => new RoleViewModel { Name = x }).ToList();
+                string allRoles = "";
+                foreach (var role in listRoles)
+                {
+                    allRoles += $"{role.Name}, ";
+                }
+                ViewBag.AllRoles = allRoles.TrimEnd(' ', ',');
                 return View(user.ToUserViewModel());
             }
             return View("ExistUser");
@@ -42,28 +46,34 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Add(UserViewModel user)
+        public IActionResult EditRights(string name)
         {
-            if (ModelState.IsValid)
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
+            var roles = usersManager.GetRolesAsync(user).Result;
+            var allRoles = rolesManager.Roles.ToList();
+
+            var model = new EditRightsViewModel
             {
-                adminUsers.Add(user);
-                return RedirectToAction("GetUsers", "Home");
-            }
-            return View("Add", user);
+                UserName = user.UserName,
+                Roles = roles.Select(x => new RoleViewModel { Name = x }).ToList(),
+                AllRoles = allRoles.Select(x => new RoleViewModel { Name = x.Name }).ToList()
+            };
+            return View(model);
+
         }
-        public IActionResult Save(Guid Id, string role)
+        [HttpPost]
+        public IActionResult SaveEditRights(string name, Dictionary<string, string> userRolesViewModel)
         {
-            var correctRole = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
-            if (correctRole == null) { return View("BadRole"); }
-            var user = adminUsers.TryGetById(Id);
-            if (user != null)
-            {
-                user.Role.Name = role;
-                adminUsers.EditRole(user);
-                return RedirectToAction("GetUsers", "Home");
-            }
-            return View("ExistUser");
+            var userSelectedRoles = userRolesViewModel.Select(x => x.Key);
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
+            var roles = usersManager.GetRolesAsync(user).Result;
+
+            usersManager.RemoveFromRolesAsync(user, roles).Wait();
+            usersManager.AddToRolesAsync(user, userSelectedRoles).Wait();
+
+            return Redirect($"/Admin/Users/Info?name={name}");
         }
 
         public IActionResult Delete(string name)
@@ -105,28 +115,42 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             }
             return View();
         }
-        public IActionResult Edit(Guid Id)
+        public IActionResult Edit(string name)
         {
-            ViewBag.AllRoles = rolesRepository.GetAll();
-            var user = adminUsers.TryGetById(Id);
-            if (user != null)
-            {
-                return View(user);
-            }
-            return View("ExistUser");
+            var user = usersManager.FindByNameAsync(name).Result;
+            if (user == null) return View("ExistUser");
+
+            var userViewModel = user.ToUserViewModel();
+
+            return View(userViewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(UserViewModel user, string role)
+        public IActionResult Edit(UserViewModel userViewModel, string oldName)
         {
             if (ModelState.IsValid)
             {
-                user.Role = rolesRepository.GetAll().FirstOrDefault(x => x.Name == role);
-                adminUsers.Edit(user);
-                return RedirectToAction("GetUsers", "Home");
-            }
-            return View("Edit", user);
-        }
+                var user = usersManager.FindByNameAsync(oldName).Result;
 
+                if (user != null)
+                {
+                    user.UserName = userViewModel.Login;
+                    user.Email = userViewModel.Email;
+
+                    var result = usersManager.UpdateAsync(user).Result;
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Ошибка при обновлении пользователя.");
+                    }
+                }
+            }
+            return View(userViewModel);
+        }
     }
+
 }

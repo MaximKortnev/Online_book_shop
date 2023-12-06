@@ -1,6 +1,5 @@
 ﻿using OnlineShop.Db.Models;
 using OnlineShop_WebApp.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Mappings
 {

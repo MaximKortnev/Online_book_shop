@@ -20,7 +20,7 @@ namespace OnlineShop_WebApp.Controllers
 
         public IActionResult Index()
         {
-            var сomparison = сomparisonRepository.GetAll(Constants.UserId);
+            var сomparison = сomparisonRepository.GetAll(User.Identity.Name);
             var comparisonViewModel = Mapping.ToProductViewModels(сomparison);
             return View(comparisonViewModel);
         }
@@ -29,7 +29,7 @@ namespace OnlineShop_WebApp.Controllers
         {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorComparison"); }
-            сomparisonRepository.Add(product, Constants.UserId);
+            сomparisonRepository.Add(product, User.Identity.Name);
             return RedirectToAction("Index", "Home");
         }
 
@@ -37,7 +37,7 @@ namespace OnlineShop_WebApp.Controllers
         {
             var product = productsRepository.TryGetProductById(productId);
             if (product == null) { return View("ErrorComparison"); }
-            сomparisonRepository.Delete(product, Constants.UserId);
+            сomparisonRepository.Delete(product, User.Identity.Name);
             return RedirectToAction("Index", "Home");
         }
 

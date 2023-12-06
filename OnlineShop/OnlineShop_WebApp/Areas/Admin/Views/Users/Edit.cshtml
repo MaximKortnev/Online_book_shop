@@ -6,48 +6,38 @@
 <div class="container mt-5">
     <h2>@ViewData["Title"]</h2>
     <form method="post" class="needs-validation" novalidate>
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" name="oldName" value="@Model.Login"/>
 
         <div class="form-group">
             <label asp-for="Login">Логин</label>
-            <input asp-for="Login" class="form-control" required />
+            <input asp-for="Login" class="form-control" />
             <span asp-validation-for="Login" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Email">E-mail</label>
-            <input asp-for="Email" class="form-control" required />
+            <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Password">Пароль</label>
-            <input asp-for="Password" class="form-control" required />
+            <input asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="ConfirmPassword">Подтвердите пароль</label>
-            <input asp-for="ConfirmPassword" class="form-control" required />
+            <label asp-for="ConfirmPassword">Пароль еще раз</label>
+            <input asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="NickName">Имя</label>
-            <input asp-for="NickName" class="form-control" required />
+            <input asp-for="NickName" class="form-control" />
             <span asp-validation-for="NickName" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label for="Role">Выберите роль:</label>
-            <select id="role" name="role" class="form-control">
-                @foreach (var role in ViewBag.AllRoles)
-                {
-                    <option value="@role.Name" selected="@(Model.Role != null && Model.Role.Name == role.Name ? "selected" : null)">@role.Name</option>
-                }
-            </select>
         </div>
 
         <button type="submit" class="btn btn-primary" asp-area="Admin" asp-action="Edit" asp-controller="Users">Сохранить изменения</button>

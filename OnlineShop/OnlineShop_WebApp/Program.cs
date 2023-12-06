@@ -1,13 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Repositories;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
-using OnlineShop_WebApp.Interfaces;
-using OnlineShop_WebApp.Repositories;
-using OnlineShop_WebApp.Areas.Admin;
 using Serilog;
 
 
@@ -30,20 +26,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie = new CookieBuilder { IsEssential = true };
 });
 
-
-
 builder.Services.AddTransient<IProductsRepository, ProductsDBRepository>();
 builder.Services.AddTransient<ICartsRepository, CartsDBRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDBRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDBRepository>();
 builder.Services.AddTransient<IComparisonRepository, ComparisonDBRepository>();
-builder.Services.AddSingleton<IRolesRepository, InFileRolesRepository>();
-builder.Services.AddSingleton<IUsersRepository, InFileUsersRepository>();
-builder.Services.AddSingleton<IAdminUsersFunctions, AdminUsersFunctions>();
-
-
-
-
 
 var app = builder.Build();
 

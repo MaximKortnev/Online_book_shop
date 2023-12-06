@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Models;
 
@@ -9,16 +8,13 @@ namespace OnlineShop_WebApp.Controllers
     public class AuthController : Controller
     {
 
-        private readonly IUsersRepository userRepository;
-        private readonly IRolesRepository roleRepository;
         //private readonly IUserManager userManager;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _singInManager;
 
-        public AuthController(IUsersRepository userRepository, IRolesRepository roleRepository, SignInManager<User> singInManager, UserManager<User> _userManager)
+        public AuthController(SignInManager<User> singInManager, UserManager<User> _userManager)
         {
-            this.userRepository = userRepository;
-            this.roleRepository = roleRepository;
+
             _singInManager = singInManager;
             this._userManager = _userManager;
         }
