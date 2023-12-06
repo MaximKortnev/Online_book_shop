@@ -2,7 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Interfaces;
 using OnlineShop_WebApp.Models;
+using OnlineShop_WebApp.Mappings;
+using OnlineShop.Db.Models;
 using OnlineShop.Db;
+using Microsoft.AspNetCore.Identity;
+using OnlineShop_WebApp.Areas.Admin.Models;
+
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -12,19 +17,22 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     {
         private readonly IAdminUsersFunctions adminUsers;
         private readonly IRolesRepository rolesRepository;
-        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository rolesRepository)
+
+        private readonly UserManager<User> usersManager;
+        public UsersController(IAdminUsersFunctions adminUsers, IRolesRepository rolesRepository, UserManager<User> usersManager)
         {
             this.adminUsers = adminUsers;
             this.rolesRepository = rolesRepository;
+            this.usersManager = usersManager;
         }
 
-        public IActionResult Info(Guid Id)
+        public IActionResult Info(string name)
         {
             ViewBag.AllRoles = rolesRepository.GetAll();
-            var user = adminUsers.TryGetById(Id);
+            var user = usersManager.FindByNameAsync(name).Result;
             if (user != null)
             {
-                return View(user);
+                return View(user.ToUserViewModel());
             }
             return View("ExistUser");
         }
@@ -58,40 +66,42 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             return View("ExistUser");
         }
 
-        public IActionResult Delete(Guid Id)
+        public IActionResult Delete(string name)
         {
-            var user = adminUsers.TryGetById(Id);
+            var user = usersManager.FindByNameAsync(name).Result;
             if (user != null)
             {
-                adminUsers.Delete(Id);
+                usersManager.DeleteAsync(user).Wait();
                 return RedirectToAction("GetUsers", "Home");
             }
             return View("ExistUser");
 
         }
 
-        public IActionResult EditPassword(Guid Id)
+        public IActionResult EditPassword(string name)
         {
-            var user = adminUsers.TryGetById(Id);
-            if (user != null)
+            var changePassword = new ChangePassword()
             {
-                return View(user);
-            }
-            return View("ExistUser");
+                UserName = name
+            };
+            return View(changePassword);
+
         }
 
         [HttpPost]
-        public IActionResult EditPassword(Guid Id, string password)
+        public IActionResult EditPassword(ChangePassword changePassword)
         {
             if (ModelState.IsValid)
             {
-                var user = adminUsers.TryGetById(Id);
-                if (user != null)
+                var user = usersManager.FindByNameAsync(changePassword.UserName).Result;
+                if (user == null)
                 {
-                    adminUsers.EditPassword(Id, password);
-                    return RedirectToAction("GetUsers", "Home");
+                    return View("ExistUser");
                 }
-                return View("ExistUser");
+                var newHashPassword = usersManager.PasswordHasher.HashPassword(user, changePassword.Password);
+                user.PasswordHash = newHashPassword;
+                usersManager.UpdateAsync(user).Wait();
+                return RedirectToAction("GetUsers", "Home");
             }
             return View();
         }

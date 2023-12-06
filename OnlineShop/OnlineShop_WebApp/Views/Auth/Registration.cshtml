@@ -4,8 +4,8 @@
         <div class="card-body">
             <h2 class="card-title text-center mb-4">Регистрация</h2>
             <form method="post">
-                <div asp-validation-summary="All" class="text-danger font-weight-bold"></div>
-
+                <div asp-validation-summary="ModelOnly" class="text-danger font-weight-bold"></div>
+                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
                 <div class="form-group">
                     <label asp-for="Login" class="form-label">Логин</label>
                     <input type="text" class="form-control" asp-for="Login" />

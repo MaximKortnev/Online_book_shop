@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Models
 {
@@ -31,5 +32,7 @@ namespace OnlineShop_WebApp.Models
         public string NickName { get; set; } = string.Empty;
 
         public Roles? Role { get; set; }
+        [BindNever]
+        public string? ReturnUrl { get; set; }
     }
 }

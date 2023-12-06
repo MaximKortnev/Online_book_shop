@@ -5,6 +5,8 @@ using OnlineShop_WebApp.Mappings;
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using OnlineShop.Db.Models;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -15,13 +17,13 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         private readonly IProductsRepository productRepository;
         private readonly IOrdersRepository orderRepository;
         private readonly IRolesRepository rolesRepository;
-        private readonly IUsersRepository usersRepository;
-        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
+        private readonly UserManager<User> usersManager;
+        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, IRolesRepository rolesRepository, UserManager<User> usersManager)
         {
             this.productRepository = productRepository;
             this.orderRepository = orderRepository;
             this.rolesRepository = rolesRepository;
-            this.usersRepository = usersRepository;
+            this.usersManager = usersManager;
         }
 
         public IActionResult Index()
@@ -43,8 +45,8 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
 
         public IActionResult GetUsers()
         {
-            var users = usersRepository.GetAll();
-            return View(users);
+            var users = usersManager.Users.ToList();
+            return View(users.Select(x=>x.ToUserViewModel()).ToList());
         }
 
         public IActionResult GetRoles()

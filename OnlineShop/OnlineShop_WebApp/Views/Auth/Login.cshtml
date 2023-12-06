@@ -5,7 +5,7 @@
         <div class="card-body">
             <h2 class="card-title">Вход</h2>
             <form method="post">
-                <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+                <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
                 <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
                 <div class="form-group">
                     <label asp-for="Login" class="form-label">Введите логин</label>
@@ -24,7 +24,7 @@
                 <button type="submit" class="btn btn-primary" asp-area="" asp-controller="Auth" asp-action="Login">Войти</button>
             </form>
             <div class="mt-3">
-                <p>Нет аккаунта? <a asp-area="" asp-controller="Auth" asp-action="Registration">Зарегистрируйтесь</a>.</p>
+                <p>Нет аккаунта? <a asp-area="" asp-controller="Auth" asp-action="Registration" asp-route-ReturnUrl="@Model.ReturnUrl">Зарегистрируйтесь</a>.</p>
             </div>
         </div>
     </div>
