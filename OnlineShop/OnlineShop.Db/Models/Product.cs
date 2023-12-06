@@ -1,4 +1,6 @@
-﻿namespace OnlineShop.Db.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace OnlineShop.Db.Models
 {
     public class Product
     {
