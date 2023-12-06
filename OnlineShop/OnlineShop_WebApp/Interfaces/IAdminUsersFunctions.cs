@@ -1,0 +1,19 @@
+﻿using OnlineShop_WebApp.Models;
+using System;
+using System.Collections.Generic;
+
+namespace OnlineShop_WebApp.Interfaces
+{
+    public interface IAdminUsersFunctions
+    {
+        List<User> Read(string filePath);
+        User TryGetById(Guid Id);
+        List<User> GetAll();
+        void EditRole(User user);
+        void Delete(Guid Id);
+        void SaveAll(List<User> users);
+        void Add(User user);
+        void EditPassword(Guid Id, string password);
+        void Edit(User user);
+    }
+}
