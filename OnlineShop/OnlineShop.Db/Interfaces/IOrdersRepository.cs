@@ -9,5 +9,6 @@ namespace OnlineShop.Db.Interfaces
         Order TryGetById(Guid Id);
         void EditStatus(Guid Id, OrderStatus status);
         void Delete(Guid Id);
+        List<Order> GetAllByUser(string userId);
     }
 }

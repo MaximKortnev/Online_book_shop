@@ -46,12 +46,21 @@ namespace OnlineShop_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = userView.Login, Email = userView.Email };
+                var user = new User { UserName = userView.Login, 
+                    Email = userView.Email, 
+                    NickName = userView.NickName, 
+                    AvatarImagePath = "/images/users/DefaultAvatar.png"
+                };
                 var result = await _userManager.CreateAsync(user, userView.Password);
 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
+                    var res = _singInManager.PasswordSignInAsync(userView.Login, userView.Password, true, false).Result;
+                    if (res.Succeeded)
+                    {
+                        return Redirect(userView.ReturnUrl ?? "/Home");
+                    }
                     return Redirect(userView.ReturnUrl ?? "/Home");
                 }
 
@@ -59,6 +68,7 @@ namespace OnlineShop_WebApp.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+
             }
             return View("Registration", userView);
         }

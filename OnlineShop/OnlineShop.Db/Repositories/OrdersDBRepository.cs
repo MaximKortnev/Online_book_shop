@@ -49,5 +49,10 @@ namespace OnlineShop.Db.Repositories
             }
             databaseContext.SaveChanges();
         }
+
+        public List<Order> GetAllByUser(string userId)
+        {
+            return databaseContext.Orders.Where(u => u.UserId == userId).Include(x => x.ListProducts).ToList();
+        }
     }
 }

@@ -137,7 +137,9 @@ namespace OnlineShop_WebApp.Mappings
             return new UserViewModel
             {
                 Login = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                NickName = user.NickName,
+                AvatarImagePath = user.AvatarImagePath
             };
         }
     }

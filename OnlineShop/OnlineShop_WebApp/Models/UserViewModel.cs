@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Models
@@ -31,7 +32,10 @@ namespace OnlineShop_WebApp.Models
         [NoWhitespace(ErrorMessage = "Имя не может состоять из пробелов")]
         public string? NickName { get; set; } = string.Empty;
 
-        public RoleViewModel? Role { get; set; }
         public string? ReturnUrl { get; set; }
+        [BindNever]
+        public string? AvatarImagePath { get; set; }
+
+        public IFormFile? UploadNewAvatar { get; set; }
     }
 }
