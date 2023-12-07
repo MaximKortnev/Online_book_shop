@@ -5,7 +5,7 @@ namespace OnlineShop_WebApp.Mappings
     public static class FileManager
     {
 
-        public static List<string> PathImagesForProduct(ProductViewModel product, IWebHostEnvironment appEnvironment)
+        public static List<string> SaveProductImagesInDB(ProductViewModel product, IWebHostEnvironment appEnvironment)
         {
             string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
             if (!Directory.Exists(productImagesPath))

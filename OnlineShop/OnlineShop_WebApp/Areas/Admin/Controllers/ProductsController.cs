@@ -52,7 +52,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             {
                 if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
+                    var imagePaths = FileManager.SaveProductImagesInDB(product, appEnvironment);
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
 
@@ -71,7 +71,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             {
                 if (product.ImageFiles != null && product.ImageFiles.Any())
                 {
-                    var imagePaths = FileManager.PathImagesForProduct(product, appEnvironment);
+                    var imagePaths = FileManager.SaveProductImagesInDB(product, appEnvironment);
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
                     productRepository.Add(Mapping.ToProductDB(product));
