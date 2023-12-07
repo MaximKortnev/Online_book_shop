@@ -18,6 +18,7 @@
 
         public Order()
         {
+            ListProducts = new List<CartItem>();
             Status = OrderStatus.Created;
         }
     }

@@ -22,7 +22,7 @@ namespace OnlineShop.Db.Repositories
                 {
                     UserId = userId,
                 };
-                newCart.Items = new List<CartItem>() { new CartItem() { Amount = 1, Product = product, Cart = newCart } };
+                newCart.Items = new List<CartItem>() { new CartItem() { Amount = 1, Product = product } };
                 databaseContext.Carts.Add(newCart);
             }
             else
@@ -30,7 +30,7 @@ namespace OnlineShop.Db.Repositories
                 var existingCardItem = existingCart.Items.FirstOrDefault(prod => prod.Product.Id == product.Id);
 
                 if (existingCardItem != null) existingCardItem.Amount += 1;
-                else existingCart.Items.Add(new CartItem() { Amount = 1, Product = product, Cart = existingCart });
+                else existingCart.Items.Add(new CartItem() { Amount = 1, Product = product });
             }
             databaseContext.SaveChanges();
         }
@@ -55,6 +55,7 @@ namespace OnlineShop.Db.Repositories
         public void Clear(string userId)
         {
             var existingCart = TryGetByUserId(userId);
+           // databaseContext.CartItems.RemoveRange(existingCart.Items);
             databaseContext.Carts.Remove(existingCart);
             databaseContext.SaveChanges();
         }
