@@ -64,7 +64,7 @@ namespace OnlineShop_WebApp.Controllers
             if (user == null) { return View("ExistUser"); }
             if (userView.UploadNewAvatar != null)
             {
-                var filePath = FileManager.PathImageForAvatar(userView, appEnvironment);
+                var filePath = FileManager.SavehImageAvatarInDB(userView, appEnvironment);
                 user.AvatarImagePath = filePath;
                 usersManager.UpdateAsync(user).Wait();
             }
