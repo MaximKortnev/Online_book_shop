@@ -29,6 +29,7 @@ namespace OnlineShop_WebApp.Mappings
                 Cost = product.Cost,
                 Description = product.Description,
                 ImagePath = product.ImagePath,
+                ImagePaths = product.ImagePaths
             };
             return productViewModel;
         }
@@ -45,7 +46,8 @@ namespace OnlineShop_WebApp.Mappings
                 Quote = product.Quote,
                 Cost = product.Cost,
                 Description = product.Description,
-                ImagePath = product.ImagePath
+                ImagePath = product.ImagePath,
+                ImagePaths= product.ImagePaths
             };
             return productDB;
         }
