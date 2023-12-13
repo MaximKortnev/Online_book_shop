@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
-using OnlineShop_WebApp.Areas.Admin.Models;
 using OnlineShop_WebApp.Mappings;
 using OnlineShop_WebApp.Models;
 
@@ -21,8 +20,6 @@ namespace OnlineShop_WebApp.Controllers
             this.appEnvironment = appEnvironment;
             _singInManager = singInManager;
         }
-
-
 
         public IActionResult Main()
         {
@@ -67,18 +64,8 @@ namespace OnlineShop_WebApp.Controllers
             if (user == null) { return View("ExistUser"); }
             if (userView.UploadNewAvatar != null)
             {
-                string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/users/");
-                if (!Directory.Exists(productImagesPath))
-                {
-                    Directory.CreateDirectory(productImagesPath);
-                }
-
-                var filename = Guid.NewGuid() + "." + userView.UploadNewAvatar.FileName.Split('.').Last();
-                using (var fileStream = new FileStream(productImagesPath + filename, FileMode.Create))
-                {
-                    userView.UploadNewAvatar.CopyTo(fileStream);
-                }
-                user.AvatarImagePath = "/images/users/" + filename;
+                var filePath = FileManager.SavehImageAvatarInDB(userView, appEnvironment);
+                user.AvatarImagePath = filePath;
                 usersManager.UpdateAsync(user).Wait();
             }
             return RedirectToAction("Main");
@@ -102,6 +89,7 @@ namespace OnlineShop_WebApp.Controllers
                 if (userViewModel.Password != userViewModel.ConfirmPassword)
                 {
                     ModelState.AddModelError(string.Empty, "Пароли не совпадают");
+                    return View("Edit", userViewModel);
                 }
                 else
                 {
@@ -128,7 +116,7 @@ namespace OnlineShop_WebApp.Controllers
                     }
                 }
             }
-            return View(userViewModel);
+            return View("Edit", userViewModel);
         }
         public IActionResult Delete(string name)
         {
