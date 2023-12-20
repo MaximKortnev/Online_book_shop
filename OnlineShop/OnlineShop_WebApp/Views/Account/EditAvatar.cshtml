@@ -15,6 +15,7 @@
             <label>Обновить аватарку</label>
             <input type="file" name="UploadNewAvatar" class="form-control" />
         </div>
+        <input type="hidden" name="Login" value="@Model.Login" />
         <div class="form-group">
             <button type="submit" class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="SaveEditAvatar">Сохранить изменения</button>
         </div>
