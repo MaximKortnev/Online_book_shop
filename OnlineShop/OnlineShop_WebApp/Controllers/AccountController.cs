@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
@@ -13,12 +14,14 @@ namespace OnlineShop_WebApp.Controllers
         private readonly UserManager<User> usersManager;
         private readonly IWebHostEnvironment appEnvironment;
         private readonly SignInManager<User> _singInManager;
-        public AccountController(IOrdersRepository orderRepository, UserManager<User> usersManager, IWebHostEnvironment appEnvironment, SignInManager<User> singInManager)
+        private readonly IMapper mapper;
+        public AccountController(IOrdersRepository orderRepository, IMapper mapper, UserManager<User> usersManager, IWebHostEnvironment appEnvironment, SignInManager<User> singInManager)
         {
             this.orderRepository = orderRepository;
             this.usersManager = usersManager;
             this.appEnvironment = appEnvironment;
             _singInManager = singInManager;
+            this.mapper = mapper;
         }
 
         public IActionResult Main()
@@ -30,7 +33,8 @@ namespace OnlineShop_WebApp.Controllers
         {
             var user = usersManager.FindByNameAsync(User.Identity.Name).Result;
             if (user == null) { return View("ExistUser"); }
-            return View(user.ToUserViewModel());
+            var userViewModel = mapper.Map<UserViewModel>(user);
+            return View(userViewModel);
         }
 
         public IActionResult GetOrders()
@@ -41,7 +45,7 @@ namespace OnlineShop_WebApp.Controllers
 
             foreach (var order in orders)
             {
-                ordersViewModel.Add(Mapping.ToOrderViewModel(order));
+                ordersViewModel.Add(mapper.Map<OrderViewModel>(order));
             }
             return View(ordersViewModel);
         }
@@ -76,7 +80,7 @@ namespace OnlineShop_WebApp.Controllers
             var user = usersManager.FindByNameAsync(name).Result;
             if (user == null) return View("ExistUser");
 
-            var userViewModel = user.ToUserViewModel();
+            var userViewModel = mapper.Map<UserViewModel>(user);
 
             return View(userViewModel);
         }

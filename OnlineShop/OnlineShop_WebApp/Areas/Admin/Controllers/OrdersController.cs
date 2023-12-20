@@ -5,6 +5,7 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db;
 using OnlineShop_WebApp.Mappings;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -13,15 +14,17 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository ordersRepository;
-        public OrdersController( IOrdersRepository ordersRepository)
+        private readonly IMapper mapper;
+        public OrdersController( IOrdersRepository ordersRepository, IMapper mapper)
         {
             this.ordersRepository = ordersRepository;
+            this.mapper = mapper;
         }
 
         public IActionResult Info(Guid Id)
         {
             var order = ordersRepository.TryGetById(Id);
-            if (order != null) { return View(Mapping.ToOrderViewModel(order)); }
+            if (order != null) { return View(mapper.Map<OrderViewModel>(order)); }
             return View("BadOrder");
         }
         [HttpPost]

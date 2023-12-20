@@ -2,8 +2,10 @@
 using OnlineShop_WebApp.Models;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShop_WebApp.Mappings;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -13,10 +15,12 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     {
         private readonly IProductsRepository productRepository;
         private readonly IWebHostEnvironment appEnvironment;
-        public ProductsController(IProductsRepository productRepository, IWebHostEnvironment appEnvironment)
+        private readonly IMapper mapper;
+        public ProductsController(IProductsRepository productRepository, IWebHostEnvironment appEnvironment, IMapper mapper)
         {
             this.productRepository = productRepository;
             this.appEnvironment = appEnvironment;
+            this.mapper = mapper;
         }
 
         public IActionResult ViewEdit(Guid productId)
@@ -26,7 +30,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             {
                 return View("ErrorProduct");
             }
-            var productViewModel = Mapping.ToProductViewModel(product);
+            var productViewModel = mapper.Map<ProductViewModel>(product);
             return View(productViewModel);
 
         }
@@ -56,7 +60,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
 
-                    var productDB = Mapping.ToProductDB(product);
+                    var productDB = mapper.Map<Product>(product);
                     productRepository.Edit(productDB);
                     return RedirectToAction("GetProducts", "Home");
                 }
@@ -74,7 +78,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                     var imagePaths = FileManager.SaveProductImagesInDB(product, appEnvironment);
                     product.ImagePath = imagePaths.FirstOrDefault();
                     product.ImagePaths = imagePaths;
-                    productRepository.Add(Mapping.ToProductDB(product));
+                    productRepository.Add(mapper.Map<Product>(product));
                     return RedirectToAction("GetProducts", "Home");
                 }
             }

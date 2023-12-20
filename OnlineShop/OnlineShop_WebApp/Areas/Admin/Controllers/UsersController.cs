@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop_WebApp.Models;
-using OnlineShop_WebApp.Mappings;
 using OnlineShop.Db.Models;
 using OnlineShop.Db;
 using Microsoft.AspNetCore.Identity;
 using OnlineShop_WebApp.Areas.Admin.Models;
+using AutoMapper;
 
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
@@ -15,12 +15,14 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly RoleManager<IdentityRole> rolesManager;
+        private readonly IMapper mapper;
 
         private readonly UserManager<User> usersManager;
-        public UsersController(RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
+        public UsersController(RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager, IMapper mapper)
         {
             this.usersManager = usersManager;
             this.rolesManager = rolesManager;
+            this.mapper = mapper;
         }
 
         public IActionResult Info(string name)
@@ -36,7 +38,8 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
                     allRoles += $"{role.Name}, ";
                 }
                 ViewBag.AllRoles = allRoles.TrimEnd(' ', ',');
-                return View(user.ToUserViewModel());
+                var userViewModel = mapper.Map<UserViewModel>(user);
+                return View(userViewModel);
             }
             return View("ExistUser");
         }
@@ -120,7 +123,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
             var user = usersManager.FindByNameAsync(name).Result;
             if (user == null) return View("ExistUser");
 
-            var userViewModel = user.ToUserViewModel();
+            var userViewModel = mapper.Map<UserViewModel>(user);
 
             return View(userViewModel);
         }

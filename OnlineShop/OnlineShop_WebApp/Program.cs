@@ -5,6 +5,7 @@ using OnlineShop.Db.Repositories;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using Serilog;
+using OnlineShop_WebApp.Mappings;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

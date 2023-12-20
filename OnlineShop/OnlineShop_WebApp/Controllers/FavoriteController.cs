@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
-using OnlineShop_WebApp.Mappings;
-using OnlineShop.Db;
+using AutoMapper;
+using OnlineShop_WebApp.Models;
 
 namespace OnlineShop_WebApp.Controllers
 {
@@ -12,16 +12,18 @@ namespace OnlineShop_WebApp.Controllers
 
         private readonly IProductsRepository productsRepository;
         private readonly IFavoritesRepository favoriteRepository;
-        public FavoriteController(IProductsRepository productsRepository, IFavoritesRepository favoriteRepository)
+        private readonly IMapper mapper;
+        public FavoriteController(IProductsRepository productsRepository, IMapper mapper, IFavoritesRepository favoriteRepository)
         {
             this.favoriteRepository = favoriteRepository;
             this.productsRepository = productsRepository;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var favorite = favoriteRepository.GetAll(User.Identity.Name);
-            var favoriteViewModel = Mapping.ToProductViewModels(favorite);
+            var favoriteViewModel = mapper.Map<List<ProductViewModel>>(favorite);
             return View(favoriteViewModel);
         }
 

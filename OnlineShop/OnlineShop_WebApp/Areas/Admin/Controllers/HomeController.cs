@@ -6,6 +6,7 @@ using OnlineShop.Db;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using OnlineShop.Db.Models;
+using AutoMapper;
 
 namespace OnlineShop_WebApp.Areas.Admin.Controllers
 {
@@ -17,12 +18,14 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         private readonly IOrdersRepository orderRepository;
         private readonly UserManager<User> usersManager;
         private readonly RoleManager<IdentityRole> rolesManager;
-        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, UserManager<User> usersManager, RoleManager<IdentityRole> rolesManager)
+        private readonly IMapper mapper;
+        public HomeController(IProductsRepository productRepository, IOrdersRepository orderRepository, UserManager<User> usersManager, RoleManager<IdentityRole> rolesManager, IMapper mapper)
         {
             this.productRepository = productRepository;
             this.orderRepository = orderRepository;
             this.usersManager = usersManager;
             this.rolesManager = rolesManager;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
@@ -37,15 +40,15 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
 
             foreach (var order in orders)
             {
-                ordersViewModel.Add(Mapping.ToOrderViewModel(order));
+                ordersViewModel.Add(mapper.Map<OrderViewModel>(order)) ;
             }
             return View(ordersViewModel);
         }
 
         public IActionResult GetUsers()
         {
-            var users = usersManager.Users.ToList();
-            return View(users.Select(x => x.ToUserViewModel()).ToList());
+            var users = mapper.Map<List<UserViewModel>>(usersManager.Users.ToList());
+            return View(users);
         }
 
         public IActionResult GetRoles()
@@ -57,7 +60,7 @@ namespace OnlineShop_WebApp.Areas.Admin.Controllers
         public IActionResult GetProducts()
         {
             var products = productRepository.GetAll();
-            var productsViewModels = Mapping.ToProductViewModels(products);
+            var productsViewModels = mapper.Map<List<ProductViewModel>>(products);
             return View(productsViewModels);
         }
     }
