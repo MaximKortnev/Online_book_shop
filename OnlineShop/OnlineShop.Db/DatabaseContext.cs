@@ -29,7 +29,8 @@ namespace OnlineShop.Db
                     Quote = "Считаю до трёх, а потом как дам больно!",
                     Cost = (decimal)20.00,
                     Description = "Невероятная история о деревянном мальчике",
-                    ImagePath = "image.jpg"
+                    ImagePath = "image.jpg",
+                    ImagePaths = ["image.jpg", "image1.jpg"]
                 },
                 new Product
                 {
@@ -41,7 +42,8 @@ namespace OnlineShop.Db
                     Quote = "Считаю до трёх, а потом как дам больно!",
                     Cost = (decimal)15.99,
                     Description = "Книга о приключениях девочки Асилы и о неведомых чудесах созданных Льюисом Кэрроллом ",
-                    ImagePath = "image.jpg"
+                    ImagePath = "image.jpg",
+                    ImagePaths = ["image.jpg", "image1.jpg"]
                 },
                 new Product
                 {
@@ -53,7 +55,8 @@ namespace OnlineShop.Db
                     Quote = "Считаю до трёх, а потом как дам больно!",
                     Cost = (decimal)15.00,
                     Description = "Биографическая книга о мыслях и жизни девушки по имени Марта",
-                    ImagePath = "image.jpg"
+                    ImagePath = "image.jpg",
+                    ImagePaths = ["image.jpg", "image1.jpg"]
                 },
                 new Product
                 {
@@ -65,7 +68,8 @@ namespace OnlineShop.Db
                     Quote = "Считаю до трёх, а потом как дам больно!",
                     Cost = (decimal)45.20,
                     Description = "Жан Пьер Мюри, одна из выдающихся личностей прошлого столетия",
-                    ImagePath = "image.jpg"
+                    ImagePath = "image.jpg",
+                    ImagePaths = ["image.jpg", "image1.jpg"]
                 });
         }
     }

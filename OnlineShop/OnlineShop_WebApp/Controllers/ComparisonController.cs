@@ -41,9 +41,9 @@ namespace OnlineShop_WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Clear(string userId)
+        public IActionResult Clear()
         {
-            сomparisonRepository.Clear(Constants.UserId);
+            сomparisonRepository.Clear(User.Identity.Name);
             return RedirectToAction("Index", "Home");
         }
     }

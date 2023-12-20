@@ -41,8 +41,6 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<User>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     IdentityInitializer.Initialize(userManager, roleManager);
-
-    SeedData.Initialize(services);
 }
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
