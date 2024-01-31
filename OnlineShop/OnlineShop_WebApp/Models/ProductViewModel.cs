@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using OnlineShop_WebApp.ReviewApi;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop_WebApp.Models
@@ -40,6 +41,8 @@ namespace OnlineShop_WebApp.Models
         public List<string>? ImagePaths { get; set; }
         public string? ImagePath { get; set; }
         public List<IFormFile>? ImageFiles { get; set; }
+
+        public List<Review>? Reviews { get; set; }
     }
 }
 

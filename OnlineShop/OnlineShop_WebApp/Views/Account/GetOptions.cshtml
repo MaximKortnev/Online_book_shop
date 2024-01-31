@@ -1,7 +1,7 @@
 ﻿@model UserViewModel
 @if (Model == null)
 {
-    <h1>Пользователь не найден</h1>
+    <h1>Bad</h1>
 }
 else
 {
@@ -33,7 +33,7 @@ else
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" asp-area="" asp-controller="Account" asp-route-name="@Model.Login" asp-action="Edit">Редактирование данных</a>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="EditAvatar" asp-route-name="@Model.Login">Изменить аватар</a>
+                                        <button type="submit" class="dropdown-item" asp-area="" asp-controller="Account" asp-action="EditAvatar" asp-route-name="@Model.Login">Изменить аватар</button>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" asp-area="" asp-route-name="@Model.Login" asp-action="Delete" asp-controller="Account">Удалить пользователя</a>
                                     </div>

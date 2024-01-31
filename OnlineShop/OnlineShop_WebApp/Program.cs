@@ -6,6 +6,8 @@ using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using Serilog;
 using OnlineShop_WebApp.Mappings;
+using Microsoft.Net.Http.Headers;
+using OnlineShop_WebApp.ReviewApi;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,11 +31,18 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie = new CookieBuilder { IsEssential = true };
 });
 
+builder.Services.AddHttpClient("ReviewApi", httpClient => {
+    httpClient.BaseAddress = new Uri("https://localhost:7274");
+
+});
+
 builder.Services.AddTransient<IProductsRepository, ProductsDBRepository>();
 builder.Services.AddTransient<ICartsRepository, CartsDBRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDBRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDBRepository>();
 builder.Services.AddTransient<IComparisonRepository, ComparisonDBRepository>();
+builder.Services.AddTransient<ReviewApiClient>();
+
 
 var app = builder.Build();
 

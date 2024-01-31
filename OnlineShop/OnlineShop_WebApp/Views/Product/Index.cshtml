@@ -43,6 +43,14 @@
                     <div class="mt-4">
                         <h6>Цитата из книги:</h6>
                         <p>@Model.Quote</p>
+                        <!--<a class="btn btn-outline-success" asp-area="" asp-controller="Product" asp-action="AddReview" asp-route-productId="@Model.Id">Добавить отзыв</a>-->
+                    </div>
+                    <div class="mt-4">
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <p>@review.Text  @review.Grade</p>
+
+                        }
                     </div>
                 </div>
             </div>
